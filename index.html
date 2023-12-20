@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap core CSS -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <!---bootstrap core css end--->
+    <script src="./js/bootstrap.bundle.min.js"></script>
+
+    
+    <title>Lodwick Masete's  Portfolio</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #6CAF20;
+            color: #333;
+        }
+
+        header, section, footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #6CAF20;
+            color: white;
+        }
+
+        #projects {
+            background-color: #e0e0e0;
+            padding: 20px;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .project {
+
+            padding: 10px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: inline-block;
+            transition: transform 0.3s;
+            background-color:#6CAF20;
+        }
+
+        .project:hover {
+            transform: scale(1.1);
+            background-color:#6CAF20;
+        }
+
+        #projectDetailsOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #projectDetails {
+            background-color: #d0d0d0;
+            padding: 20px;
+            border-radius: 5px;
+            width: 70%;
+            position: relative;
+        }
+
+        #visitLinkButton {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button {
+            cursor: pointer;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        #avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 20px auto;
+            display: block;
+            cursor: pointer;
+            border:7px solid black;
+        }
+
+        #biographyOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #biography {
+            background-color: #d0d0d0;
+            padding: 20px;
+            border-radius: 5px;
+            width: 70%;
+            text-align: left;
+        }
+
+
+
+        .hire_detail {
+            margin-bottom: 10px;
+
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img id="avatar" src="./img/profile.png" alt="Lodwick_profile" onclick="openBiography()">
+        <h1>Lodwick Masete <button type="button" class="btn btn-danger btn-circle"><i class="fa fa-heart"></i>
+        </button></h1>
+        <p>Web Developer | Android Developer </p>
+    </header>
+        <h2>Projects</h2>
+    <section id="projects">
+
+        <div class="project" onclick="openProject('project1')">
+            <h3>HOVDSA</h3>
+            <p>Website Dedicated to vigro deep</p>
+        </div>
+        <div class="project" onclick="openProject('project2')">
+            <h3>HOVDSA ChatBot</h3>
+            <p>A chatbot dedicated to vigro deep</p>
+        </div>
+        <div class="project" onclick="openProject('project3')">
+            <h3>House Of Vigro Deep (2024 version)</h3>
+            <p>vigro deep's events & stories in 2023.</p>
+        </div>
+
+    </section>
+
+    <div id="projectDetailsOverlay">
+        <div id="projectDetails">
+
+            <h2 id="projectTitle"></h2>
+            <p id="projectDescription"></p>
+            <button onclick="closeProject()">Close</button>
+        </div>
+    </div>
+
+    <div id="biographyOverlay">
+        <div id="biography">
+            <h2>Hire Me</h2>
+            <p>for free<a href="malito:lodwickjmasete@gmail.com">lodwickjmasete@gmail.com</a></p>
+            <button onclick="closeBiography()">Close</button>
+        </div>
+    </div>
+    
+    
+    
+    <script>
+        var currentPage = 1;
+        var projectsPerPage = 3;
+
+        function openProject(projectId) {
+            var projectTitle = "";
+            var projectDescription = "";
+
+            // Update project details based on the project ID
+            if (projectId === 'project1') {
+                projectTitle = "HOVDSA v2024";
+                projectDescription = "Check it out on <a href='https://vigrodeepsa.github.io' target='_blank'>vigrodeepsa.github.io</a>.";
+            } else if (projectId === 'project2') {
+                projectTitle = "HOVDSA bot 2024";
+                projectDescription = "chat with vigro deep's bot on  <a href='https://vigrodeepsa.github.io/fullscreen.html' target='_blank'>CHATBOT</a> .";
+            } else if (projectId === 'project3') {
+                projectTitle = "HOVDSA 2023";
+                projectDescription = "<a href='https://vigrodeepsa.github.io/index.html' target='_blank'>House of vigro deep Sa</a> 2023 version.";
+            } 
+            // Addmore project details as needed
+            
+            // Display project details
+            document.getElementById('projectTitle').innerHTML = projectTitle;
+            document.getElementById('projectDescription').innerHTML = projectDescription;
+            document.getElementById('projectDetailsOverlay').style.display = 'flex';
+            }
+            
+            function closeProject() {
+            // Hide project details
+            document.getElementById('projectDetailsOverlay').style.display = 'none';
+            }
+            
+            function visitProjectLink() {
+            // Replace this with the desired link
+            window.open("#", "_blank");
+            }
+            
+            function openHireMe() {
+            // Display hire me details
+            document.getElementById('hireMeDetails').style.display = 'block';
+            }
+            
+            function closeHireMe() {
+            // Hide hire me details
+            document.getElementById('hireMeDetails').style.display = 'none';
+            }
+            
+            function openBiography() {
+            // Display biography overlay
+            document.getElementById('biographyOverlay').style.display = 'flex';
+            }
+            
+            function closeBiography() {
+            // Hide biography overlay
+            document.getElementById('biographyOverlay').style.display = 'none';
+            }
+            </script>
+            </body>
+            </html>
