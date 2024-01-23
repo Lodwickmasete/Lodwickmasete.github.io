@@ -27,11 +27,19 @@
         }
 
         #projects {
-            background-color: #e0e0e0;
             padding: 20px;
-            overflow-x: auto;
-            white-space: nowrap;
+            overflow-y: scroll;
+            max-height:400px;
         }
+
+#projects:hover {
+
+    background-color: #e0e0e0;
+    padding: 20px;
+    overflow-y: scroll;
+    white-space:nowrap;
+    max-height:400px;
+}
 
         .project {
 
@@ -39,9 +47,11 @@
             margin: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            display: inline-block;
+
             transition: transform 0.3s;
             background-color:#6CAF20;
+            width:100%;
+            word-wrap:break-word;
         }
 
         .project:hover {
@@ -127,30 +137,43 @@
             margin-bottom: 10px;
 
         }
+
     </style>
 </head>
 <body>
     <header>
         <img id="avatar" src="./img/profile.png" alt="Lodwick_profile" onclick="openBiography()">
-        <h1>Lodwick Masete <button type="button" class="btn btn-danger btn-circle"><i class="fa fa-heart"></i>
+        <h1>Lodwick Masete </h1>
         </button></h1>
-        <p>Web Developer | Android Developer </p>
+        <p>Web Developer | Still studying</p>
     </header>
+<button class="btn btn-secondary" onclick="openBiography()" >Let's Connect</button>      
+<!--<a href="lodwick.html"><button class="btn btn-secondary">Full portfolio</button></a>  --->    
+
         <h2>Projects</h2>
     <section id="projects">
 
+<p>
+<center>2024</center>
+<div class="project" onclick="openProject('project4')">
+<h3>Betting Tips</h3>
+<p class="p-info">Betway | Hollywoodbets Betting Tips & Codes website <b>Coming Soon</b></p>
+</div>
+
+       <div class="project" onclick="openProject('project3')">
+       <h3>365_Quotes</h3>
+       <p class="p-info">Website For Daily motivation</p>
+       </div>
+</p>
+<center>2023</center>
         <div class="project" onclick="openProject('project1')">
             <h3>HOVDSA</h3>
-            <p>Website Dedicated to vigro deep</p>
+            <p class="p-info">Website Dedicated to vigro deep</p>
         </div>
         <div class="project" onclick="openProject('project2')">
-            <h3>HOVDSA ChatBot</h3>
-            <p>A chatbot dedicated to vigro deep</p>
-        </div>
-        <div class="project" onclick="openProject('project3')">
-            <h3>House Of Vigro Deep (2024 version)</h3>
-            <p>vigro deep's events & stories in 2023.</p>
-        </div>
+            <h3>ChatBot</h3>
+            <p class="p-info">A chatbot dedicated to vigro deep</p>
+       </div>
 
     </section>
 
@@ -165,8 +188,26 @@
 
     <div id="biographyOverlay">
         <div id="biography">
-            <h2>Hire Me</h2>
-            <p>for free<a href="malito:lodwickjmasete@gmail.com">lodwickjmasete@gmail.com</a></p>
+            <h2>Let's Connect</h2>
+            available for : <br>
+            <li>Project Collaboration</li>
+            <li>Code Snippets</li>
+            <li>Website developing (Front-End)</li>
+            <li>FreeLancing</li>
+
+<hr>
+            
+            What i'm Looking for:
+            <li>Android Developers</li>
+            <li>PHP/WEB Developers (back-end)</li>
+            <li>Content Creators</li>
+            <li>Local Brands (Unpopular Brands <b>RSA</b> only) </li>
+            <li>Advertisers</li>
+    <hr> 
+  You can check my   <a href="lodwick.html">Full portfolio</a>.
+            
+            <br>My Email:
+             <p><a href="malito:lodwickjmasete@gmail.com">lodwickjmasete@gmail.com</a></p>
             <button onclick="closeBiography()">Close</button>
         </div>
     </div>
@@ -189,10 +230,13 @@
                 projectTitle = "HOVDSA bot 2024";
                 projectDescription = "chat with vigro deep's bot on  <a href='https://vigrodeepsa.github.io/fullscreen.html' target='_blank'>CHATBOT</a> .";
             } else if (projectId === 'project3') {
-                projectTitle = "HOVDSA 2023";
-                projectDescription = "<a href='https://vigrodeepsa.github.io/index.html' target='_blank'>House of vigro deep Sa</a> 2023 version.";
+                projectTitle = "365 Quotes Daily";
+                projectDescription = "Check it out at <a href='https://365-quotes.github.io/index.html' target='_blank'>365-quotes.github.io</a> 2024 version.";
+            } else if (projectId === 'project4') {
+            projectTitle = "Betting Tips & Codes";
+            projectDescription = 'Coming soon,Still looking For Full time punters ,if you are the one send me email via <p><a href="malito:lodwickjmasete@gmail.com">lodwickjmasete@gmail.com</a></p>';
             } 
-            // Addmore project details as needed
+       
             
             // Display project details
             document.getElementById('projectTitle').innerHTML = projectTitle;
