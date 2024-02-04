@@ -26,11 +26,7 @@
             color: white;
         }
 
-        #projects {
-            padding: 20px;
-            overflow-y: scroll;
-            max-height:400px;
-        }
+
 
 #projects:hover {
 
@@ -102,7 +98,7 @@
         }
 
         #avatar {
-            width: 100px;
+            width:100px;
             height: 100px;
             border-radius: 50%;
             margin: 20px auto;
@@ -155,14 +151,20 @@
 
 <p>
 <center>2024</center>
-<div class="project" onclick="openProject('project4')">
-<h3>Betting Tips</h3>
-<p class="p-info">Betway | Hollywoodbets Betting Tips & Codes website <b>Coming Soon</b></p>
-</div>
 
+<div class="project" onclick="openProject('project5')">
+<h3>An.Act GROUP website</h3>
+<p class="p-info">A website for Local extra lessons</p>
+</div>
+<hr>
        <div class="project" onclick="openProject('project3')">
        <h3>365_Quotes</h3>
        <p class="p-info">Website For Daily motivation</p>
+       </div>
+       <hr>
+       <div class="project" onclick="openProject('project4')">
+       <h3>Betting Tips</h3>
+       <p class="p-info">Betway | Hollywoodbets Betting Tips & Codes website <b>Coming Soon</b></p>
        </div>
 </p>
 <center>2023</center>
@@ -188,7 +190,7 @@
 
     <div id="biographyOverlay">
         <div id="biography">
-            <h2>Let's Connect</h2>
+            <h2>Let's Connect <a href="./img/profile.png">ADMIN</a></h2>
             available for : <br>
             <li>Project Collaboration</li>
             <li>Code Snippets</li>
@@ -235,7 +237,11 @@
             } else if (projectId === 'project4') {
             projectTitle = "Betting Tips & Codes";
             projectDescription = 'Coming soon,Still looking For Full time punters ,if you are the one send me email via <p><a href="malito:lodwickjmasete@gmail.com">lodwickjmasete@gmail.com</a></p>';
+            }else if (projectId === 'project5') {
+            projectTitle = "Created this Website for MR Mangena";
+            projectDescription = 'I voluntered to create this <p><a href="https://enactgroup.guthub.io">en act website</a><p> ,if you need a web design send me email via <p><a href="malito:lodwickjmasete@gmail.com">lodwickjmasete@gmail.com</a></p>';
             } 
+             
        
             
             // Display project details
