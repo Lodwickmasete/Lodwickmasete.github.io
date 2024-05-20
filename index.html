@@ -1,284 +1,464 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap core CSS -->
-    <link href="./css/bootstrap.min.css" rel="stylesheet">
-    <!---bootstrap core css end--->
-    <script src="./js/bootstrap.bundle.min.js"></script>
+  <title>Lodwick Masete Projects</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding-top: 120px; /* Offset for the fixed header */
+    }
 
-    
-    <title>Lodwick Masete's  Portfolio</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #6CAF20;
-            color: #333;
-        }
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      z-index: 1000;
+      padding: 20px 0;
+    }
 
-        header, section, footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #6CAF20;
-            color: white;
-        }
+    header h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
 
+    header p {
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
 
+    header .social-handles {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
 
-#projects:hover {
+    header .social-handles a {
+      text-decoration: none;
+      color: #007BFF;
+      font-size: 1.5em;
+    }
 
-    background-color: #e0e0e0;
-    padding: 20px;
-    overflow-y: scroll;
-    white-space:nowrap;
-    max-height:400px;
-}
+    #search-input {
+      width: calc(100% - 40px); /* Adjust for padding */
+      padding: 10px;
+      margin-bottom: 20px;
+      margin-top: 120px; /* Adjust for fixed header */
+      margin-left: 20px; /* Adjust for padding */
+      box-sizing: border-box;
+    }
 
-        .project {
+    #filter {
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
 
-            padding: 10px;
-            margin: 5px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
 
-            transition: transform 0.3s;
-            background-color:#6CAF20;
-            width:100%;
-            word-wrap:break-word;
-        }
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
 
-        .project:hover {
-            transform: scale(1.1);
-            background-color:#6CAF20;
-        }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 34px;
+    }
 
-        #projectDetailsOverlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: none;
-            justify-content: center;
-            align-items: center;
-        }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
 
-        #projectDetails {
-            background-color: #d0d0d0;
-            padding: 20px;
-            border-radius: 5px;
-            width: 70%;
-            position: relative;
-        }
+    input:checked + .slider {
+      background-color: #007BFF;
+    }
 
-        #visitLinkButton {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-        }
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
 
-        button {
-            cursor: pointer;
-            padding: 10px;
-            margin-top: 10px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-        }
+    #project-list {
+      list-style-position: inside;
+      padding: 0;
+      max-height: 400px;
+      overflow-y: auto;
+      transition: max-height 0.5s;
+    }
 
-        #avatar {
-            width:100px;
-            height: 100px;
-            border-radius: 50%;
-            margin: 20px auto;
-            display: block;
-            cursor: pointer;
-            border:7px solid black;
-        }
+    #project-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      border-left: 4px solid #007BFF;
+      border-right: 4px solid #007BFF;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.3s;
+      position: relative;
+    }
 
-        #biographyOverlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: none;
-            justify-content: center;
-            align-items: center;
-        }
+    #project-list li:hover {
+      background-color: #f0f0f0;
+      transform: scale(1.02);
+    }
 
-        #biography {
-            background-color: #d0d0d0;
-            padding: 20px;
-            border-radius: 5px;
-            width: 70%;
-            text-align: left;
-        }
+    #project-list li span {
+      margin-right: 10px;
+      font-weight: bold;
+    }
 
+    #project-list li small {
+      position: absolute;
+      bottom: 10px;
+      right: 20px;
+      font-size: 0.8em;
+      color: gray;
+      font-weight: normal;
+    }
+    #project-list li ff {
+      position: absolute;
+      bottom: 10px;
+      left: 20px;
+      font-size: 0.8em;
+      color: gray;
+      font-weight: normal;
+    }
 
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1001;/*overlaying the header*/
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding-top: 60px;
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
 
-        .hire_detail {
-            margin-bottom: 10px;
+    .modal-content {
+      background-color: #fefefe;
+      margin: 5% auto;
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      max-width: 500px;
+      border-radius: 10px;
+      animation: fadeIn 0.5s;
+    }
 
-        }
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
 
-    </style>
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .modal-buttons {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+
+    .modal-buttons button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      color: white;
+    }
+
+    .live-demo {
+      background-color: #007BFF;
+    }
+
+    .download {
+      background-color: #28A745;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeOut {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+
+    #updates {
+      margin-top: 40px;
+    }
+
+    #updates h2 {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    #updates img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin-bottom: 20px;
+    }
+  </style>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lodwick Masete freesourcecodes</title>
 </head>
 <body>
-    <header>
-        <img id="avatar" src="./img/profile.png" alt="Lodwick_profile" onclick="openBiography()">
-        <h1>Lodwick Masete </h1>
-        </button></h1>
-        <p>Web Developer | Still studying</p>
-    </header>
-<button class="btn btn-secondary" onclick="openBiography()" >Let's Connect</button>      
-<!--<a href="lodwick.html"><button class="btn btn-secondary">Full portfolio</button></a>  --->    
-
-        <h2>Projects</h2>
-    <section id="projects">
-
-<p>
-<center>2024</center>
-
-<div class="project" onclick="openProject('project5')">
-<h3>An.Act GROUP website</h3>
-<p class="p-info">A website for Local extra lessons</p>
-</div>
-<hr>
-       <div class="project" onclick="openProject('project3')">
-       <h3>365_Quotes</h3>
-       <p class="p-info">Website For Daily motivation</p>
-       </div>
-       <hr>
-       <div class="project" onclick="openProject('project4')">
-       <h3>Betting Tips</h3>
-       <p class="p-info">Betway | Hollywoodbets Betting Tips & Codes website <b>Coming Soon</b></p>
-       </div>
-</p>
-<center>2023</center>
-        <div class="project" onclick="openProject('project1')">
-            <h3>HOVDSA</h3>
-            <p class="p-info">Website Dedicated to vigro deep</p>
-        </div>
-        <div class="project" onclick="openProject('project2')">
-            <h3>ChatBot</h3>
-            <p class="p-info">A chatbot dedicated to vigro deep</p>
-       </div>
-
-    </section>
-
-    <div id="projectDetailsOverlay">
-        <div id="projectDetails">
-
-            <h2 id="projectTitle"></h2>
-            <p id="projectDescription"></p>
-            <button onclick="closeProject()">Close</button>
-        </div>
+  <header>
+    <h1>Masete Lodwick</h1>
+    <p>Welcome to my project portfolio. Here you can find various projects that I have worked on. Feel free to explore and reach out through my social handles</p>
+    <div class="social-handles">
+      <a href="https://twitter.com" target="_blank">Twitter</a>
+      <a href="https://github.com" target="_blank">GitHub</a>
+      <a href="https://linkedin.com" target="_blank">LinkedIn</a>
     </div>
-
-    <div id="biographyOverlay">
-        <div id="biography">
-            <h2>Let's Connect <a href="./img/profile.png">ADMIN</a></h2>
-            available for : <br>
-            <li>Project Collaboration</li>
-            <li>Code Snippets</li>
-            <li>Website developing (Front-End)</li>
-            <li>FreeLancing</li>
-
-<hr>
-            
-            What i'm Looking for:
-            <li>Android Developers</li>
-            <li>PHP/WEB Developers (back-end)</li>
-            <li>Content Creators</li>
-            <li>Local Brands (Unpopular Brands <b>RSA</b> only) </li>
-            <li>Advertisers</li>
-    <hr> 
-  You can check my   <a href="lodwick.html">Full portfolio</a>.
-            
-            <br>My Email:
-             <p><a href="malito:lodwickjmasete@gmail.com">lodwickjmasete@gmail.com</a></p>
-            <button onclick="closeBiography()">Close</button>
-        </div>
+  </header>
+  
+  <input type="text" id="search-input" placeholder="Search for a project">
+  
+  <div id="filter">
+    <label class="switch">
+      <input type="checkbox" id="html-filter" checked>
+      <span class="slider"></span>
+    </label>
+    <label for="html-filter">HTML</label>
+    
+    <label class="switch">
+      <input type="checkbox" id="php-filter" checked>
+      <span class="slider"></span>
+    </label>
+    <label for="php-filter">PHP</label>
+  </div>
+  
+  <ul id="project-list"></ul>
+  
+  <div id="updates">
+    <h2>About Me</h2>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+    <img src="profile.png" alt="About me">
+  </div>
+  
+  <div id="projectModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2 id="modal-title"></h2>
+      <p id="modal-description"></p>
+      <p id="modal-size"></p>
+      <p id="modal-lang"></p>
+      <div class="modal-buttons">
+        <button class="live-demo" onclick="openLiveDemo()">Live Demo</button>
+        <button class="download" onclick="downloadProject()">Download</button>
+      </div>
     </div>
-    
-    
-    
-    <script>
-        var currentPage = 1;
-        var projectsPerPage = 3;
+  </div>
+</body>
+</html>
+<script>
+const projects = [
 
-        function openProject(projectId) {
-            var projectTitle = "";
-            var projectDescription = "";
+  {
+    title: "Mokotla Soccer Betting System",
+    url: "https://Lodwickmasete.github.io/projects/Mokotla/",
+    description: "This Project allows you to add Teams and their odds,you are able check betslip when selecting. <p> But ,On Pro Verson  you are able to:</p>    <li>create betting account</li>       <li>See Live Matches and scores</li>          <li>Bet More Markets and bet live</li>    <li>Take Ealry Cashout offer</li>      <li>Settle Loss and win Tickets</li>          <li>etc...</li>   ",
+    size: "0.52 MB",
+    type: "PHP",
+    date: "2024-01-01"
+  },
+  {
+    title: "Web text editor",
+    url: "https://Lodwickmasete.github.io/projects/web_file_editor/",
+    description: "Web File editor that has the ability to Create File,upload it and create a folder",
+    size: "0.07 MB",
+    type: "PHP",
+    date: "2024-01-01"
+  },
+  {
+    title: "Solve For X System",
+    url: "https://Lodwickmasete.github.io/projects/solve_for_x_system/",
+    description: "This System allows you to enter monomial,binomial and trinomial equations to solve for x.",
+    size: "0.04 MB",
+    type: "PHP",
+    date: "2024-01-01"
+  },
+  {
+    title: "Chat Room System",
+    url: "https://Lodwickmasete.github.io/projects/ChatRoom/",
+    description:"This system allows you to enter room name and then start chatting,when the room does not exist,it create a new room",
+    size: "0.52 MB",
+    type: "PHP",
+    date: "2024-01-01"
+  },
+  {
+    title: "Rating system",
+    url: "https://Lodwickmasete.github.io/projects/rating_system/",
+    description: "Rating System in php that allows you to rate using stars and text",
+    size: "0.02 MB",
+    type: "PHP",
+    date: "2024-01-01"
+  },
+  {
+    title: "An act PTY LTD",
+    url: "https://en-act.github.io/index.html",
+    description: "This website hold tutorials to enhace your vocabulary.",
+    size: "8.14 MB",
+   type: "HTML",
+    date: "2024-01-01"
+  }
+ ,
+ {
+   title: "365 Quoetes (daly motuvation posts)",
+   url: "https://365-qoutes.github.io/index.html",
+   description: "An automatic Post uploader,It uplpadee a motivation per day to encorage everyone.",
+   size: "1.35 MB",
+   type: "HTML",
+   date: "2024-01-01"
+ },
+ {
+   title: "House Of Vigro Deep SA",
+   url: "https://vigrodeepsa.github.io/index.html",
+   description: "A Html Website dedicated to vigro deep.",
+   size: "7.68 MB",
+   type: "HTML",
+   date: "2023-01-01"
+ },
+ {
+   title: "Vigro Deep SA Chatbot",
+   url: "https://vigrodeepsa.github.io/fullscreen.html",
+   description: "This is my first project. It is a simple HTML and CSS website.",
+   size: "0.20 MB",
+   type: "HTML",
+   date: "2023-01-01"
+ }
 
-            // Update project details based on the project ID
-            if (projectId === 'project1') {
-                projectTitle = "HOVDSA v2024";
-                projectDescription = "Check it out on <a href='https://vigrodeepsa.github.io' target='_blank'>vigrodeepsa.github.io</a>.";
-            } else if (projectId === 'project2') {
-                projectTitle = "HOVDSA bot 2024";
-                projectDescription = "chat with vigro deep's bot on  <a href='https://vigrodeepsa.github.io/fullscreen.html' target='_blank'>CHATBOT</a> .";
-            } else if (projectId === 'project3') {
-                projectTitle = "365 Quotes Daily";
-                projectDescription = "Check it out at <a href='https://365-quotes.github.io/index.html' target='_blank'>365-quotes.github.io</a> 2024 version.";
-            } else if (projectId === 'project4') {
-            projectTitle = "Betting Tips & Codes";
-            projectDescription = 'Coming soon,Still looking For Full time punters ,if you are the one send me email via <p><a href="malito:lodwickjmasete@gmail.com">lodwickjmasete@gmail.com</a></p>';
-            }else if (projectId === 'project5') {
-            projectTitle = "Created this Website for MR Mangena";
-            projectDescription = 'check it out <p><a href="https://enactgroup.github.io">https://enactgroup.github.io</a></p>';
-            } 
-             
-       
-            
-            // Display project details
-            document.getElementById('projectTitle').innerHTML = projectTitle;
-            document.getElementById('projectDescription').innerHTML = projectDescription;
-            document.getElementById('projectDetailsOverlay').style.display = 'flex';
-            }
-            
-            function closeProject() {
-            // Hide project details
-            document.getElementById('projectDetailsOverlay').style.display = 'none';
-            }
-            
-            function visitProjectLink() {
-            // Replace this with the desired link
-            window.open("#", "_blank");
-            }
-            
-            function openHireMe() {
-            // Display hire me details
-            document.getElementById('hireMeDetails').style.display = 'block';
-            }
-            
-            function closeHireMe() {
-            // Hide hire me details
-            document.getElementById('hireMeDetails').style.display = 'none';
-            }
-            
-            function openBiography() {
-            // Display biography overlay
-            document.getElementById('biographyOverlay').style.display = 'flex';
-            }
-            
-            function closeBiography() {
-            // Hide biography overlay
-            document.getElementById('biographyOverlay').style.display = 'none';
-            }
-            </script>
-            </body>
-            </html>
+
+];
+
+// Get elements
+const searchInput = document.getElementById("search-input");
+const projectList = document.getElementById("project-list");
+const modal = document.getElementById("projectModal");
+const modalTitle = document.getElementById("modal-title");
+const modalDescription = document.getElementById("modal-description");
+const lang = document.getElementById("modal-lang");
+const modalSize = document.getElementById("modal-size");
+
+const closeButton = document.getElementsByClassName("close")[0];
+const htmlFilter = document.getElementById("html-filter");
+const phpFilter = document.getElementById("php-filter");
+const updates = document.getElementById("updates");
+
+let currentProject = null;
+
+// Function to open the modal
+function openModal(project) {
+  currentProject = project;
+  modalTitle.textContent = project.title;
+  modalDescription.innerHTML = project.description;
+  modalSize.textContent = `Size: ${project.size}`;
+  modal.style.display = "block";
+  modal.style.opacity = 1;
+}
+
+// Function to close the modal
+function closeModal() {
+  modal.style.opacity = 0;
+  setTimeout(() => { modal.style.display = "none"; }, 500);
+}
+
+// Function to handle live demo
+function openLiveDemo() {
+  if (currentProject) {
+    window.open(currentProject.url, '_blank');
+  }
+}
+
+// Function to handle download
+function downloadProject() {
+  if (currentProject) {
+    const link = document.createElement('a');
+    link.href = currentProject.url;
+    link.download = currentProject.title;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+}
+
+// Function to filter projects
+function filterProjects() {
+  const searchTerm = searchInput.value.toLowerCase();
+  const showHTML = htmlFilter.checked;
+  const showPHP = phpFilter.checked;
+
+  const filteredProjects = projects.filter(project =>
+    project.title.toLowerCase().includes(searchTerm) &&
+    ((project.type === 'HTML' && showHTML) || (project.type === 'PHP' && showPHP))
+  );
+
+  projectList.innerHTML = "";
+  updates.style.display = searchTerm ? 'none' : 'block';
+
+  const displayLimit = searchTerm ? filteredProjects.length : 5;
+  projectList.style.maxHeight = searchTerm ? 'none' : '400px';
+
+  filteredProjects.slice(0, displayLimit).forEach(project => {
+    const li = document.createElement("li");
+    li.innerHTML = `<span>${project.size} <ff><b>${project.type}</b></ff></span><a>${project.title}</a><small> ${project.date}</small>`;
+    li.addEventListener("click", () => openModal(project));
+    projectList.appendChild(li);
+  });
+}
+
+// Add event listeners
+searchInput.addEventListener("input", filterProjects);
+htmlFilter.addEventListener("change", filterProjects);
+phpFilter.addEventListener("change", filterProjects);
+closeButton.addEventListener("click", closeModal);
+
+// Initial display of projects
+filterProjects();
+</script>
