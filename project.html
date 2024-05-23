@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downloading...</title>
+    <script>
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        function downloadRepo() {
+            const repoUrl = getQueryParam('d');
+            if (repoUrl) {
+                const match = repoUrl.match(/^https:\/\/github\.com\/([^\/]+)\/([^\/]+)\/tree\/(.+)$/);
+                if (match) {
+                    const owner = match[1];
+                    const repo = match[2];
+                    const branch = match[3];
+                    const url = `https://github.com/${owner}/${repo}/archive/refs/heads/${branch}.zip`;
+                    window.location.href = url;
+                } else {
+                    alert('Invalid GitHub repository URL. Please use the format: https://github.com/user/repo/tree/branch');
+                }
+            }
+        }
+
+        window.onload = downloadRepo;
+    </script>
+</head>
+<body>
+    <h1>Downloading ...</h1>
+    <form action="index.html" method="get">
+        <label for="repoUrl">GitHub Repository URL:</label>
+        <input type="url" id="repoUrl" name="d" required placeholder="https://github.com/user/repo/tree/branch"><br><br>
+        <button type="submit">Download ZIP</button>
+    </form>
+</body>
+</html>
