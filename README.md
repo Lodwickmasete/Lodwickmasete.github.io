@@ -1,13 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terms of Use</title>
-
-</head>
-<body>
-
 <h1>Terms of Use</h1>
 
 <div class="accordion" data-section="introduction">
@@ -75,8 +65,5 @@
     <p>I reserve the right to modify these terms at any time. Changes will be updated on this repository, and continued use of the code signifies acceptance of any modifications.</p>
 </div>
 
-
-</body>
-</html>
 lodwickjmasete@gmail.com 
 masetelodwick@gmail.com 
