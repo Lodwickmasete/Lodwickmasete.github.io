@@ -4,57 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terms of Use</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 20px;
-        }
-        h1 {
-            color: #333;
-        }
-        .accordion {
-            background-color: #f1f1f1;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            padding: 15px;
-            margin: 5px 0;
-            cursor: pointer;
-            position: relative;
-            transition: background-color 0.3s ease;
-        }
-        .accordion:hover {
-            background-color: #e2e2e2;
-        }
-        .accordion .status {
-            width: 15px;
-            height: 15px;
-            border-radius: 50%;
-            border: 1px solid #333;
-            position: absolute;
-            top: 50%;
-            right: 20px;
-            transform: translateY(-50%);
-            background-color: transparent;
-            transition: background-color 0.3s ease;
-        }
-        .panel {
-            background-color: #f9f9f9;
-            border: 1px solid #ccc;
-            border-top: none;
-            border-radius: 0 0 5px 5px;
-            padding: 15px;
-            margin: 0;
-            display: none;
-            overflow: hidden;
-            transition: max-height 0.3s ease, padding 0.3s ease;
-            max-height: 0;
-        }
-        .panel.show {
-            display: block;
-            max-height: 500px; /* Adjust based on content length */
-        }
-    </style>
+
 </head>
 <body>
 
@@ -125,54 +75,6 @@
     <p>I reserve the right to modify these terms at any time. Changes will be updated on this repository, and continued use of the code signifies acceptance of any modifications.</p>
 </div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var acc = document.getElementsByClassName("accordion");
-
-        // Load read status from local storage
-        for (var i = 0; i < acc.length; i++) {
-            var section = acc[i].getAttribute('data-section');
-            var isRead = localStorage.getItem(section);
-
-            if (isRead) {
-                acc[i].querySelector('.status').style.backgroundColor = "black";
-                var panel = acc[i].nextElementSibling;
-                panel.style.display = "block";
-                panel.style.maxHeight = panel.scrollHeight + "px";
-                panel.classList.add("show");
-            }
-
-            acc[i].addEventListener("click", function() {
-                this.classList.toggle("active");
-                var panel = this.nextElementSibling;
-                var status = this.querySelector('.status');
-                var section = this.getAttribute('data-section');
-
-                if (panel.classList.contains("show")) {
-                    panel.style.maxHeight = 0;
-                    setTimeout(() => {
-                        panel.style.display = "none";
-                        panel.classList.remove("show");
-                    }, 300);
-                } else {
-                    panel.style.display = "block";
-                    setTimeout(() => {
-                        panel.style.maxHeight = panel.scrollHeight + "px";
-                        panel.classList.add("show");
-                    }, 10);
-                    localStorage.setItem(section, "read");
-                }
-
-                if (status.style.backgroundColor === "black") {
-                    status.style.backgroundColor = "transparent";
-                    localStorage.removeItem(section);
-                } else {
-                    status.style.backgroundColor = "black";
-                }
-            });
-        }
-    });
-</script>
 
 </body>
 </html>
