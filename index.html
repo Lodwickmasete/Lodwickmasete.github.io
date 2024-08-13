@@ -298,18 +298,28 @@
       <input type="checkbox" id="php-filter" checked>
       <span class="slider"></span>
     </label>
+
     <label for="php-filter">PHP</label>
+
+    <label class="switch">
+      <input type="checkbox" id="python-filter" checked>
+      <span class="slider"></span>
+    </label>
+    <label for="python-filter">PYTHON</label>
   </div>
   
   <ul id="project-list"></ul>
   
   <div id="updates">
+  <div class="update">
     <h2>Updates</h2>
     <p>
 Capturing moments and creating memories one click at a time.
 I am passionate about creating captivating visuals that tell a story. Please explore my work and feel free to reach out for collaboration opportunities. I look forward to hearing from you!
     </p>
-    <img src="./img/profile.png" alt="About me">
+    <img src="profile.jpg" alt="About me">
+    </div>
+    
   </div>
   
   <div id="projectModal" class="modal">
@@ -330,82 +340,52 @@ I am passionate about creating captivating visuals that tell a story. Please exp
 <script>
 const projects = [
 {
-  title: "Rating System",
-
+  title: "Python Maths Projects",
+  url: "https://Lodwickmasete.github.io/projects/python/maths.zip",
+  demoUrl : "#",
+  description: " A collection of python projects that include <br><b>factorial finder</b><br><b>factorial derivative</b><br><b>Solve for x (linear equation)</b> <br><b>square number lisitng</b><br><b>Number guessing game</b>  ",
+  size: "0.02 MB",
+  type: "PYTHON",
+  date: "2024-Apr-01"
+},
+{
+  title: "Rating System in PHP",
   url: "https://Lodwickmasete.github.io/projects/php/Rating System In PHP - Lodwick Masete.zip",
+  demoUrl : "#", 
   description: "Rating System in php that allows you to rate using stars and text",
   size: "0.07 MB",
   type: "PHP",
-  date: "2024-03-02"
+  date: "2024-Mar-02"
 },
 {
-  title: "Solve For X System",
+  title: "Solve For X System in php",
   url: "https://Lodwickmasete.github.io/projects/php/solve for x in PHP - Lodwick Masete.zip",
+  demoUrl : "#",
   description: "This System allows you to enter monomial,binomial and trinomial equations to solve for x.",
   size: "0.04 MB",
   type: "PHP",
-  date: "2024-02-04"
+  date: "2024-Feb-04"
 },
 {
-  title: "Web Text Editor",
+  title: "Web Text Editor in php",
   url: "https://Lodwickmasete.github.io/projects/php/web file manager - Lodwick Masete.zip",
+  demoUrl : "#",
   description: "Web File editor that has the ability to Create File,upload it and create a folder",
   size: "0.02 MB",
   type: "PHP",
-  date: "2024-01-03"
+  date: "2024-Jan-03"
 },
-  {
-    title: "Mokotla Soccer Betting System",
-    url: "https://Lodwickmasete.github.io",
-    description: "This Project allows you to add Teams and their odds,you are able check betslip when selecting. <p> But ,On Pro Verson  you are able to:</p>    <li>create betting account</li>       <li>See Live Matches and scores</li>          <li>Bet More Markets and bet live</li>    <li>Take Ealry Cashout offer</li>      <li>Settle Loss and win Tickets</li>          <li>etc...</li>   ",
-    size: "0.52 MB",
-    type: "PHP",
-    date: "unreleased"
-  },
 
-
-  {
-    title: "Chat Room System",
-    url: "https://Lodwickmasete.github.io",
-    description:"This system allows you to enter room name and then start chatting,when the room does not exist,it create a new room",
-    size: "0.52 MB",
-    type: "PHP",
-    date: "unreleased"
-  },
-
-  {
-    title: "An act PTY LTD",
-    url: "https://en-act.github.io",
-    description: "This website hold tutorials to enhace your vocabulary.",
-    size: "8.14 MB",
-   type: "HTML",
-    date: "unreleased"
-  }
- ,
- {
-   title: "365 Quotes (daly motuvation posts)",
-   url: "https://365-qoutes.github.io",
-   description: "An automatic Post uploader,It updates a motivation per day to encorage everyone.",
-   size: "1.35 MB",
-   type: "HTML",
-    date: "unreleased"
- },
- {
-   title: "House Of Vigro Deep SA",
-   url: "https://vigrodeepsa.github.io",
-   description: "A Html Website dedicated to vigro deep.",
-   size: "7.68 MB",
-   type: "HTML",
-    date: "unreleased"
- },
- {
-   title: "Vigro Deep SA Chatbot",
-   url: "https://vigrodeepsa.github.io/fullscreen.html",
-   description: "This is my first project. It is a simple HTML and CSS website.",
-   size: "0.20 MB",
-   type: "HTML",
-   date: "unreleased"
- }
+{
+  title: "365 Quotes (daly motivation posts) in html",
+  url: "https://Lodwickmasete.github.io/projects/php/365-quotes.zip",
+  demoUrl : "https://365-quotes.github.io",
+  //for demo check 365-quotes.github.io/index.html
+  description: "An automatic Post uploader,It updates a motivation per day to encorage everyone  <p> check out <a href='https://365-quotes.github.io/index.html'>https://365-quotes.github.io </a> for demo</p>.",
+  size: "1.35 MB",
+  type: "HTML",
+  date: "2024-Jan-02"
+},
 
 
 ];
@@ -422,6 +402,7 @@ const modalSize = document.getElementById("modal-size");
 const closeButton = document.getElementsByClassName("close")[0];
 const htmlFilter = document.getElementById("html-filter");
 const phpFilter = document.getElementById("php-filter");
+const pythonFilter = document.getElementById("python-filter");
 const updates = document.getElementById("updates");
 
 let currentProject = null;
@@ -445,7 +426,7 @@ function closeModal() {
 // Function to handle live demo
 function openLiveDemo() {
   if (currentProject) {
-    window.open(currentProject.url, '_blank');
+    window.open(currentProject.demoUrl, '_blank');
   }
 }
 
@@ -466,16 +447,17 @@ function filterProjects() {
   const searchTerm = searchInput.value.toLowerCase();
   const showHTML = htmlFilter.checked;
   const showPHP = phpFilter.checked;
+  const showPYTHON = pythonFilter.checked;
 
   const filteredProjects = projects.filter(project =>
     project.title.toLowerCase().includes(searchTerm) &&
-    ((project.type === 'HTML' && showHTML) || (project.type === 'PHP' && showPHP))
+    ((project.type === 'HTML' && showHTML) || (project.type === 'PHP' && showPHP) || (project.type === 'PYTHON' && showPYTHON))
   );
 
   projectList.innerHTML = "";
   updates.style.display = searchTerm ? 'none' : 'block';
 
-  const displayLimit = searchTerm ? filteredProjects.length : 5;
+  const displayLimit = searchTerm ? filteredProjects.length : 10;
   projectList.style.maxHeight = searchTerm ? 'none' : '400px';
 
   filteredProjects.slice(0, displayLimit).forEach(project => {
@@ -490,6 +472,7 @@ function filterProjects() {
 searchInput.addEventListener("input", filterProjects);
 htmlFilter.addEventListener("change", filterProjects);
 phpFilter.addEventListener("change", filterProjects);
+pythonFilter.addEventListener("change", filterProjects);
 closeButton.addEventListener("click", closeModal);
 
 // Initial display of projects
