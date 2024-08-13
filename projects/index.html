@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Manager</title>
+
+<link rel="stylesheet" href="./cdn/awe/css/all.min.css">
+    <style type="text/css">
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .file-manager {
+            width: 80%;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        
+        #breadcrumb {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        #breadcrumb a {
+            text-decoration: none;
+            color: #0066cc;
+        }
+        
+        #breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        #file-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        #file-list li {
+            padding: 20px;
+            border-bottom: 1px solid #ccc;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        
+        #file-list li:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .folder::before {
+            content: "\f07b"; /* Font Awesome folder icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            margin-right: 10px;
+            color: #333;
+        }
+        
+        .folder.empty::before {
+            content: "\f07c"; /* Font Awesome empty folder icon */
+            font-family: "Font Awesome 6 Free";
+                       background-color: #f0f0f0;
+            font-weight: 900;
+            margin-right: 10px;
+            color: #666;
+        }
+        
+        .file::before {
+            content: "\f15b"; /* Font Awesome file icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            margin-right: 10px;
+            color: #666;
+        }
+        
+        .link {
+            font-weight: 1000;
+            color: #0066cc;
+        }
+    </style>
+</head>
+<body>
+    <div class="file-manager">
+        <div id="breadcrumb"></div>
+        <ul id="file-list"></ul>
+    </div>
+
+    <script>
+        const fileSystemData = {
+            "Home": {
+                "PHP": {
+                    "Betway": {
+                        "file3.txt": "File 3 Content"
+                    },
+                    "CHAT app": {
+
+                    },
+                    "betway.zip": "File 1 Content",
+                    "Bot.zip": "File 2 Content"
+                },
+                "HTML": {
+                    "translator.zip": "File 4 Content"
+                },
+                "PYTHON": {
+                    "factoria.zip": "File 4 Content"
+                },
+                "readme.html": "File 5 Content"
+            }
+        };
+        
+        let currentPath = [];
+        let fileSystem = {};
+        
+        document.addEventListener("DOMContentLoaded", () => {
+            loadFileSystem(fileSystemData);
+            navigateToFolder([]);
+        });
+        
+        function loadFileSystem(data) {
+            fileSystem = data;
+        }
+        
+        function navigateToFolder(path) {
+            currentPath = path;
+            let currentFolder = getFolder(fileSystem, path);
+            displayBreadcrumb(path);
+            displayFiles(currentFolder);
+        }
+        
+        function getFolder(fileSystem, path) {
+            return path.reduce((fs, folderName) => fs[folderName], fileSystem);
+        }
+        
+        function displayBreadcrumb(path) {
+            const breadcrumb = document.getElementById("breadcrumb");
+            breadcrumb.innerHTML = '';
+            
+            let breadcrumbPath = '';
+            path.forEach((folder, index) => {
+                breadcrumbPath += folder + '/';
+                const breadcrumbItem = document.createElement("a");
+                breadcrumbItem.href = "#";
+                breadcrumbItem.textContent = folder;
+                breadcrumbItem.onclick = () => navigateToFolder(path.slice(0, index + 1));
+                breadcrumb.appendChild(breadcrumbItem);
+                if (index < path.length - 1) {
+                    breadcrumb.appendChild(document.createTextNode(' / '));
+                }
+            });
+            if (path.length === 0) {
+                breadcrumb.textContent = 'home';
+            }
+        }
+        
+        function displayFiles(folder) {
+            const fileList = document.getElementById("file-list");
+            fileList.innerHTML = '';
+
+            if (currentPath.length > 0) {
+                const backLink = document.createElement("li");
+                backLink.classList.add('link');
+                backLink.textContent = '.../';
+                backLink.addEventListener("click", () => navigateToFolder(currentPath.slice(0, -1)));
+                fileList.appendChild(backLink);
+            }
+            
+            Object.keys(folder).forEach(item => {
+                const li = document.createElement("li");
+                if (typeof folder[item] === 'object') {
+                    li.classList.add('folder');
+                    if (Object.keys(folder[item]).length === 0) 
+                    {
+                        li.innerHTML = 'empty folder';
+                        li.classList.add('empty');
+                    }
+                    li.innerHTML = item;
+                    li.addEventListener("click", () => navigateToFolder([...currentPath, item]));
+                } else {
+                    li.classList.add('file');
+                    li.innerHTML = item;
+                }
+                fileList.appendChild(li);
+            });
+        }
+    </script>
+</body>
+</html>
