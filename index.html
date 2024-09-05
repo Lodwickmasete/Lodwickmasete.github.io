@@ -227,47 +227,6 @@
       from { opacity: 1; }
       to { opacity: 0; }
     }
-
-    #updates {
-      margin-top: 40px;
-    }
-
-    #updates h2 {
-      font-size: 2em;
-      margin-bottom: 20px;
-    }
-
-
-
-    #updates img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin-bottom: 20px;
-    }
-    #updates {
-    padding: 20px;
-    background-color: #f4f4f4;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    }
-    
-    #updates h2 {
-    font-size: 24px;
-    color: #333;
-    }
-    
-    #updates p {
-    font-size: 16px;
-    line-height: 1.6;
-    color: #555;
-    }
-    
-    #updates img {
-    max-width: 100%;
-    border-radius: 5px;
-    margin-top: 20px;
-    }
   </style>
 <!DOCTYPE html>
 <html>
@@ -310,17 +269,66 @@
   
   <ul id="project-list"></ul>
   
-  <div id="updates">
+<div id="updates">
+<b>Change Logs</b>
   <div class="update">
-    <h2>Updates</h2>
-    <p>
-Capturing moments and creating memories one click at a time.
-I am passionate about creating captivating visuals that tell a story. Please explore my work and feel free to reach out for collaboration opportunities. I look forward to hearing from you!
-    </p>
-    <img src="profile.jpg" alt="About me">
+    <select id="projectSelect">
+      <option value="">Select a project</option>
+    </select>
+<p>
+    <div id="log-container">
+      <div id="change-log"></div>
     </div>
-    
+</p>
   </div>
+</div>
+
+<style>
+  #updates {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: ;
+
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column; /* Stack updates vertically */
+    align-items: center; /* Center updates horizontally */
+  }
+
+  .update {
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .profile-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+
+  .log-details {
+    display: flex;
+    flex-direction: column;
+  }
+
+  #change-log {
+    font-size: 14px;
+    color: #777;
+  }
+
+  .content {
+    margin-bottom: 15px;
+  }
+  .separator {
+    width: 100%;
+    height: 1px;
+    background-color: #ccc;
+    margin: 20px 0;
+  }
+</style>
   
   <div id="projectModal" class="modal">
     <div class="modal-content">
@@ -338,58 +346,80 @@ I am passionate about creating captivating visuals that tell a story. Please exp
 </body>
 </html>
 <script>
+
+
+
 const projects = [
-{
-  title: "Python Maths Projects",
-  url: "https://Lodwickmasete.github.io/projects/python/maths.zip",
-  demoUrl : "#",
-  description: " A collection of python projects that include <br><b>factorial finder</b><br><b>factorial derivative</b><br><b>Solve for x (linear equation)</b> <br><b>square number lisitng</b><br><b>Number guessing game</b>  ",
-  size: "0.02 MB",
-  type: "PYTHON",
-  date: "2024-Apr-01"
-},
-{
-  title: "Rating System in PHP",
-  url: "https://Lodwickmasete.github.io/projects/php/Rating System In PHP - Lodwick Masete.zip",
-  demoUrl : "#", 
-  description: "Rating System in php that allows you to rate using stars and text",
-  size: "0.07 MB",
-  type: "PHP",
-  date: "2024-Mar-02"
-},
-{
-  title: "Solve For X System in php",
-  url: "https://Lodwickmasete.github.io/projects/php/solve for x in PHP - Lodwick Masete.zip",
-  demoUrl : "#",
-  description: "This System allows you to enter monomial,binomial and trinomial equations to solve for x.",
-  size: "0.04 MB",
-  type: "PHP",
-  date: "2024-Feb-04"
-},
-{
-  title: "Web Text Editor in php",
-  url: "https://Lodwickmasete.github.io/projects/php/web file manager - Lodwick Masete.zip",
-  demoUrl : "#",
-  description: "Web File editor that has the ability to Create File,upload it and create a folder",
-  size: "0.02 MB",
-  type: "PHP",
-  date: "2024-Jan-03"
-},
+  {
+    title: "Python Maths Projects",
+    url: "https://Lodwickmasete.github.io/projects/python/maths.zip",
+    demoUrl: "#",
+    description: "A collection of python projects that include <br><b>factorial finder</b><br><b>factorial derivative</b><br><b>Solve for x (linear equation)</b> <br><b>square number listing</b><br><b>Number guessing game</b>",
+    size: "0.02 MB",
+    type: "PYTHON",
+    date: "2024-Apr-01",
+    logs: [
+      { date: "2024-04-03", message: "added <b>factotial.py</b>" },
+      { date: "2024-04-07", message: "added <b>factorial_derivative.py</b>" },
+      { date: "2024-04-13", message: "added <b>factorial_2.py</b>" },
+      { date: "2024-04-23", message: "added <b> solve_for_x.py</b>" },
+      { date: "2024-04-30", message: "added <b> square_counter.py</b>" }
 
-{
-  title: "365 Quotes (daly motivation posts) in html",
-  url: "https://Lodwickmasete.github.io/projects/php/365-quotes.zip",
-  demoUrl : "https://365-quotes.github.io",
-  //for demo check 365-quotes.github.io/index.html
-  description: "An automatic Post uploader,It updates a motivation per day to encorage everyone  <p> check out <a href='https://365-quotes.github.io/index.html'>https://365-quotes.github.io </a> for demo</p>.",
-  size: "1.35 MB",
-  type: "HTML",
-  date: "2024-Jan-02"
-},
-
-
+    ]
+  },
+  {
+    title: "Rating System in PHP",
+    url: "https://Lodwickmasete.github.io/projects/php/Rating System In PHP - Lodwick Masete.zip",
+    demoUrl: "#",
+    description: "Rating System in php that allows you to rate using stars and text",
+    size: "0.07 MB",
+    type: "PHP",
+    date: "2024-Mar-02",
+    logs: [
+      { date: "2024-03-20", message: "Fixed a bug in star rating display" },
+      { date: "2024-03-26", message: "Added text rating feature" }
+    ]
+  },
+  {
+    title: "Solve For X System in php",
+    url: "https://Lodwickmasete.github.io/projects/php/solve for x in PHP - Lodwick Masete.zip",
+    demoUrl: "#",
+    description: "This System allows you to enter monomial, binomial and trinomial equations to solve for x.",
+    size: "0.04 MB",
+    type: "PHP",
+    date: "2024-Feb-04",
+    logs: [
+      { date: "2024-02-11", message: "Improved equation parsing for more complex expressions" },
+      { date: "2024-02-18", message: "Added error handling for invalid input" }
+    ]
+  },
+  {
+    title: "Web Text Editor in php",
+    url: "https://Lodwickmasete.github.io/projects/php/web file manager - Lodwick Masete.zip",
+    demoUrl: "#",
+    description: "Web File editor that has the ability to Create File, upload it and create a folder",
+    size: "0.02 MB",
+    type: "PHP",
+    date: "2024-Jan-03",
+    logs: [
+      { date: "2024-01-19", message: "Added support for image uploading" },
+      { date: "2024-01-25", message: "Fixed a security vulnerability in file creation" }
+    ]
+  },
+  {
+    title: "365 Quotes (daly motivation posts) in html",
+    url: "https://Lodwickmasete.github.io/projects/php/365-quotes.zip",
+    demoUrl: "https://365-quotes.github.io",
+    description: "An automatic Post uploader, It updates a motivation per day to encourage everyone <p> check out <a href='https://365-quotes.github.io/index.html'>https://365-quotes.github.io </a> for demo</p>.",
+    size: "1.35 MB",
+    type: "HTML",
+    date: "2024-Jan-02",
+    logs: [
+      { date: "2024-01-14", message: "Added new quotes to the database" },
+      { date: "2024-07-18", message: "Improved quote randomization logic" }
+    ]
+  }
 ];
-
 // Get elements
 const searchInput = document.getElementById("search-input");
 const projectList = document.getElementById("project-list");
@@ -477,4 +507,29 @@ closeButton.addEventListener("click", closeModal);
 
 // Initial display of projects
 filterProjects();
+</script>
+
+<script type="text/javascript">
+
+const projectSelect = document.getElementById("projectSelect");
+const changeLog = document.getElementById("change-log");
+
+// Create options for the select element
+projects.forEach(project => {
+  const option = document.createElement("option");
+  option.value = project.title;
+  option.text = project.title;
+  projectSelect.add(option);
+});
+
+// Event listener for select change
+projectSelect.addEventListener("change", () => {
+  const selectedProject = projects.find(project => project.title === projectSelect.value);
+  if (selectedProject) {
+    changeLog.innerHTML = selectedProject.logs.map(log => `${log.date} - ${log.message}`).join("<br>");
+  } else {
+    changeLog.innerHTML = "";
+  }
+});
+
 </script>
