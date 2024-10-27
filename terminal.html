@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terminal-like System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #222;
+      color: #eee;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #terminal-input {
+      width: 100%;
+      height: 50px;
+      background-color: black;
+      color: white;
+      font-family: monospace;
+      padding: 10px;
+      resize: none;
+      margin-top: 10px;
+    }
+
+    #log, #helpline {
+      width: 100%;
+      max-width: 600px;
+      background-color: #333;
+      color: lightgreen;
+      font-family: monospace;
+      padding: 10px;
+      overflow-y: auto;
+      margin: 10px 0;
+      border-radius: 5px;
+    }
+
+    .command-output {
+      margin: 0;
+      white-space: pre-wrap;
+    }
+
+    #helpline {
+      background-color: #444;
+      color: #ccc;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h1>JavaScript Terminal</h1>
+  <div id="helpline">
+    <strong>Available Commands:</strong><br>
+    - <strong>help</strong>: Show available commands<br>
+    - <strong>echo [message]</strong>: Echo back the message<br>
+    - <strong>clear</strong>: Clear the command log<br>
+    - <strong>date</strong>: Show the current date and time<br>
+    - <strong>math [expression]</strong>: Evaluate a math expression (e.g., math 2+2)<br>
+    - <strong>download</strong>: Download the app<br>
+  </div>
+
+  <textarea id="terminal-input" placeholder="Type a command..."></textarea>
+  <div id="log"></div>
+
+  <script>
+    const terminalInput = document.getElementById('terminal-input');
+    const log = document.getElementById('log');
+
+    // Capture keydown event
+    terminalInput.addEventListener('keydown', function(event) {
+      if (event.key === 'Enter') {
+        event.preventDefault();  // Prevents a new line
+        processCommand();
+      }
+    });
+
+    function processCommand() {
+      const command = terminalInput.value.trim();  // Get the command from the textarea
+      let output = '';
+
+      // Determine the command and execute corresponding logic
+      if (command === 'help') {
+        output = 'Available Commands:\nhelp, echo [message], clear, date, math [expression], download';
+      } else if (command.startsWith('echo ')) {
+        output = command.slice(5);  // Echoes the message after 'echo '
+      } else if (command === 'clear') {
+        log.innerHTML = '';  // Clears the log
+        terminalInput.value = '';
+        return;
+      } else if (command === 'date') {
+        output = `Current Date and Time: ${new Date().toLocaleString()}`;
+      } else if (command.startsWith('math ')) {
+        const expression = command.slice(5);
+        try {
+          output = `Result: ${eval(expression)}`;
+        } catch (error) {
+          output = 'Invalid math expression.';
+        }
+      } else if (command === 'download') {
+        output = 'Downloading the app...';
+        const link = document.createElement('a');
+        link.href = 'https://lodwickmasete.github.io/app/lodwick.apk';
+        link.download = 'lodwick.apk';
+        link.click();
+      } else {
+        output = `Command not found: ${command}`;
+      }
+
+      // Append the result to the log
+      const commandOutput = document.createElement('p');
+      commandOutput.className = 'command-output';
+      commandOutput.textContent = `> ${command}\n${output}`;
+      log.appendChild(commandOutput);
+
+      // Scroll to the bottom of the log
+      log.scrollTop = log.scrollHeight;
+
+      // Clear the textarea for a new command
+      terminalInput.value = '';
+    }
+  </script>
+</body>
+</html>
