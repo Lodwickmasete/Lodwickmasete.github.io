@@ -3,6 +3,15 @@
 <head>
 <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+ <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+ <meta name="description" content="Lodwick masete projects , a php,python and java developer in South Africa.">
+ <meta name="author" content="Lodwick Masete">
+ <!-- Favicon -->
+ <link rel="icon" href="profile.jpg">
+ <link rel="shortcut icon" href="profile.jpg">
+ 
+ 
   <title>Lodwick Masete Projects</title>
   <style>
     body {
@@ -47,11 +56,11 @@
     }
 
     #search-input {
-      width: calc(100% - 40px); /* Adjust for padding */
+      width: calc(100% - 40px);
       padding: 10px;
       margin-bottom: 20px;
-      margin-top: 120px; /* Adjust for fixed header */
-      margin-left: 20px; /* Adjust for padding */
+      margin-top: 120px; 
+      margin-left: 20px; 
       box-sizing: border-box;
     }
 
@@ -227,6 +236,13 @@
       from { opacity: 1; }
       to { opacity: 0; }
     }
+    
+   .modal{ 
+    background-image:url("profile_2.jpg");
+    background-repeat:no-repeat;
+     background-position:center;  
+    }
+    
   </style>
 <!DOCTYPE html>
 <html>
@@ -238,13 +254,16 @@
     <h1>Masete Lodwick</h1>
     <p>Welcome to my project portfolio. Here you can find various projects that I have worked on. Feel free to explore and reach out through my social handles</p>
     <div class="social-handles">
-      <a href="https://www.facebook.com/lordwickMpro" target="_blank">Facebook</a>
-      <a href="https://github.com/lodwickmasete" target="_blank">GitHub</a>
+      <a href="https://www.facebook.com/lordwickMpro" target="_blank">Facebook</a> | 
+      <a href="https://github.com/lodwickmasete" target="_blank">GitHub</a> |
+      <a href="https://www.tiktok.com/@lodwickmasete" target="_blank">Tik Tok</a>
+
+
 
     </div>
   </header>
   
-  <input type="text" id="search-input" placeholder="Search for a project">
+  <input type="text" id="search-input" placeholder="Search for a project,Enter a Space To view all">
   
   <div id="filter">
     <label class="switch">
@@ -265,13 +284,40 @@
       <span class="slider"></span>
     </label>
     <label for="python-filter">PYTHON</label>
-  </div>
   
+  
+  
+
+  
+  
+  <div id="moreLangInputs">
+<label class="switch">
+<input type="checkbox" id="java-filter" checked>
+<span class="slider"></span>
+</label>
+<label for="java-filter">JAVA</label>
+  </div>
+  </div>
+<center>  <button onclick="moreLang()">more ...</button></center>
   <ul id="project-list"></ul>
   
 <div id="updates">
-<b>Change Logs</b>
+   <div id="getApk" class="update">
+   <b>Download Apk ( android )</b>
+   <br>
+      <img class="apk-logo" width="100px" src="profile.jpg">
+
+   <div class="apk">
+      <a class="apk-logo" href="./app/lodwick.apk" download="./app/Lodwick.apk">Download</a>
+
+   </div>
+   <br>
+   Use,download & clone projects sources offline on the App
+   </div>
+   
   <div class="update">
+  <b>Change Logs</b>
+  <br>
     <select id="projectSelect">
       <option value="">Select a project</option>
     </select>
@@ -281,9 +327,20 @@
     </div>
 </p>
   </div>
+  
+  <div class="update">
+  <b>Navigate</b><br>
+<a href="editor.html" >Terminal</a> | <a href="/" >file Manager</a> 
+  </div>
+  
+
 </div>
 
+
 <style>
+#moreLangInputs{
+display:none;
+}
   #updates {
     margin-top: 40px;
     padding: 20px;
@@ -307,6 +364,17 @@
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
+  }
+  .apk-logo {
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+   height:100px;
+  flex-direction: column; /* Align content in a column */
+  cursor: pointer;
+
+
+
   }
 
   .log-details {
@@ -350,6 +418,124 @@
 
 
 const projects = [
+{
+  title: "Java Maths Projects",
+  url: "#",
+  demoUrl: "https://github.com/Lodwickmasete/javamaths",
+  description: "A compilation of JAVA sources,Specifically for Mathematics",
+  size: "0.02 MB",
+  type: "JAVA",
+  date: "2024-Nov-04",
+  logs: [
+    { date: "2024-12-01", message: "modified <b>calculator.java</b>" }
+
+  ]
+},
+
+{
+  title: "google search engine in PHP pre-release v 0.1 - Lodwick Masete",
+  url: "https://Lodwickmasete.github.io/projects/php/google search engine in PHP pre-release v 0.1 - Lodwick Masete.zip",
+  demoUrl: "#",
+  description: "A google lkke search engine where you can type a search term and get results of it.this is pre release (<b>.sql</b> file is also included)",
+  size: "0.62 MB",
+  type: "PHP",
+  date: "2024-Nov-04",
+  logs: [
+    { date: "2024-11-04", message: "added <b>A related shortcuts on searched query</b>" }
+
+  ]
+},
+{
+  title: "filesystem in PHP pre-release v 0.1 - Lodwick Masete",
+  url: "https://Lodwickmasete.github.io/projects/php/fileSystem in PHP pre-release v 0.1 - Lodwick Masete.zip",
+  demoUrl: "#",
+  description: "open system files in read only mode.this is pre release (no <b>.sql</b> file included)",
+  size: "0.13 MB",
+  type: "PHP",
+  date: "2024-Oct-04",
+  logs: [
+    { date: "2024-10-01", message: "added <b>more files extensions</b>" }
+
+  ]
+},
+
+
+
+
+{
+  title: "construction management in PHP pre-release v 0.1 - Lodwick Masete",
+  url: "https://Lodwickmasete.github.io/projects/php/construction management in PHP pre-release v 0.1 - Lodwick Masete.zip",
+  demoUrl: "#",
+  description: "construction system,users can book and request an engineer.this is pre release (<b>.sql</b> file is also included)",
+  size: "2.03 MB",
+  type: "PHP",
+  date: "2024-Sep-04",
+  logs: [
+    { date: "2024-09-04", message: "added <b>few users</b>" }
+
+  ]
+},
+
+
+
+
+
+{
+  title: "chatroom app in PHP pre-release v 0.1 - Lodwick Masete",
+  url: "https://Lodwickmasete.github.io/projects/php/chatroom app in PHP pre-release v 0.1 - Lodwick Masete.zip",
+  demoUrl: "#",
+  description: "A chat room id based system ,users can chat by entering the same room id.this is pre release (<b>.sql</b> file is also included)",
+  size: "0.19 MB",
+  type: "PHP",
+  date: "2024-Aug-04",
+  logs: [
+    { date: "2024-08-04", message: "added <b>new data to the sql file</b>" }
+
+  ]
+},
+
+
+{
+  title: "aviator Game casino in PHP pre-release v 0.1",
+  url: "https://Lodwickmasete.github.io/projects/php/aviator Game casino in PHP pre-release  v  0.1 - Lodwick  Masete.zip",
+  demoUrl: "#",
+  description: "This is a php system where a plane is stumulated until a certain multilply.this is pre release (no <b>.sql</b> file included)",
+  size: "3.04 MB",
+  type: "PHP",
+  date: "2024-Jul-04",
+  logs: [
+    { date: "2024-07-02", message: "added <b>plane.gif</b>" }
+
+  ]
+},
+
+
+{
+  title: "news Website in PHP pre-release - Lodwick Masete.zip",
+  url: "https://Lodwickmasete.github.io/projects/php/news Website in PHP pre-release - Lodwick Masete.zip",
+  demoUrl: "#",
+  description: "A News Updates website.this is pre release (no <b>.sql</b> file included)",
+  size: "0.62 MB",
+  type: "PHP",
+  date: "2024-June-04",
+  logs: [
+    { date: "2024-06-04", message: "added <b>category table</b>" }
+
+  ]
+},
+{
+  title: "ChatBot in PHP v 1.0",
+  url: "https://Lodwickmasete.github.io/projects/php/chatbot in PHP - Lodwick Masete.zip",
+  demoUrl: "#",
+  description: "A  basic chatbot in PHP,with a little bit of  <b> NLP</b>.",
+  size: "0.2 MB",
+  type: "PHP",
+  date: "2024-May-02",
+  logs: [
+    { date: "2024-05-04", message: "added <b>basic trigers</b>" }
+
+  ]
+},
   {
     title: "Python Maths Projects",
     url: "https://Lodwickmasete.github.io/projects/python/maths.zip",
@@ -433,6 +619,7 @@ const closeButton = document.getElementsByClassName("close")[0];
 const htmlFilter = document.getElementById("html-filter");
 const phpFilter = document.getElementById("php-filter");
 const pythonFilter = document.getElementById("python-filter");
+const javaFilter = document.getElementById("java-filter");
 const updates = document.getElementById("updates");
 
 let currentProject = null;
@@ -478,10 +665,11 @@ function filterProjects() {
   const showHTML = htmlFilter.checked;
   const showPHP = phpFilter.checked;
   const showPYTHON = pythonFilter.checked;
+  const showJAVA = javaFilter.checked;
 
   const filteredProjects = projects.filter(project =>
     project.title.toLowerCase().includes(searchTerm) &&
-    ((project.type === 'HTML' && showHTML) || (project.type === 'PHP' && showPHP) || (project.type === 'PYTHON' && showPYTHON))
+    ((project.type === 'HTML' && showHTML) || (project.type === 'PHP' && showPHP) || (project.type === 'PYTHON' && showPYTHON) || (project.type === 'JAVA' && showJAVA))
   );
 
   projectList.innerHTML = "";
@@ -503,12 +691,17 @@ searchInput.addEventListener("input", filterProjects);
 htmlFilter.addEventListener("change", filterProjects);
 phpFilter.addEventListener("change", filterProjects);
 pythonFilter.addEventListener("change", filterProjects);
+javaFilter.addEventListener("change", filterProjects);
 closeButton.addEventListener("click", closeModal);
 
 // Initial display of projects
 filterProjects();
 </script>
-
+<script type="text/javascript">
+function moreLang(){
+document.getElementById("moreLangInputs").style.display ="block";
+}
+</script>
 <script type="text/javascript">
 
 const projectSelect = document.getElementById("projectSelect");
