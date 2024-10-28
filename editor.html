@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Developer Dashboard</title>
+<style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .block-snip {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: transform 0.2s;
+                        width: 50%;
+                        margin:10px;
+        }
+
+
+.block {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: transform 0.2s;
+
+}
+        .block:hover {
+            transform: scale(1.02);
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        .code-snippet {
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap; /* To preserve formatting */
+            
+        }
+
+        .terminal {
+            background-color: #222;
+            color: #00ff00;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            height: 150px;
+            overflow-y: auto; /* Enable scrolling */
+            resize: vertical; /* Allow user to resize */
+        }
+
+        .terminal textarea {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background-color: transparent;
+            color: #00ff00;
+            resize: none; /* Prevent textarea resizing */
+            font-family: 'Courier New', Courier, monospace;
+            padding: 5px;
+            outline: none;
+        }
+
+        .terminal textarea:focus {
+            outline: none; /* Remove default focus outline */
+        }
+    </style>
+</head>
+<body>
+
+        <div class="block-snip">
+            <h2>Command Snippets</h2>
+            <div class="code-snippet">open file manager<code> ~ <b>file_manger index</b></code></div>
+
+            <div class="code-snippet">home<code> ~ <b>index.html</b></code></div>
+            <div class="code-snippet">clear terminal<code> ~ <b>clear t</b></code></div>
+        </div>
+    <div class="container">
+
+
+
+        <div class="block" style="grid-column: span 3;">
+            <h2>Terminal</h2>
+            <div class="terminal" id="terminal">
+<textarea id="terminal-input" placeholder="Type a command..."></textarea>
+            </div>
+        </div>
+    </div>
+<script type="text/javascript">
+function exec() {
+const code = document.getElementById('terminal-input').value;
+
+// Update the preview area with the new code
+const codePreview = document.getElementById('code-preview');
+
+// Clear existing content
+
+</script>
+
+</body>
+</html>
