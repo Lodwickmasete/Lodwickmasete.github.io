@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Developer Desktop</title>
+
+    <title>wick.js - Web Interface Creation Kit</title>
     <style>
         /* Basic reset */
         * {
@@ -62,8 +63,8 @@
             text-decoration: none;
             display: block;
         }
-
-        .sidebar a:hover {
+        
+         .active {
             background-color: #444;
         }
 
@@ -72,7 +73,7 @@
             flex: 1;
             margin-top: 10px;
             margin-left: 0;
-            padding-top: 20px;
+            padding-top: 50px;
             padding-left: 20px;
             padding-right: 20px;
             overflow-y: auto;
@@ -83,11 +84,10 @@
         /* Additional top header in content with columns */
         .content-header {
             position: sticky;
-            top: 20px;
+            top: 2px;
             background-color: #fff;
             padding: 5px 10px; /* Reduced padding */
             border-bottom: 1px solid #ccc;
-
             display: flex;
             gap: 10px;
             z-index: 1;
@@ -102,14 +102,15 @@
         }
         
 
-        /* Columns within content header */
-        .content-header .column {
-            flex: 1;
-            font-size: 0.9em;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
+/* Columns within content header */
+.content-header .column {
+    flex: 1;
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    word-break: break-word; /* This will break long words to the next line */
+}
 
         /* Code styling */
         .content-header code {
@@ -146,11 +147,18 @@
             padding-top: 20px; /* Reduced padding */        
         }
         
+        /**
+        
         .lib-link:hover{
         text-decoration:underline;
         }
         #prev-link:hover{
         text-decoration:underline;        
+        }
+**/
+
+        .lib-link-prev,.lib-link-changelog,.lib-link-demo{
+opacity:0.2;
         }
     </style>
 </head>
@@ -166,60 +174,64 @@
     <!-- Sidebar -->
     <div class="sidebar" id="sidebar">
 
-        <a href="#overview">Overview</a>
-        <a href="#changeLog">Examples</a>
+        <a onclick="loadFile('./pages/overview','.html','overview')" href="#overview">Overview + </a>
+        <a onclick="loadFile('https://github.com/Lodwickmasete/wick.js/raw/main/wick','.js','repository')" href="#repository">Raw +</a>
+        <a onclick="loadFile('./pages/documentation','.html','documentation')" href="#documentation">Documantation +</a>
 
     </div>
 
     <!-- Main content area -->
     <div class="content" id="content" >
-        <div id="overview">
-        <!-- Content Header with columns -->
-        <div class="content-header">
-            <div class="column"><code>Section:</code> Overview</div>
-            <div class="column"><code>Status:</code> Active</div>
-        </div>
-        <br>
-        <div class="content-header">
-            <div class="column"><code>Last Updated:</code> 26 Oct 2024</div>
-            <div class="column"><code>Version:</code> 1.0.0.0</div>
-        </div>
-    <div class="text">    
+
+      <div id="overview"></div>
+      
+        
+
+     <div id="documentation">  
+
+     </div>
     
-    <div class="content-header">
+    <div id="repository" ></div>
     
-    <div class="column"><br><code>src</code></div>
 
     </div>
-<div class="content-header">
 
-    <div class="column"><br><code class="lib-link">https://lodwickmasete.github.io/lib/wick/wick-1.0.0.1.js</code></div>
-    <div class="column"><code>copy</code> 1.0.0.1</div>
-</div>
 
-        <div class="content-header">
-        
-            <div class="column"><br><code class="lib-link">https://lodwickmasete.github.io/lib/wick/wick-1.0.js</code></div>
-            <div class="column"><code>copy</code> 1.0</div>
-        </div>
-        
-        <div class="content-header">
-<div class="column" id="prev-link"><b class="lib-link">...previous</b> </div>
-<div class="column" id="changeLog-link"><b class="lib-link" id="prev-link">ChangeLog</b> </div>
-<div class="column" id="demo-link"><b class="lib-link" id="prev-link">Demostration</b> </div>
-        </div>
-        
-        </div>
- <p></p>
+<script>
+    loadFile('./pages/overview' ,'.html','overview');   
+function loadFile(fileName, fileExtension, elementId) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', fileName + fileExtension, true);
+  xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+      document.getElementById(elementId).innerHTML = xhr.responseText;
+      k(elementId);
+      if (elementId == "documentation") {
+        startDocumentation(); // Your existing function
+      }
 
-        
+    }
+  };
+  xhr.send();
+ }
 
-    </div>
-    
-    <div id="examples">
-#examples here
-    </div>
-</div>
+function k(elementId) {
+  var div = document.getElementById(elementId);
+  var link = document.querySelector(`a[href="#${elementId}"]`);
+
+  if (link.classList.contains('active')) {
+    link.classList.remove('active');
+    link.textContent = link.textContent.replace('-', '+');
+    div.innerHTML = ''; // Clear the content
+  } else {
+    link.classList.add('active');
+    link.textContent = link.textContent.replace('+', '-');
+  }
+}
+
+</script>
+
+
     <script>
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
@@ -227,6 +239,57 @@
             sidebar.classList.toggle('open');
             content.classList.toggle('shifted');
         }
+    </script>
+    
+    <script>
+    function startDocumentation(){
+
+    var acc = document.getElementsByClassName("accordion");
+    
+    // Load read status from local storage
+    for (var i = 0; i < acc.length; i++) {
+    var section = acc[i].getAttribute('data-section');
+    var isRead = localStorage.getItem(section);
+    
+    if (isRead) {
+    acc[i].querySelector('.status').style.backgroundColor = "black";
+    var panel = acc[i].nextElementSibling;
+    panel.style.display = "block";
+    panel.style.maxHeight = panel.scrollHeight + "px";
+    panel.classList.add("show");
+    }
+    
+    acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    var status = this.querySelector('.status');
+    var section = this.getAttribute('data-section');
+    
+    if (panel.classList.contains("show")) {
+    panel.style.maxHeight = 0;
+    setTimeout(() => {
+    panel.style.display = "none";
+    panel.classList.remove("show");
+    }, 300);
+    } else {
+    panel.style.display = "block";
+    setTimeout(() => {
+    panel.style.maxHeight = panel.scrollHeight + "px";
+    panel.classList.add("show");
+    }, 10);
+    localStorage.setItem(section, "read");
+    }
+    
+    if (status.style.backgroundColor === "black") {
+    status.style.backgroundColor = "transparent";
+    localStorage.removeItem(section);
+    } else {
+    status.style.backgroundColor = "black";
+    }
+    });
+    }
+    }
+
     </script>
 
 </body>
