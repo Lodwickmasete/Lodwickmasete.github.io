@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Terminal</title>
+    <link rel="stylesheet" href="./style.css">
+    <style type="text/css">
+        body {
+            font-family: monospace;
+            background-color: #1e1e1e;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .prompt {
+            margin: 0;
+        }
+        .comment {
+            color: #6a9955; /* Green for comments */
+        }
+        .command {
+            color: #569cd6; /* Blue for commands */
+        }
+        .pulse {
+            color: #ffffff; /* White for cursor */
+        }
+        .error {
+            color: red; /* White for cursor */
+        }
+        .input-area {
+            display: inline; /* Keep the input inline with the command */
+            outline: none; /* Remove outline */
+            color: white; /* White text color */
+        }
+    </style>
+</head>
+<body>
+
+<h1>Wick.js</h1>
+<div class="window" id="terminalWindow" onclick="focusInput()">
+    <div class="bar">
+        <div class="btn"></div>
+    </div>
+    <div class="body">
+        <pre id="terminalOutput"><div class="comment"># run $ help for commands:</div></pre>
+        <div class="prompt">$ <span id="inputArea" class="input-area" contenteditable="true" onkeydown="handleKeyDown(event)" onfocus="removeCursor()"> </span><span class="pulse" id="inputCursor">_</span></div>
+    </div>
+</div>
+
+<script  src="functions.js"></script>
+<script>
+const terminalOutput = document.getElementById('terminalOutput');
+const inputArea = document.getElementById('inputArea');
+const inputCursor = document.getElementById('inputCursor');
+
+const commandData = {
+    "ls": [{ "text": "file1.txt  file2.txt  folder1  folder2", "delay": 0 }],
+    "pwd": [{ "text": "/home/user", "delay": 0 }],
+    "uname -a": [{ "text": "Linux hostname 5.10.0-8-amd64 #1 SMP Debian 5.10.46-4 x86_64 GNU/Linux", "delay": 0 }],
+    "echo Hello World": [{ "text": "Hello World", "delay": 0 }],
+    "install wick.js": [
+        { "text": "Fetching package...", "delay": 1500, "function": "fetchPackage", "errorText": "Failed to fetch package" },
+        { "text": "Data found...", "delay": 0, "function": "download", "errorText": "No data found" },
+        { "text": "Installing...", "delay": 2000, "function": "install", "errorText": "Install failed" },
+        { "text": "Success", "delay": 0, "function": "" }
+    ]
+};
+
+
+function focusInput() {
+    inputArea.focus();
+}
+
+function handleKeyDown(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        const command = inputArea.textContent.trim();
+        if (command) {
+            terminalOutput.innerHTML += `<div class="prompt">$ <span class="command">${command}</span></div>`;
+
+            if (commandData.hasOwnProperty(command)) {
+                const outputs = commandData[command];
+                let cumulativeDelay = 0;
+
+                // Function to process each output step by step
+                const processOutput = (index) => {
+                    if (index >= outputs.length) return; // End if no more outputs
+                    
+                    const output = outputs[index];
+                    cumulativeDelay += output.delay;
+                    
+                    setTimeout(() => {
+                        // Check if a function is specified
+                        if (output.function) {
+                            const result = window[output.function](); // Call the function by name
+                            if (result === 0) { // If function fails, show error and stop
+                                terminalOutput.innerHTML += `<div class="prompt error">${output.errorText}</div>`;
+                                terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                                return;
+                            }
+                        }
+                        
+                        // Display the output text
+                        terminalOutput.innerHTML += `<div class="prompt">${output.text}</div>`;
+                        terminalOutput.scrollTop = terminalOutput.scrollHeight;
+
+                        // Process the next output in the sequence
+                        processOutput(index + 1);
+
+                    }, cumulativeDelay);
+                };
+
+                // Start processing from the first output
+                processOutput(0);
+            } else {
+                terminalOutput.innerHTML += `<div class="prompt error">Command not found: ${command}</div>`;
+            }
+
+            inputArea.textContent = '';
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+        }
+    }
+}
+
+// Show cursor when typing
+inputArea.addEventListener('input', () => {
+    inputCursor.style.display = 'inline';
+});
+
+// Hide cursor when input loses focus
+inputArea.addEventListener('blur', () => {
+    inputCursor.style.display = 'none';
+});
+</script>
+
+</body>
+</html>
