@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loader with Internet Check</title>
+<style type="text/css">
+  #loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    width: 120px;
+    height: 120px;
+    margin: -60px 0 0 -60px;
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    animation: spin 2s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .animate-bottom {
+    position: relative;
+    animation-name: animatebottom;
+    animation-duration: 1s;
+  }
+  
+  @keyframes animatebottom { 
+    from { bottom:-100px; opacity:0 } 
+    to { bottom:0px; opacity:1 }
+  }
+</style>
+</head>
+<body onload="checkInternetConnection()">
+
+<div id="loader"></div>
+
+<script>
+function getUrlParameter(name) {
+    // Extract the URL parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
+
+function checkInternetConnection() {
+    const redirectUrl = getUrlParameter('url') || 'https://lodwickmasete.github.io';
+
+    // Fetch a small file from a reliable online source
+    fetch('https://lodwickmasete.github.io/index.html', {mode: 'no-cors'})
+    .then(() => {
+        // If fetch is successful, redirect to the specified URL or default URL
+        window.location.href = redirectUrl;
+    })
+    .catch(() => {
+        // If fetch fails (no internet), redirect to the error page
+        window.location.href ="./error.html?url=" + redirectUrl ;
+    });
+}
+
+// Call the function to check internet connection when the script loads
+checkInternetConnection();
+</script>
+
+</body>
+</html>

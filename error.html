@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>No Internet Connection</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #f05050; /* Red for emphasis */
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 20px;
+        }
+
+        .refresh-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .refresh-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="offlineContainer"> 
+        <h1>No Internet Connection</h1>
+        <p>Please check your internet connection and try again.</p>
+        <button  class="refresh-button" onclick="retry()">Retry</button>
+                <button  class="refresh-button" onclick="local()">Local (offline)</button>
+    </div>
+
+    <div class="container" id="onlineContainer" style="display: none;">
+        <h1>Welcome!</h1>
+        <p>You are now online.</p>
+        </div>
+</body>
+<div id="test"></div>
+<script type="text/javascript">
+function getUrlParameter(name) {
+    // Extract the URL parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(name);
+}
+const redirectUrl = getUrlParameter('url') || 'https://lodwickmasete.github.io';
+/*var x = document.getElementById("test");
+x.innerHTML= redirectUrl;
+*/
+function retry(){
+
+
+    // Fetch a small file from a reliable online source
+    fetch('https://lodwickmasete.github.io/index.html', {mode: 'no-cors'})
+    .then(() => {
+        // If fetch is successful, redirect to the specified URL or default URL
+// If fetch fails (no internet), redirect to the error page
+  window.location.href = "./start.html?url=" + redirectUrl ;
+    })
+    .catch(() => {
+        // If fetch fails (no internet), redirect to the error page
+        window.location.href = '#';
+    });
+
+
+
+}
+
+function local(){
+        window.location.href = 'index.html';
+}
+</script>
+</html>
