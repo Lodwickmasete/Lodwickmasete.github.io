@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon - Betting Site</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            padding-top: 5px;
+            height: calc(140vh + 80px);
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* Fixed Header */
+        .top-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #1e293b;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            height: 50px;
+            padding: 0 15px;
+        }
+
+        .site-name {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+            cursor: pointer;
+        }
+
+        .balance-section {
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 3px 6px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .balance {
+            font-size: 14px;
+            font-weight: 500;
+            color: #cbd5e1;
+        }
+
+        .refresh-icon {
+            color: white;
+            background: #475569;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        /* Main Content */
+        #main {
+        width:100%;
+            padding: 60px 0px 0px 0px;
+            overflow-y: auto;
+            height: calc(100vh - 50px);
+        }
+
+        .maintenance-container {
+
+            margin: auto;
+            background: white;
+            border-radius: 1px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .maintenance-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .maintenance-header h1 {
+            font-size: 22px;
+            color: #1e293b;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .maintenance-header p {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Reduced countdown boxes */
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .countdown-item {
+            background-color: #f1f5f9;
+            padding: 10px;
+            border-radius: 6px;
+            min-width: 60px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+
+        .countdown-number {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1e293b;
+        }
+
+        .countdown-label {
+            font-size: 10px;
+            color: #64748b;
+            margin-top: 3px;
+        }
+
+        /* Team section with horizontal scroll */
+        .team-section {
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .team-section h2 {
+            font-size: 18px;
+            color: #1e293b;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        /* Horizontal scrollable container */
+        .team-scroll-container {
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: #cbd5e1 #f1f5f9;
+            padding: 10px 0;
+        }
+
+        .team-scroll-container::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .team-scroll-container::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+
+        .team-scroll-container::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        .team-grid {
+            display: flex;
+            gap: 20px;
+            padding: 5px 5px 15px 5px;
+            min-width: min-content;
+        }
+
+        .team-member {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            min-width: 180px;
+            max-width: 220px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .team-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 15px;
+            border: 3px solid #f0f2f5;
+        }
+
+        .team-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+
+        .team-role {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+
+        .team-bio {
+            font-size: 12px;
+            color: #64748b;
+            line-height: 1.5;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        /* Team member details modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #64748b;
+            line-height: 1;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-right: 20px;
+        }
+
+        .modal-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 3px solid #f0f2f5;
+        }
+
+        .modal-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+
+        .modal-role {
+            font-size: 16px;
+            color: #64748b;
+        }
+
+        .modal-bio {
+            color: #334155;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .modal-stats {
+            display: flex;
+            justify-content: space-between;
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .modal-contact {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .contact-btn {
+            padding: 8px 15px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .contact-email {
+            background: #16a34a;
+            color: white;
+            border: none;
+        }
+
+        .contact-email:hover {
+            background: #15803d;
+        }
+
+        .signup-form {
+            margin: 30px 0;
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .signup-form h2 {
+            font-size: 18px;
+            color: #1e293b;
+            margin-bottom: 10px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .signup-form p {
+            color: #64748b;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .form-control {
+            display: flex;
+            margin-top: 15px;
+        }
+
+        input[type="email"] {
+            flex-grow: 1;
+            padding: 10px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px 0 0 4px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        input[type="email"]:focus {
+            border-color: #16a34a;
+        }
+
+        button[type="submit"] {
+            background: #16a34a;
+            color: white;
+            border: none;
+            padding: 0 20px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background: #15803d;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 1px solid #e2e8f0;
+            margin-top: 20px;
+        }
+
+        .footer p {
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        /* Responsive Styles */
+        @media (min-width: 768px) {
+            .team-grid {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+                padding: 5px;
+                width: 100%;
+            }
+
+            .team-member {
+                min-width: auto;
+                max-width: none;
+            }
+
+            .team-scroll-container {
+                overflow-x: hidden;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .team-scroll-container {
+                margin: 0 -10px;
+                padding: 10px;
+            }
+
+            .team-grid {
+                padding-bottom: 5px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .maintenance-container {
+                margin: 0px;
+            }
+
+            .maintenance-header h1 {
+                font-size: 20px;
+            }
+
+            .countdown {
+                flex-wrap: wrap;
+            }
+
+            .countdown-item {
+                min-width: 60px;
+            }
+
+            .modal-content {
+                padding: 15px;
+            }
+
+            .modal-stats {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .stat-item {
+                width: 45%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fixed Header -->
+    <div class="top-bar">
+        <div class="site-name">Your Betting Site</div>
+        <div class="balance-section">
+            <div class="balance">Coming Soon</div>
+            <div class="refresh-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                    <path d="M21 3v5h-5"></path>
+                    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                    <path d="M3 21v-5h5"></path>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="main">
+        <div class="maintenance-container">
+            <div class="maintenance-header">
+                <h1>Site Under Maintenance</h1>
+                <p>We're working on building the ultimate betting experience. Our site will be live soon with competitive odds and exciting features.</p>
+            </div>
+
+            <div class="countdown">
+                <div class="countdown-item">
+                    <div class="countdown-number" id="days">00</div>
+                    <div class="countdown-label">Days</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="hours">00</div>
+                    <div class="countdown-label">Hours</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="minutes">00</div>
+                    <div class="countdown-label">Minutes</div>
+                </div>
+                <div class="countdown-item">
+                    <div class="countdown-number" id="seconds">00</div>
+                    <div class="countdown-label">Seconds</div>
+                </div>
+            </div>
+
+            <div class="team-section">
+                <h2>Meet Our Team</h2>
+                <div class="team-scroll-container">
+                    <div class="team-grid">
+                        <div class="team-member" data-member-id="1">
+                            <img src="/api/placeholder/100/100" alt="Team Member" class="team-image">
+                            <h3 class="team-name">John Smith</h3>
+                            <p class="team-role">Founder & CEO</p>
+                            <p class="team-bio">Betting industry expert with years of experience creating winning strategies.</p>
+                        </div>
+                        
+                        <div class="team-member" data-member-id="2">
+                            <img src="/api/placeholder/100/100" alt="Team Member" class="team-image">
+                            <h3 class="team-name">Sarah Johnson</h3>
+                            <p class="team-role">Head of Odds</p>
+                            <p class="team-bio">Sports analytics specialist who ensures the most competitive odds on the market.</p>
+                        </div>
+                        
+                        <div class="team-member" data-member-id="3">
+                            <img src="/api/placeholder/100/100" alt="Team Member" class="team-image">
+                            <h3 class="team-name">Michael Chen</h3>
+                            <p class="team-role">Customer Support</p>
+                            <p class="team-bio">Dedicated to providing the best user experience in online betting.</p>
+                        </div>
+                        
+                        <div class="team-member" data-member-id="4">
+                            <img src="/api/placeholder/100/100" alt="Team Member" class="team-image">
+                            <h3 class="team-name">Emma Wilson</h3>
+                            <p class="team-role">Head of Marketing</p>
+                            <p class="team-bio">Digital marketing expert specialized in sports betting audience engagement.</p>
+                        </div>
+                        
+                        <div class="team-member" data-member-id="5">
+                            <img src="/api/placeholder/100/100" alt="Team Member" class="team-image">
+                            <h3 class="team-name">David Lee</h3>
+                            <p class="team-role">Lead Developer</p>
+                            <p class="team-bio">Tech wizard ensuring our platform is fast, secure, and user-friendly.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="signup-form">
+                <h2>Get Early Access</h2>
+                <p>Be the first to know when we launch and receive exclusive welcome bonuses.</p>
+                <div class="form-control">
+                    <input type="email" placeholder="Enter your email address">
+                    <button type="submit">Notify Me</button>
+                </div>
+            </div>
+
+            <div class="footer">
+                <p>&copy; 2025 Your Betting Site. All rights reserved. | 18+ | Bet Responsibly</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Member Modal -->
+    <div class="modal-overlay" id="memberModal">
+        <div class="modal-content">
+            <button class="modal-close">&times;</button>
+            <div class="modal-header">
+                <img src="/api/placeholder/80/80" alt="Team Member" class="modal-image" id="modalImage">
+                <div>
+                    <h3 class="modal-name" id="modalName">Team Member</h3>
+                    <p class="modal-role" id="modalRole">Role</p>
+                </div>
+            </div>
+            <div class="modal-bio" id="modalBio">
+                Bio information will appear here.
+            </div>
+            <div class="modal-stats">
+                <div class="stat-item">
+                    <div class="stat-value" id="modalExperience">5+</div>
+                    <div class="stat-label">Years Exp.</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="modalSpecialty">Sports</div>
+                    <div class="stat-label">Specialty</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" id="modalProjects">20+</div>
+                    <div class="stat-label">Projects</div>
+                </div>
+            </div>
+            <div class="modal-contact">
+                <button class="contact-btn contact-email">Contact</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Countdown Timer
+        const countDownDate = new Date();
+        countDownDate.setDate(countDownDate.getDate() + 14); // Launch in 14 days
+        
+        const countdown = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
+            document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
+            document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+            
+            if (distance < 0) {
+                clearInterval(countdown);
+                document.getElementById("days").innerHTML = "00";
+                document.getElementById("hours").innerHTML = "00";
+                document.getElementById("minutes").innerHTML = "00";
+                document.getElementById("seconds").innerHTML = "00";
+            }
+        }, 1000);
+
+        // Team Member Modal Functionality
+        const modal = document.getElementById('memberModal');
+        const modalClose = document.querySelector('.modal-close');
+        const teamMembers = document.querySelectorAll('.team-member');
+        
+        // Team member data (in a real app, this would come from a database)
+        const teamData = [
+            {
+                id: 1,
+                name: "John Smith",
+                role: "Founder & CEO",
+                bio: "John has over 10 years of experience in the betting industry. He started his career as an odds compiler for a major bookmaker before founding several successful betting platforms. His expertise in risk management and understanding of betting markets has helped shape our company's vision and strategy. John holds a degree in Statistics and has a passion for sports analytics.",
+                experience: "10+",
+                specialty: "Risk Mgmt",
+                projects: "15+"
+            },
+            {
+                id: 2,
+                name: "Sarah Johnson",
+                role: "Head of Odds",
+                bio: "Sarah brings her expertise in statistical analysis and market trends to ensure our odds are competitive and fair. With a background in data science and previous experience at major betting exchanges, she leads our team of analysts in developing proprietary algorithms that balance user experience with business sustainability. Sarah is known for her accurate predictions and deep understanding of sports dynamics.",
+                experience: "8+",
+                specialty: "Analytics",
+                projects: "30+"
+            },
+            {
+                id: 3,
+                name: "Michael Chen",
+                role: "Customer Support",
+                bio: "Michael is dedicated to providing exceptional service to our users. With experience in both online gaming and fintech customer support roles, he understands the importance of quick resolutions and clear communication. He has built our support team from the ground up with a focus on responsiveness and user satisfaction. Michael is fluent in three languages and holds certifications in customer experience management.",
+                experience: "6+",
+                specialty: "Service",
+                projects: "12+"
+            },
+            {
+                id: 4,
+                name: "Emma Wilson",
+                role: "Head of Marketing",
+                bio: "Emma is a digital marketing strategist with specialized knowledge in sports betting audience engagement. Her innovative campaigns have consistently driven high conversion rates and user retention. Before joining our team, she worked with several top-tier betting companies, helping them expand into new markets. Emma has an MBA with a focus on digital marketing and is a certified Google Ads specialist.",
+                experience: "7+",
+                specialty: "Digital",
+                projects: "25+"
+            },
+            {
+                id: 5,
+                name: "David Lee",
+                role: "Lead Developer",
+                bio: "David is the technical genius behind our platform's seamless performance. With expertise in full-stack development and a background in cybersecurity, he ensures our site is not only user-friendly but also secure and reliable. David has previously developed betting platforms that handle millions of transactions daily. He holds a Master's in Computer Science and is constantly exploring new technologies to improve our user experience.",
+                experience: "9+",
+                specialty: "Full-stack",
+                projects: "40+"
+            }
+        ];
+        
+        // Open modal with member details
+        teamMembers.forEach(member => {
+            member.addEventListener('click', function() {
+                const memberId = parseInt(this.getAttribute('data-member-id'));
+                const memberData = teamData.find(m => m.id === memberId);
+                
+                if (memberData) {
+                    document.getElementById('modalName').textContent = memberData.name;
+                    document.getElementById('modalRole').textContent = memberData.role;
+                    document.getElementById('modalBio').textContent = memberData.bio;
+                    document.getElementById('modalExperience').textContent = memberData.experience;
+                    document.getElementById('modalSpecialty').textContent = memberData.specialty;
+                    document.getElementById('modalProjects').textContent = memberData.projects;
+                    // Update image if needed
+                    // document.getElementById('modalImage').src = memberData.image;
+                    
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden'; // Prevent scrolling
+                }
+            });
+        });
+        
+        // Close modal
+        modalClose.addEventListener('click', function() {
+            modal.classList.remove('active');
+            document.body.style.overflow = ''; // Re-enable scrolling
+        });
+        
+        // Close modal when clicking outside
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = ''; // Re-enable scrolling
+            }
+        });
+    </script>
+</body>
+</html>
