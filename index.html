@@ -1,728 +1,944 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- 
- <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
- <meta name="description" content="Lodwick masete projects , a php,python and java developer in South Africa.">
- <meta name="author" content="Lodwick Masete">
- <!-- Favicon -->
- <link rel="icon" href="profile.jpg">
- <link rel="shortcut icon" href="profile.jpg">
- 
- 
-  <title>Lodwick Masete Projects</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      padding-top: 120px; /* Offset for the fixed header */
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lodwick's (from South Africa)  Projects Webpage,Showing All projects and recent updates">
+    <meta name="keywords" content="LodwickMasete,lodwick,lodwickmasete,lodwick masete,july masete,july,masete,tlaishego,programmer,developer,south africa,coding,rsa,wick.js">
+    <meta name="author" content="LODWICK MASETE">
+    <link rel="icon" type="image/jpg" sizes="2304x3072" href="./img/lodwick.jpg">
+    <link rel="shortcut icon" href="./img/lodwick.jpg">   
+        
+    <title>Lodwick Masete - Portfolio</title>
+    <style>
+        /* Variables */
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #166088;
+            --accent: #47b8e0;
+            --light: #f5f5f5;
+            --dark: #333333;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
 
-    header {
-      text-align: center;
-      margin-bottom: 40px;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background: white;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      z-index: 1000;
-      padding: 20px 0;
-    }
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    header h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
-    }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+        }
 
-    header p {
-      font-size: 1.2em;
-      margin-bottom: 20px;
-    }
+        a {
+            text-decoration: none;
+            color: var(--secondary);
+            transition: all 0.3s ease;
+        }
 
-    header .social-handles {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-    }
+        a:hover {
+            color: var(--accent);
+        }
+        /* Fixed Header */
+        .header {
+                    color: white;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+        padding: 2rem 0;
+       background: linear-gradient(135deg, var(--primary), var(--secondary));
+        }
+        
+        /* Hide header on scroll down */
+        .header.hide {
+        opacity:0;
+        transform: translateY(-100%);
+        transition: opacity 0.5s ease, display 5s ease;
+        }
 
-    header .social-handles a {
-      text-decoration: none;
-      color: #007BFF;
-      font-size: 1.5em;
-    }
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
 
-    #search-input {
-      width: calc(100% - 40px);
-      padding: 10px;
-      margin-bottom: 20px;
-      margin-top: 120px; 
-      margin-left: 20px; 
-      box-sizing: border-box;
-    }
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+        }
 
-    #filter {
-      margin-bottom: 20px;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-    }
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
 
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 60px;
-      height: 34px;
-    }
+        .nav-links li {
+            margin-left: 2rem;
+        }
 
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
+        .nav-links a {
+            color: white;
+            font-weight: 500;
+            position: relative;
+        }
 
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      transition: .4s;
-      border-radius: 34px;
-    }
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: white;
+            transition: width 0.3s;
+        }
 
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 26px;
-      width: 26px;
-      left: 4px;
-      bottom: 4px;
-      background-color: white;
-      transition: .4s;
-      border-radius: 50%;
-    }
+        .nav-links a:hover:after {
+            width: 100%;
+        }
 
-    input:checked + .slider {
-      background-color: #007BFF;
-    }
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
 
-    input:checked + .slider:before {
-      transform: translateX(26px);
-    }
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
 
-    #project-list {
-      list-style-position: inside;
-      padding: 0;
-      max-height: 400px;
-      overflow-y: auto;
-      transition: max-height 0.5s;
-    }
+        /* Hero Section */
+.hero {
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 2rem;
+    position: relative;
+    overflow: hidden;
+}
 
-    #project-list li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px;
-      border-left: 4px solid #007BFF;
-      border-right: 4px solid #007BFF;
-      margin-bottom: 10px;
-      cursor: pointer;
-      transition: background-color 0.3s, transform 0.3s;
-      position: relative;
-    }
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('./img/lodwick.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(var(--image-blur, 0px));
+    transition: filter 0.3s;
+    z-index: -1;
+}
 
-    #project-list li:hover {
-      background-color: #f0f0f0;
-      transform: scale(1.02);
-    }
+.hero-content {
+    position: relative;
+    z-index: 1;
+    color: white;
+    filter: blur(var(--text-blur, 50px));
+    transition: filter 0.3s;
+}
 
-    #project-list li span {
-      margin-right: 10px;
-      font-weight: bold;
+        
+@media screen and (min-width: 678px) {
+    .hero {
+        margin-top: 6rem;
     }
+}
+        .hero-content {
+            max-width: 800px;
+            z-index: 1;
+        }
 
-    #project-list li small {
-      position: absolute;
-      bottom: 10px;
-      right: 20px;
-      font-size: 0.8em;
-      color: gray;
-      font-weight: normal;
-    }
-    #project-list li ff {
-      position: absolute;
-      bottom: 10px;
-      left: 20px;
-      font-size: 0.8em;
-      color: gray;
-      font-weight: normal;
-    }
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
 
-    /* Modal styles */
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1001;/*overlaying the header*/
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0, 0, 0, 0.5);
-      padding-top: 60px;
-      opacity: 0;
-      transition: opacity 0.5s ease-in-out;
-    }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: var(--dark);
+        }
 
-    .modal-content {
-      background-color: #fefefe;
-      margin: 5% auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-      max-width: 500px;
-      border-radius: 10px;
-      animation: fadeIn 0.5s;
-    }
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
 
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-    }
+        .cta-button:hover {
+            background-color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px var(--shadow);
+        }
 
-    .close:hover,
-    .close:focus {
-      color: black;
-      text-decoration: none;
-      cursor: pointer;
-    }
+        /* Projects Section */
+        .section {
+            padding: 5rem 2rem;
+        }
 
-    .modal-buttons {
-      display: flex;
-      justify-content: space-around;
-      margin-top: 20px;
-    }
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
 
-    .modal-buttons button {
-      padding: 10px 20px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      color: white;
-    }
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background-color: var(--accent);
+            margin: 0.5rem auto;
+        }
 
-    .live-demo {
-      background-color: #007BFF;
-    }
+        .projects-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
 
-    .download {
-      background-color: #28A745;
-    }
+        .project-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px var(--shadow);
+            transition: all 0.3s ease;
+        }
 
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px var(--shadow);
+        }
 
-    @keyframes fadeOut {
-      from { opacity: 1; }
-      to { opacity: 0; }
-    }
-    
-   .modal{ 
-    background-image:url("profile_2.jpg");
-    background-repeat:no-repeat;
-     background-position:center;  
-    }
-    
-  </style>
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Lodwick Masete freesourcecodes</title>
+        .project-image {
+            width: 100%;
+            height: 200px;
+            background-color: var(--primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.1);
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0.5rem 0;
+        }
+
+        .tag {
+            background-color: rgba(74, 111, 165, 0.1);
+            color: var(--primary);
+            font-size: 0.8rem;
+            padding: 0.2rem 0.8rem;
+            border-radius: 50px;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-desc {
+            margin-bottom: 1rem;
+            color: #666;
+        }
+
+        .project-links {
+            display: flex;
+        }
+
+        .project-link {
+            margin-right: 1rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .project-link svg {
+            margin-right: 0.3rem;
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Updates Section */
+        .updates-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .update-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px var(--shadow);
+            position: relative;
+        }
+
+        .update-date {
+            font-size: 0.9rem;
+            color: #888;
+            margin-bottom: 0.5rem;
+        }
+
+        .update-title {
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+
+        /* Theme Switcher */
+        .theme-switch {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px var(--shadow);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .theme-switch:hover {
+            background-color: var(--secondary);
+            transform: rotate(30deg);
+        }
+
+        /* Dark Theme */
+        .dark-theme {
+            --light: #222222;
+            --dark: #f5f5f5;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        .dark-theme .header {
+            background: linear-gradient(135deg, #2c3e50, #1a1a2e);
+        }
+
+        .dark-theme .project-card, 
+        .dark-theme .update-card, 
+        .dark-theme .contact-form {
+            background-color: #2d2d2d;
+        }
+
+        .dark-theme .tag {
+            background-color: rgba(71, 184, 224, 0.2);
+        }
+
+        .dark-theme .project-desc,
+        .dark-theme .update-date {
+            color: #bbb;
+        }
+
+        .dark-theme input, 
+        .dark-theme textarea {
+            background-color: #333;
+            border-color: #444;
+            color: white;
+        }
+
+        /* Filter Projects */
+        .filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .filter-btn {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 0.5rem 1.5rem;
+            margin: 0 0.5rem 1rem 0.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                position: absolute;
+                right: 0;
+                top: 70px;
+                background-color: var(--primary);
+                flex-direction: column;
+                width: 100%;
+                transition: transform 0.5s ease;
+                z-index: 100;
+                padding: 1rem 0;
+                display:none;
+            }
+
+            .nav-links.active {
+                transform: translateX(0);
+                display:block;
+            }
+
+            .nav-links li {
+                margin: 1rem 2rem;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .project-image {
+                height: 150px;
+            }
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .social-links li {
+            margin: 0 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--accent);
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        #detailed-about{
+        display:none;        
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Masete Lodwick</h1>
-    <p>Welcome to my project portfolio. Here you can find various projects that I have worked on. Feel free to explore and reach out through my social handles</p>
-    <div class="social-handles">
-      <a href="https://www.facebook.com/lordwickMpro" target="_blank">Facebook</a> | 
-      <a href="https://github.com/lodwickmasete" target="_blank">GitHub</a> |
-      <a href="https://www.tiktok.com/@lodwickmasete" target="_blank">Tik Tok</a>
+<p id="detailed-about">
+i'm Lodwick Masete (programmer) from:
+South Africa,Limpopo,Ga Sekororo,Maruleng,Madeira(village)
 
+i excell in:
+-SQL (still learning)
+-python (maths)
+-PHP
+-javascript
+-Java (still learning)
+-electronics (computer Hardwares & Robotics)
+-FL Studio (BeatMaker)
 
+my picture:
+https://lodwickmasete.github.io/img/lodwick.jpg
 
-    </div>
-  </header>
-  
-  <input type="text" id="search-input" placeholder="Search for a project,Enter a Space To view all">
-  
-  <div id="filter">
-    <label class="switch">
-      <input type="checkbox" id="html-filter" checked>
-      <span class="slider"></span>
-    </label>
-    <label for="html-filter">HTML</label>
-    
-    <label class="switch">
-      <input type="checkbox" id="php-filter" checked>
-      <span class="slider"></span>
-    </label>
-
-    <label for="php-filter">PHP</label>
-
-    <label class="switch">
-      <input type="checkbox" id="python-filter" checked>
-      <span class="slider"></span>
-    </label>
-    <label for="python-filter">PYTHON</label>
-  
-  
-  
-
-  
-  
-  <div id="moreLangInputs">
-<label class="switch">
-<input type="checkbox" id="java-filter" checked>
-<span class="slider"></span>
-</label>
-<label for="java-filter">JAVA</label>
-  </div>
-  </div>
-<center>  <button onclick="moreLang()">more ...</button></center>
-  <ul id="project-list"></ul>
-  
-<div id="updates">
-   <div id="getApk" class="update">
-   <b>Download Apk ( android )</b>
-   <br>
-      <img class="apk-logo" width="100px" src="profile.jpg">
-
-   <div class="apk">
-      <a class="apk-logo" href="./app/lodwick.apk" download="./app/Lodwick.apk">Download</a>
-
-   </div>
-   <br>
-   Use,download & clone projects sources offline on the App
-   </div>
-   
-  <div class="update">
-  <b>Change Logs</b>
-  <br>
-    <select id="projectSelect">
-      <option value="">Select a project</option>
-    </select>
-<p>
-    <div id="log-container">
-      <div id="change-log"></div>
-    </div>
 </p>
-  </div>
-  
-  <div class="update">
-  <b>Navigate</b><br>
-<a href="./lib/wick/html/index.html" >wick.js</a> | <a href="./terminal/index.html">wick Terminal</a> | <a href="start.html?url=editor.html" >file Manager</a> | <a href="./apps/index.html" >Apps</a> 
-  </div>
-  
+    <header class="header">
+        <div class="nav-container">
+            <a href="#" class="logo">Lodwick Masete</a>
+            <ul class="nav-links">
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#updates">Updates</a></li>
+                <li><a href="#footer">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </div>
+    </header>
 
+    <section class="hero" id="hero">
+<!--- https://lodwickmasete.github.io/img/lodwick.jpg   --->
+        <div class="hero-content" >
+            <h1>I'm <span class="highlight">Lodwick Masete</span></h1>
+            <p>A passionate & learning developer focused on creating elegant solutions to complex problems.</p>
+            <a href="#projects" class="cta-button">View My Work</a>
+        </div>
+    </section>
+
+    <section id="projects" class="section">
+        <h2 class="section-title">My Projects</h2>
+        
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+             <button class="filter-btn" data-filter="app">Mobile Apps</button>
+            <button class="filter-btn" data-filter="web">Web Development</button>         
+            <button class="filter-btn" data-filter="other">Other</button>
+        </div>
+        
+        <div class="projects-container">
+        
+        <div class="project-card" data-category="app">
+            <div class="project-image">
+                <img src="./img/quotes.png" alt="quotes app icon">
+            </div>
+            <div class="project-content">
+                <h3 class="project-title">Quotes</h3>
+                <div class="project-tags">
+                    <span class="tag">Java</span>
+                    <span class="tag">HTML</span>
+                    <span class="tag">CSS</span>
+                    <span class="tag">JavaScript</span>
+                </div>
+                <p class="project-desc">lightweight <b>Motivational quotes app </b> with 1000 quotes </p>
+        
+<div class="project-links">
+    <a href="https://lodwickmasete.github.io/apps/quotes.apk" class="project-link">
+        <img width="20px" src="./img/default_image.png" srcxmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        </img>
+      APK
+    </a>
+    <a href="https://github.com/Lodwickmasete/365-quotes" class="project-link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+        </svg>
+        GitHub
+    </a>
 </div>
+            </div>
+        </div>
+        
+        <!-- Project 4 -->
+            
+        <div class="project-card" data-category="app">
+            <div class="project-image">
+                <img src="./img/localhost-server-1.0.png" alt="localhost v 1.0">
+            </div>
+            <div class="project-content">
+                <h3 class="project-title">Localhost Sever</h3>
+                <div class="project-tags">
+                <span class="tag">Java</span>
+                <span class="tag">HTML</span>
+                <span class="tag">Js</span>
+                <span class="tag">CSS</span>
+                </div>
+                <p class="project-desc">
+A server that runs on localhost and any local addresses (127.0.0.1 and 0.0.0.0) with a specifed port
+                </p>
+                <div class="project-links">
+                    <a href="https://lodwickmasete.github.io/apps/localhost-server-1.0.apk" class="project-link">
+                        <img width="20px" src="./img/default_image.png" srcxmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
+                        </img>
+                      APK
+                    </a>
+                    <a href="https://github.com/Lodwickmasete/localhost-server" class="project-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                        </svg>
+                        GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+
+        <div class="project-card" data-category="web">
+            <div class="project-image">
+                <img src="./img/bank_system.jpg" alt="bank system icon">
+            </div>
+            <div class="project-content">
+                <h3 class="project-title">Wick Banking System</h3>
+                <div class="project-tags">
+                    <span class="tag">Python ,Flask</span>
+                    <span class="tag">Javascript</span>
+                    <span class="tag">HTML</span>
+                </div>
+                <p class="project-desc">This Is a Bank system in python(flask) ,users can login, deposit,widthraw ,request statement and send funds to existing bank accounts belonging to others</p>
+                <div class="project-links">
+                    <a href="https://github.com/Lodwickmasete/wick-banking-system" class="project-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 3 21 3 21 9"></polyline>
+                            <polyline points="9 21 3 21 3 15"></polyline>
+                            <line x1="21" y1="3" x2="14" y2="10"></line>
+                            <line x1="3" y1="21" x2="10" y2="14"></line>
+                        </svg>
+                        Live Demo
+                    </a>
+                    <a href="https://github.com/Lodwickmasete/wick-banking-system" class="project-link">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                        </svg>
+                        GitHub
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+            <!-- Project 1 -->
+            <div class="project-card" data-category="web">
+                <div class="project-image">
+                    <img src="./img/wick.js.png" alt="wick.js icon">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Wick Js</h3>
+                    <div class="project-tags">
+                        <span class="tag">HTML</span>
+                        <span class="tag">CSS</span>
+                        <span class="tag">JavaScript</span>
+                    </div>
+                    <p class="project-desc"><b>Web Interface Creation Kit </b> javascript for UI</p>
+
+                    <div class="project-links">
+                        <a href="https://lodwickmasete.github.io/lib/wick/html/index.html" class="project-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <polyline points="9 21 3 21 3 15"></polyline>
+                                <line x1="21" y1="3" x2="14" y2="10"></line>
+                                <line x1="3" y1="21" x2="10" y2="14"></line>
+                            </svg>
+                            Live Demo
+                        </a>
+                        <a href="https://github.com/Lodwickmasete/wick.js" class="project-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                            </svg>
+                            GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="project-card" data-category="web">
+                <div class="project-image">
+                    <img src="./img/webServer.jpg" alt="Web Server">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Web (server & File manger)</h3>
+                    <div class="project-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Javascript</span>
+                        <span class="tag">HTML</span>
+                    </div>
+                    <p class="project-desc">A basic file browser implemented using Flask, a Python web framework. It allows you to navigate through a directory structure on your server and download files directly from your browser.</p>
+                    <div class="project-links">
+                        <a href="https://github.com/Lodwickmasete/file-server" class="project-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <polyline points="9 21 3 21 3 15"></polyline>
+                                <line x1="21" y1="3" x2="14" y2="10"></line>
+                                <line x1="3" y1="21" x2="10" y2="14"></line>
+                            </svg>
+                            Live Demo
+                        </a>
+                        <a href="https://github.com/Lodwickmasete/file-server" class="project-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                            </svg>
+                            GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3 -->
+            <div class="project-card" data-category="other">
+                <div class="project-image">
+                    <img src="./img/sports-analysis.jpg" alt="Sports Analysis">
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Sports Analysis</h3>
+                    <div class="project-tags">
+                        <span class="tag">Python</span>
+                    </div>
+                    <p class="project-desc">
+    A script used predict Outcomes of a match given a dataset
+                    </p>
+                    <div class="project-links">
+                        <a href="https://github.com/Lodwickmasete/sports-analysis" class="project-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="15 3 21 3 21 9"></polyline>
+                                <polyline points="9 21 3 21 3 15"></polyline>
+                                <line x1="21" y1="3" x2="14" y2="10"></line>
+                                <line x1="3" y1="21" x2="10" y2="14"></line>
+                            </svg>
+                            Live Demo
+                        </a>
+                        <a href="https://github.com/Lodwickmasete/sports-analysis" class="project-link">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                            </svg>
+                            GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="updates" class="section">
+        <h2 class="section-title">Latest Updates</h2>
+        <div class="updates-container">
+            <!-- Update 1 -->
+            <div class="update-card">
+                <p class="update-date">February 24, 2025</p>
+                <h3 class="update-title">Betting Platform </h3>
+                <p>A sports Betting app Is Ready for <b>production</b> (Backend: PHP only)</p>
+            </div>
+            
+            <!-- Update 2 -->
+            <div class="update-card">
+                <p class="update-date">December 25, 2024</p>
+                <h3 class="update-title">Condolences Payments System</h3>
+                <p>
+                 Bulding A Payment System(condolences system) for my Local Communuty,Estimated Launch is 01 january 2026 .(Backend: SQL,PHP & PYTHON)
+                </p>
+            </div>
+            
+        </div>
+    </section>
+
+    
+    <footer class="footer" id="footer" >
+    <ul class="social-links">
+    <li>
+    <a href="https://github.com/lodwickmasete">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+    </svg>
+    </a>
+    </li>
+    <li>
+    <a href="https://www.linkedin.com/in/lodwick-tlaishego-4bbb9b350?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+    <rect x="2" y="9" width="4" height="12"></rect>
+    <circle cx="4" cy="4" r="2"></circle>
+    </svg>
+    </a>
+    </li>
+    <li>
+    <a href="https://x.com/Lodwickmasete">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+    </svg>
+    </a>
+    </li>
+    <li>
+    <a href="https://www.instagram.com/lodwickm_za?igsh=aHJxNjM3YjhyMjY0">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+    </svg>
+    </a>
+    </li>
+    </ul>
+    <p class="copyright">&copy; 2025 Lodwick Masete. All rights reserved.</p>
+    </footer>
 
 
-<style>
-#moreLangInputs{
-display:none;
-}
-  #updates {
-    margin-top: 40px;
-    padding: 20px;
-    background-color: ;
-
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column; /* Stack updates vertically */
-    align-items: center; /* Center updates horizontally */
-  }
-
-  .update {
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin-bottom: 20px;
-  }
-  .profile-image {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  .apk-logo {
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  margin: 20px;
-   height:100px;
-  flex-direction: column; /* Align content in a column */
-  cursor: pointer;
-
-
-
-  }
-
-  .log-details {
-    display: flex;
-    flex-direction: column;
-  }
-
-  #change-log {
-    font-size: 14px;
-    color: #777;
-  }
-
-  .content {
-    margin-bottom: 15px;
-  }
-  .separator {
-    width: 100%;
-    height: 1px;
-    background-color: #ccc;
-    margin: 20px 0;
-  }
-</style>
-  
-  <div id="projectModal" class="modal">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <h2 id="modal-title"></h2>
-      <p id="modal-description"></p>
-      <p id="modal-size"></p>
-      <p id="modal-lang"></p>
-      <div class="modal-buttons">
-        <button class="live-demo" onclick="openLiveDemo()">Live Demo</button>
-        <button class="download" onclick="downloadProject()">Download</button>
-      </div>
+    <!-- Theme Switcher -->
+    <div class="theme-switch" aria-label="Theme switcher">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
     </div>
-  </div>
+
 </body>
-</html>
+    <!-- JavaScript to handle interactive features -->
+<script type="text/javascript">
+
+// Header scroll behavior
+let lastScrollTop = 0;
+const header = document.querySelector('.header');
+let scrollTimer = null;
+
+// Handle scroll event
+window.addEventListener('scroll', function () {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+    // Determine scroll direction
+    if (scrollTop > lastScrollTop) {
+        // Scrolling down - hide header
+        header.classList.add('hide');
+
+    } else {  
+        // Scrolling up - show header
+        header.classList.remove('hide');
+    }
+
+    lastScrollTop = scrollTop;
+
+    // Clear previous timer
+    if (scrollTimer !== null) {
+        clearTimeout(scrollTimer);
+    }
+
+    // Set new timer to show header when scrolling stops
+    scrollTimer = setTimeout(function () {
+        header.classList.remove('hide');
+    }, 300); // delay 
+});
+
+// Mobile menu toggle
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
+
+hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+    hamburger.classList.toggle('toggle');
+});
+
+// Project filtering
+const filterBtns = document.querySelectorAll('.filter-btn');
+const projectCards = document.querySelectorAll('.project-card');
+
+filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        // Remove active class from all buttons
+        filterBtns.forEach(btn => btn.classList.remove('active'));
+        
+        // Add active class to clicked button
+        btn.classList.add('active');
+        
+        // Get filter value
+        const filterValue = btn.getAttribute('data-filter');
+        
+        // Filter projects
+        projectCards.forEach(card => {
+            if (filterValue === 'all') {
+                card.style.display = 'block';
+            } else if (card.getAttribute('data-category') === filterValue) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+});
+
+// Theme switcher
+const themeSwitch = document.querySelector('.theme-switch');
+const body = document.body;
+
+// Check if user has previously set a theme preference
+const currentTheme = localStorage.getItem('theme');
+if (currentTheme) {
+    body.classList.add(currentTheme);
+}
+
+themeSwitch.addEventListener('click', () => {
+    body.classList.toggle('dark-theme');
+    
+    // Save theme preference to localStorage
+    if (body.classList.contains('dark-theme')) {
+        localStorage.setItem('theme', 'dark-theme');
+    } else {
+        localStorage.removeItem('theme');
+    }
+});
+</script>
+
 <script>
 
-
-
-const projects = [
-{
-  title: "Java Maths Projects",
-  url: "#",
-  demoUrl: "https://github.com/Lodwickmasete/javamaths",
-  description: "A compilation of JAVA sources,Specifically for Mathematics",
-  size: "0.02 MB",
-  type: "JAVA",
-  date: "2024-Nov-04",
-  logs: [
-    { date: "2024-12-01", message: "modified <b>calculator.java</b>" }
-
-  ]
-},
-
-{
-  title: "google search engine in PHP pre-release v 0.1 - Lodwick Masete",
-  url: "https://Lodwickmasete.github.io/projects/php/google search engine in PHP pre-release v 0.1 - Lodwick Masete.zip",
-  demoUrl: "#",
-  description: "A google lkke search engine where you can type a search term and get results of it.this is pre release (<b>.sql</b> file is also included)",
-  size: "0.62 MB",
-  type: "PHP",
-  date: "2024-Nov-04",
-  logs: [
-    { date: "2024-11-04", message: "added <b>A related shortcuts on searched query</b>" }
-
-  ]
-},
-{
-  title: "filesystem in PHP pre-release v 0.1 - Lodwick Masete",
-  url: "https://Lodwickmasete.github.io/projects/php/fileSystem in PHP pre-release v 0.1 - Lodwick Masete.zip",
-  demoUrl: "#",
-  description: "open system files in read only mode.this is pre release (no <b>.sql</b> file included)",
-  size: "0.13 MB",
-  type: "PHP",
-  date: "2024-Oct-04",
-  logs: [
-    { date: "2024-10-01", message: "added <b>more files extensions</b>" }
-
-  ]
-},
-
-
-
-
-{
-  title: "construction management in PHP pre-release v 0.1 - Lodwick Masete",
-  url: "https://Lodwickmasete.github.io/projects/php/construction management in PHP pre-release v 0.1 - Lodwick Masete.zip",
-  demoUrl: "#",
-  description: "construction system,users can book and request an engineer.this is pre release (<b>.sql</b> file is also included)",
-  size: "2.03 MB",
-  type: "PHP",
-  date: "2024-Sep-04",
-  logs: [
-    { date: "2024-09-04", message: "added <b>few users</b>" }
-
-  ]
-},
-
-
-
-
-
-{
-  title: "chatroom app in PHP pre-release v 0.1 - Lodwick Masete",
-  url: "https://Lodwickmasete.github.io/projects/php/chatroom app in PHP pre-release v 0.1 - Lodwick Masete.zip",
-  demoUrl: "#",
-  description: "A chat room id based system ,users can chat by entering the same room id.this is pre release (<b>.sql</b> file is also included)",
-  size: "0.19 MB",
-  type: "PHP",
-  date: "2024-Aug-04",
-  logs: [
-    { date: "2024-08-04", message: "added <b>new data to the sql file</b>" }
-
-  ]
-},
-
-
-{
-  title: "aviator Game casino in PHP pre-release v 0.1",
-  url: "https://Lodwickmasete.github.io/projects/php/aviator Game casino in PHP pre-release  v  0.1 - Lodwick  Masete.zip",
-  demoUrl: "#",
-  description: "This is a php system where a plane is stumulated until a certain multilply.this is pre release (no <b>.sql</b> file included)",
-  size: "3.04 MB",
-  type: "PHP",
-  date: "2024-Jul-04",
-  logs: [
-    { date: "2024-07-02", message: "added <b>plane.gif</b>" }
-
-  ]
-},
-
-
-{
-  title: "news Website in PHP pre-release - Lodwick Masete.zip",
-  url: "https://Lodwickmasete.github.io/projects/php/news Website in PHP pre-release - Lodwick Masete.zip",
-  demoUrl: "#",
-  description: "A News Updates website.this is pre release (no <b>.sql</b> file included)",
-  size: "0.62 MB",
-  type: "PHP",
-  date: "2024-June-04",
-  logs: [
-    { date: "2024-06-04", message: "added <b>category table</b>" }
-
-  ]
-},
-{
-  title: "ChatBot in PHP v 1.0",
-  url: "https://Lodwickmasete.github.io/projects/php/chatbot in PHP - Lodwick Masete.zip",
-  demoUrl: "#",
-  description: "A  basic chatbot in PHP,with a little bit of  <b> NLP</b>.",
-  size: "0.2 MB",
-  type: "PHP",
-  date: "2024-May-02",
-  logs: [
-    { date: "2024-05-04", message: "added <b>basic trigers</b>" }
-
-  ]
-},
-  {
-    title: "Python Maths Projects",
-    url: "https://Lodwickmasete.github.io/projects/python/maths.zip",
-    demoUrl: "#",
-    description: "A collection of python projects that include <br><b>factorial finder</b><br><b>factorial derivative</b><br><b>Solve for x (linear equation)</b> <br><b>square number listing</b><br><b>Number guessing game</b>",
-    size: "0.02 MB",
-    type: "PYTHON",
-    date: "2024-Apr-01",
-    logs: [
-      { date: "2024-04-03", message: "added <b>factotial.py</b>" },
-      { date: "2024-04-07", message: "added <b>factorial_derivative.py</b>" },
-      { date: "2024-04-13", message: "added <b>factorial_2.py</b>" },
-      { date: "2024-04-23", message: "added <b> solve_for_x.py</b>" },
-      { date: "2024-04-30", message: "added <b> square_counter.py</b>" }
-
-    ]
-  },
-  {
-    title: "Rating System in PHP",
-    url: "https://Lodwickmasete.github.io/projects/php/Rating System In PHP - Lodwick Masete.zip",
-    demoUrl: "#",
-    description: "Rating System in php that allows you to rate using stars and text",
-    size: "0.07 MB",
-    type: "PHP",
-    date: "2024-Mar-02",
-    logs: [
-      { date: "2024-03-20", message: "Fixed a bug in star rating display" },
-      { date: "2024-03-26", message: "Added text rating feature" }
-    ]
-  },
-  {
-    title: "Solve For X System in php",
-    url: "https://Lodwickmasete.github.io/projects/php/solve for x in PHP - Lodwick Masete.zip",
-    demoUrl: "#",
-    description: "This System allows you to enter monomial, binomial and trinomial equations to solve for x.",
-    size: "0.04 MB",
-    type: "PHP",
-    date: "2024-Feb-04",
-    logs: [
-      { date: "2024-02-11", message: "Improved equation parsing for more complex expressions" },
-      { date: "2024-02-18", message: "Added error handling for invalid input" }
-    ]
-  },
-  {
-    title: "Web Text Editor in php",
-    url: "https://Lodwickmasete.github.io/projects/php/web file manager - Lodwick Masete.zip",
-    demoUrl: "#",
-    description: "Web File editor that has the ability to Create File, upload it and create a folder",
-    size: "0.02 MB",
-    type: "PHP",
-    date: "2024-Jan-03",
-    logs: [
-      { date: "2024-01-19", message: "Added support for image uploading" },
-      { date: "2024-01-25", message: "Fixed a security vulnerability in file creation" }
-    ]
-  },
-  {
-    title: "365 Quotes (daly motivation posts) in html",
-    url: "https://Lodwickmasete.github.io/projects/php/365-quotes.zip",
-    demoUrl: "https://365-quotes.github.io",
-    description: "An automatic Post uploader, It updates a motivation per day to encourage everyone <p> check out <a href='https://365-quotes.github.io/index.html'>https://365-quotes.github.io </a> for demo</p>.",
-    size: "1.35 MB",
-    type: "HTML",
-    date: "2024-Jan-02",
-    logs: [
-      { date: "2024-01-14", message: "Added new quotes to the database" },
-      { date: "2024-07-18", message: "Improved quote randomization logic" }
-    ]
-  }
-];
-// Get elements
-const searchInput = document.getElementById("search-input");
-const projectList = document.getElementById("project-list");
-const modal = document.getElementById("projectModal");
-const modalTitle = document.getElementById("modal-title");
-const modalDescription = document.getElementById("modal-description");
-const lang = document.getElementById("modal-lang");
-const modalSize = document.getElementById("modal-size");
-
-const closeButton = document.getElementsByClassName("close")[0];
-const htmlFilter = document.getElementById("html-filter");
-const phpFilter = document.getElementById("php-filter");
-const pythonFilter = document.getElementById("python-filter");
-const javaFilter = document.getElementById("java-filter");
-const updates = document.getElementById("updates");
-
-let currentProject = null;
-
-// Function to open the modal
-function openModal(project) {
-  currentProject = project;
-  modalTitle.textContent = project.title;
-  modalDescription.innerHTML = project.description;
-  modalSize.textContent = `Size: ${project.size}`;
-  modal.style.display = "block";
-  modal.style.opacity = 1;
-}
-
-// Function to close the modal
-function closeModal() {
-  modal.style.opacity = 0;
-  setTimeout(() => { modal.style.display = "none"; }, 500);
-}
-
-// Function to handle live demo
-function openLiveDemo() {
-  if (currentProject) {
-    window.open(currentProject.demoUrl, '_blank');
-  }
-}
-
-// Function to handle download
-function downloadProject() {
-  if (currentProject) {
-    const link = document.createElement('a');
-    link.href = currentProject.url;
-    link.download = currentProject.title;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  }
-}
-
-// Function to filter projects
-function filterProjects() {
-  const searchTerm = searchInput.value.toLowerCase();
-  const showHTML = htmlFilter.checked;
-  const showPHP = phpFilter.checked;
-  const showPYTHON = pythonFilter.checked;
-  const showJAVA = javaFilter.checked;
-
-  const filteredProjects = projects.filter(project =>
-    project.title.toLowerCase().includes(searchTerm) &&
-    ((project.type === 'HTML' && showHTML) || (project.type === 'PHP' && showPHP) || (project.type === 'PYTHON' && showPYTHON) || (project.type === 'JAVA' && showJAVA))
-  );
-
-  projectList.innerHTML = "";
-  updates.style.display = searchTerm ? 'none' : 'block';
-
-  const displayLimit = searchTerm ? filteredProjects.length : 10;
-  projectList.style.maxHeight = searchTerm ? 'none' : '400px';
-
-  filteredProjects.slice(0, displayLimit).forEach(project => {
-    const li = document.createElement("li");
-    li.innerHTML = `<span>${project.size} <ff><b>${project.type}</b></ff></span><a>${project.title}</a><small> ${project.date}</small>`;
-    li.addEventListener("click", () => openModal(project));
-    projectList.appendChild(li);
-  });
-}
-
-// Add event listeners
-searchInput.addEventListener("input", filterProjects);
-htmlFilter.addEventListener("change", filterProjects);
-phpFilter.addEventListener("change", filterProjects);
-pythonFilter.addEventListener("change", filterProjects);
-javaFilter.addEventListener("change", filterProjects);
-closeButton.addEventListener("click", closeModal);
-
-// Initial display of projects
-filterProjects();
+    const hero = document.querySelector('.hero');
+    
+    hero.addEventListener('click', (e) => {
+    // Check if the click target is not a text or a button
+    if (!e.target.closest('.hero-content')) {
+    // Apply blur to text and reset image blur
+    document.documentElement.style.setProperty('--image-blur', '0px');
+    document.documentElement.style.setProperty('--text-blur', '20px'); // Adjust text blur as needed
+    }
+    });
+    
+    window.addEventListener('scroll', () => {
+    const scrollPosition = window.scrollY;
+    const viewportHeight = window.innerHeight;
+    const maxBlur = 20;
+    const blurAmount = Math.min(maxBlur, (scrollPosition / viewportHeight) * maxBlur);
+    
+    // Apply dynamic blur to the image and keep the text clear
+    document.documentElement.style.setProperty('--image-blur', `${blurAmount}px`);
+    document.documentElement.style.setProperty('--text-blur', '0px');
+    });
 </script>
-<script type="text/javascript">
-function moreLang(){
-document.getElementById("moreLangInputs").style.display ="block";
-}
-</script>
-<script type="text/javascript">
-
-const projectSelect = document.getElementById("projectSelect");
-const changeLog = document.getElementById("change-log");
-
-// Create options for the select element
-projects.forEach(project => {
-  const option = document.createElement("option");
-  option.value = project.title;
-  option.text = project.title;
-  projectSelect.add(option);
-});
-
-// Event listener for select change
-projectSelect.addEventListener("change", () => {
-  const selectedProject = projects.find(project => project.title === projectSelect.value);
-  if (selectedProject) {
-    changeLog.innerHTML = selectedProject.logs.map(log => `${log.date} - ${log.message}`).join("<br>");
-  } else {
-    changeLog.innerHTML = "";
-  }
-});
-
-</script>
+</body>
+</html>
