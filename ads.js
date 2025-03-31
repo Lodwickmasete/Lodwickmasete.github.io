@@ -1,52 +1,21 @@
 // JSON data for ads
 const ads = [
     {
-        id: "ad1",
-        title: "Developer script works !",
-        description: "Created By Lodwick Masete.Share your feedback on WhatsApp",
+        id: "f47ac10b-58cc-4372-a567-0e02b2c3d479",
+        title: "Quotes App",
+        description: "Motivational quotes app with 1000 quotes",
         image: {
-            src: "lodwick.jpg",
-            alt: "creator"
+            src: "https://lodwickmasete.github.io/img/quotes.png",
+            alt: "Quotes App"
         },
         button: {
-            text: "WhatsApp",
-            link: "https://wa.me/27720261036?text=my%20feed%20back%20on%20the%20scores%20app%20is%20that"
+            text: "download",
+            link: "https://lodwickmasete.github.io/apps/quotes.apk"
 
         },
 
         bgColor: "#ffffff",
         buttonColor: "#4CAF50"
-    },
-    {
-        id: "ad2",
-        title: "Advertise Here",
-        description: "Advertise your products or services at low prices (R25)!",
-        image: {
-            src: "create_ads.jpg",
-            alt: "Make your ads"
-        },
-        button: {
-            text: "Advertise",
-            link: "https://wa.me/27720261036?text=i%20would%20like%20to%20advertise%20on%20the%20scores%20app"
-
-        },
-        bgColor: "#ffffff",
-        buttonColor: "#2196F3"
-    },
-    {
-        id: "ad3",
-        title: "Visit Website",
-        description: "For more APPS visit my <a href='https://lodwickmasete.github.io'> website</a>",
-        image: {
-            src: "website_cover.jpg",
-            alt: "https:lodwickmasete.github.io"
-        },
-        button: {
-            text: "Visit Website",
-            link: "https:lodwickmasete.github.io"
-        },
-        bgColor: "#ffffff",
-        buttonColor: "#FF9800"
     }
 ];
 
