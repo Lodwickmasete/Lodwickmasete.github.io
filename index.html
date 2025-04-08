@@ -90,11 +90,15 @@
     </header>
 
     <section class="hero" id="hero">
-<!--- https://lodwickmasete.github.io/img/lodwick.jpg   --->
+<!--- 
+css image will be displayed here
+https://lodwickmasete.github.io/img/lodwick.jpg 
+  --->
         <div class="hero-content" >
             <h1>I'm <span class="highlight">Lodwick Masete</span></h1>
             <p>A learning Developer, Programmer, and Tech Enthusiast passionate about building New solutions, exploring new technologies, and constantly improving skills through hands-on experience.</p>
             <a href="#projects" class="cta-button">View My Work</a>
+            <a href="https://lodwickmasete.github.io/assistant.html" class="cta-button">AI - Assistant</a>
         </div>
     </section>
 
@@ -609,6 +613,16 @@ const navLinks = document.querySelector('.nav-links');
 hamburger.addEventListener('click', () => {
     navLinks.classList.toggle('active');
     hamburger.classList.toggle('toggle');
+});
+
+// Smooth scroll for the "Learn More" button
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.querySelector(this.getAttribute('href')).scrollIntoView({
+            behavior: 'smooth'
+        });
+    });
 });
 
 // Project filtering

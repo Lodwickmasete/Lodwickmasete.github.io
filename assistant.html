@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lodwick Masete Portfolio Assistant Chatbot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .chat-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .chat-header {
+            background: #0066ff;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .chat-header-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .chat-header h3 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .bot-icon {
+            width: 30px;
+            height: 30px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #0066ff;
+            font-weight: bold;
+        }
+
+        .control-icons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .control-icon {
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+
+        .control-icon:hover {
+            opacity: 1;
+        }
+
+        .chat-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            scroll-behavior: smooth;
+        }
+
+        .chat-options {
+            padding: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            border-top: 1px solid #eaeaea;
+            transition: opacity 0.3s;
+        }
+
+        .chat-options.disabled {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        .option-button {
+            padding: 8px 15px;
+            background: #f0f7ff;
+            border: 1px solid #d0e3ff;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            color: #0066ff;
+        }
+
+        .option-button:hover {
+            background: #e0edff;
+            border-color: #0066ff;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid #eaeaea;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 1px solid #d0d0d0;
+            border-radius: 25px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .chat-input input:focus {
+            border-color: #0066ff;
+        }
+
+        .send-button {
+            width: 40px;
+            height: 40px;
+            background: #0066ff;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            margin-left: 10px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.2s;
+        }
+
+        .send-button:hover {
+            background: #0055dd;
+        }
+
+        .send-button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 12px 15px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.4;
+            word-wrap: break-word;
+        }
+
+        .bot-message {
+            background: #f0f0f0;
+            color: #333;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+
+        .user-message {
+            background: #0066ff;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+
+        .chat-bubble {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: #0066ff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+            z-index: 999;
+            transition: all 0.3s ease;
+        }
+        
+        .typing-indicator {
+            display: flex;
+            padding: 12px 15px;
+            background: #f0f0f0;
+            border-radius: 18px;
+            align-self: flex-start;
+            margin-top: 5px;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .typing-indicator span {
+            height: 8px;
+            width: 8px;
+            float: left;
+            margin: 0 1px;
+            background-color: #9E9EA1;
+            display: block;
+            border-radius: 50%;
+            opacity: 0.4;
+        }
+        
+        .typing-indicator span:nth-of-type(1) {
+            animation: 1s blink infinite 0.3333s;
+        }
+        
+        .typing-indicator span:nth-of-type(2) {
+            animation: 1s blink infinite 0.6666s;
+        }
+        
+        .typing-indicator span:nth-of-type(3) {
+            animation: 1s blink infinite 0.9999s;
+        }
+        
+        @keyframes blink {
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* Link styling */
+        .message a {
+            color: #0066ff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .message a:hover {
+            text-decoration: underline;
+        }
+
+        /* Code block styling */
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            margin: 10px 0;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1e1e1e;
+            padding: 5px 10px;
+            border-radius: 6px 6px 0 0;
+            color: #ccc;
+            font-size: 12px;
+        }
+
+        .copy-btn {
+            background: #0066ff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 3px 8px;
+            cursor: pointer;
+            font-size: 11px;
+            transition: background 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: #0055dd;
+        }
+
+        .copy-btn.copied {
+            background: #4CAF50;
+        }
+
+        .code-block {
+            position: relative;
+            margin: 10px 0;
+        }
+
+        @media (max-width: 768px) {
+            .message {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="chat-bubble" id="chat-bubble">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+    </div>
+     <h1>Created By <a style="text-decoration:none;" href="https://lodwickmasete.github.io"> Lodwick Masete</a></h1>
+
+    <div class="chat-container" id="chat-container" style="display: none;">
+        <div class="chat-header" id="chat-header">
+            <div class="chat-header-title">
+                <div class="bot-icon">L</div>
+                <h3>Lodwick  Assistant</h3>
+            </div>
+            <div class="control-icons">
+                <div class="control-icon" id="minimize-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        
+        <div class="chat-body" id="chat-body"></div>
+        
+        <div class="chat-options" id="chat-options"></div>
+        
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Type your message..." autocomplete="off" >
+            <button class="send-button" id="send-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Chat data
+const chatbotData = {
+    welcome: "Hello! I'm your developer assistant. How can I help you today?",
+    initialOptions: [
+        "Tell me about your projects",
+        "What technologies do you use?",
+        "How can I contact you?",
+        "Tell me about yourself"
+    ],
+    responses: {
+        "Tell me about your projects": {
+            text: "I've worked on several interesting projects including:",
+            options: [
+                "Wick Bank System",
+                "Sports Analyst",
+                "Other projects"
+            ]
+        },
+
+        "See live demo": {
+            text: "You can check out the live demo on <a href='https://lodwickmasete.github.io' target='_blank'>my website</a>. Feel free to explore all the features!",
+            options: [
+                "View source code",
+                "Back to projects",
+                "Contact me"
+            ]
+        },
+        "View source code": {
+            text: "The source code is available on my <a href='https://github.com/lodwickmasete' target='_blank'>GitHub</a>. I'd be happy to discuss any specific implementation details you're interested in.\n\nHere's how to clone a repository:\n```bash\ngit clone https://github.com/lodwickmasete/repository-name.git\ncd project\nnpm install\nnpm start\n```",
+            options: [
+                "See live demo",
+                "Back to projects",
+                "Contact me"
+            ]
+        },
+        "What technologies do you use?": {
+            text: "I work with a variety of modern technologies. Which area are you interested in learning about?",
+            options: [
+                "Frontend technologies",
+                "Backend technologies",
+                "Mobile development",
+                "DevOps & Cloud"
+            ]
+        },
+        "Frontend technologies": {
+            text: "For frontend development, I'm proficient in:\n- HTML5, CSS3, JavaScript (ES6+)\n- React.js, Vue.js\n- Responsive design principles\n- Web performance optimization",
+            options: [
+                "See frontend projects",
+                "Backend technologies",
+                "Back to main menu"
+            ]
+        },
+        "Backend technologies": {
+            text: "My backend expertise includes:\n- Node.js, Express, Python (Django, Flask)\n- PHP, Laravel, RESTful APIs, GraphQL\n- PostgreSQL, MongoDB, MySQL, Redis\n- Firebase\n\nExample Express route:\n```javascript\napp.get('/api/users', async (req, res) => {\n  try {\n    const users = await User.find().select('-password');\n    res.json(users);\n  } catch (err) {\n    console.error(err);\n    res.status(500).send('Server Error');\n  }\n});\n```",
+            options: [
+                "See backend projects",
+                "Frontend technologies",
+                "Back to main menu"
+            ]
+        },
+        "Mobile development": {
+            text: "For mobile applications, I work with:\n- React Native, Flutter\n- Native development (Swift for iOS, Kotlin for Android)\n- Mobile UI/UX best practices\n\nReact Native style example:\n```javascript\nconst styles = StyleSheet.create({\n  container: {\n    flex: 1,\n    padding: 20,\n    backgroundColor: '#fff'\n  },\n  title: {\n    fontSize: 24,\n    fontWeight: 'bold',\n    marginBottom: 20\n  }\n});\n```",
+            options: [
+                "See mobile projects",
+                "Other technologies",
+                "Back to main menu"
+            ]
+        },
+        "DevOps & Cloud": {
+            text: "For deployment and infrastructure, I work with:\n- AWS, Google Cloud\n- Docker, Kubernetes\n- CI/CD pipelines\n- Serverless architecture",
+            options: [
+                "Backend technologies",
+                "Mobile development",
+                "Back to main menu"
+            ]
+        },
+
+        "How can I contact you?": {
+            text: "I'd love to connect with you! Here are the best ways to reach me:",
+            options: [
+                "Email me",
+                "LinkedIn",
+                "GitHub",
+                "Other contact methods"
+            ]
+        },
+        "Email me": {
+            text: "You can email me at: <a href='mailto:lodwickjmasete@gmail.com'>lodwickjmasete@gmail.com</a>. I typically respond within 24 hours.",
+            options: [
+                "Schedule a call",
+                "Other contact methods",
+                "Back to main menu"
+            ]
+        },
+        "LinkedIn": {
+            text: "Let's connect on <a href='https://www.linkedin.com/in/lodwick-tlaishego-4bbb9b350' target='_blank'>LinkedIn</a>. I'm active there and open to networking opportunities.",
+            options: [
+                "Email me",
+                "GitHub",
+                "Back to main menu"
+            ]
+        },
+        "GitHub": {
+            text: "Check out my code on <a href='https://github.com/lodwickmasete' target='_blank'>GitHub</a>. Feel free to explore my repositories or open issues for discussion.\n\nHere's how to clone a repository:\n```bash\ngit clone https://github.com/lodwickmasete/repository-name.git\n```",
+            options: [
+                "View my projects",
+                "Contact me",
+                "Back to main menu"
+            ]
+        },
+        "Schedule a call": {
+            text: "For professional inquiries, we can schedule a call. Please email me at <a href='mailto:lodwickjmasete@gmail.com'>lodwickjmasete@gmail.com</a> with your availability and purpose of the call.",
+            options: [
+                "Email me",
+                "LinkedIn",
+                "Back to main menu"
+            ]
+        },
+
+        "Tell me about yourself": {
+            text: "I'm a passionate developer with 2 years of experience building web and mobile applications. I specialize in creating efficient, user-friendly solutions to complex problems. When I'm not coding, you can find me reading tech blogs or experimenting with FL Studio.",
+            options: [
+                "Professional experience",
+                "Education",
+                "Technical skills",
+                "Back to main menu"
+            ]
+        },
+        "Professional experience": {
+            text: "While I haven't worked at a traditional company yet, I've completed numerous freelance projects and personal initiatives that have given me practical development experience across various technologies.",
+            options: [
+                "Education",
+                "Technical skills",
+                "Back to main menu"
+            ]
+        },
+        "Education": {
+            text: "I completed grade 12 in 2024. Since then, I've been focused on self-education through online platforms like YouTube, where I continuously expand my knowledge of coding and programming.",
+            options: [
+                "Professional experience",
+                "Technical skills",
+                "Back to main menu"
+            ]
+        },
+        "Technical skills": {
+            text: "My core competencies include:\n- Full-stack web development\n- Mobile application development\n- Database design and optimization\n- API development and integration\n\nI'm also skilled in project management methodologies and agile development practices.",
+            options: [
+                "Professional experience",
+                "Education",
+                "Back to main menu"
+            ]
+        },
+
+        "Other projects": {
+            text: "Here are some additional projects I've worked on:",
+            options: [
+                "365 Quotes",
+                "Vigro Deep Website",
+                "Music Downloader",
+                "VPN Site",
+                "Back to main menu"
+            ]
+        },
+        "Back to projects": {
+            text: "Which project would you like to learn more about?",
+            options: [
+                "Wick Bank System",
+                "Sports Analyst",
+                "Other projects",
+                "Back to main menu"
+            ]
+        },
+        "Back to main menu": {
+            text: "What else would you like to know about?",
+            options: [
+                "Tell me about your projects",
+                "What technologies do you use?",
+                "How can I contact you?",
+                "Tell me about yourself"
+            ]
+        },
+        "Other contact methods": {
+            text: "Here are additional ways to connect with me:",
+            options: [
+                "Email me",
+                "LinkedIn",
+                "GitHub",
+                "Schedule a call",
+                "Back to main menu"
+            ]
+        },
+        "Other technologies": {
+            text: "Which technology stack interests you?",
+            options: [
+                "Frontend technologies",
+                "Backend technologies",
+                "Mobile development",
+                "DevOps & Cloud",
+                "Back to main menu"
+            ]
+        },
+        "Contact me": {
+            text: "I'd be happy to discuss my work or potential opportunities. How would you prefer to connect?",
+            options: [
+                "Email me",
+                "LinkedIn",
+                "GitHub",
+                "Back to projects"
+            ]
+        },
+
+        "See frontend projects": {
+            text: "Here are some of my frontend-focused projects:",
+            options: [
+                "365 Quotes",
+                "Vigro Deep Website",
+                "VPN Site",
+                "Back to technologies"
+            ]
+        },
+        "See backend projects": {
+            text: "Here are some backend-intensive projects I've worked on:",
+            options: [
+                "Wick Bank System",
+                "Sports Analyst",
+                "Back to technologies"
+            ]
+        },
+        "See mobile projects": {
+            text: "Here are my mobile development projects:",
+            options: [
+                "Quotes App",
+                "Live Scores App",
+                "Localhost Server",
+                "Sepedi AI",
+                "Back to technologies"
+            ]
+        },
+
+        "Wick Bank System": {
+            text: "The Wick Bank System is a comprehensive web-based banking simulation platform that allows users to:\n- Create and manage accounts\n- Perform transactions\n- View balance history\n\nBuilt with HTML, CSS, JavaScript, and Python (Flask), using .pkl for data storage.\n<a href='https://github.com/Lodwickmasete/wick-bank-system' target='_blank'>View repository</a>",
+            options: [
+                "See live demo",
+                "View source code",
+                "Back to projects"
+            ]
+        },
+        "Sports Analyst": {
+            text: "The Sports Analyst project provides real-time sports analytics featuring:\n- Live score tracking\n- Detailed match statistics\n- Data visualizations\n\nBuilt using Python for data processing.\n<a href='https://github.com/Lodwickmasete/sports-analysis' target='_blank'>View repository</a>",
+            options: [
+                "See live demo",
+                "View source code",
+                "Back to projects"
+            ]
+        },
+        "365 Quotes": {
+            text: "365 Quotes is a motivational application that delivers daily inspiration:\n- Web and mobile optimized\n- Offline functionality using localStorage\n- Clean, minimalist design\n\n<a href='https://365-quotes.github.io' target='_blank'>Visit website</a>",
+            options: [
+                "See live demo",
+                "View source code",
+                "Back to projects"
+            ]
+        },
+        "Vigro Deep Website": {
+            text: "An artist portfolio website featuring:\n- Music previews and downloads\n- Biography section\n- Responsive design\n- Performance optimized\n\n<a href='https://vigrodeepsa.github.io' target='_blank'>View website</a>",
+            options: [
+                "See live demo",
+                "View source code",
+                "Back to projects"
+            ]
+        },
+        "Music Downloader": {
+            text: "A web-based music downloader with:\n- Search functionality\n- Amapiano genre focus\n- AJAX implementation\n- GitHub Pages hosting",
+            options: [
+                "See live demo",
+                "View source code",
+                "Back to projects"
+            ]
+        },
+        "VPN Site": {
+            text: "A VPN service landing page featuring:\n- Service explanation\n- Configuration guides\n- Responsive design\n\n<a href='https://freenet-365.github.io' target='_blank'>View website</a>",
+            options: [
+                "See live demo",
+                "View source code",
+                "Back to main menu"
+            ]
+        },
+        "Quotes App": {
+            text: "An Android app featuring:\n- Daily inspirational quotes\n- Offline functionality\n- Local database storage\n- Built with Sketchware\n\n<a href='https://lodwickmasete.github.io/index.html#quotes-app' target='_blank'>View details</a>",
+            options: [
+                "See app screenshots",
+                "Back to projects"
+            ]
+        },
+        "Live Scores App": {
+            text: "A mobile sports app with:\n- Real-time football scores\n- Match summaries\n- Minimalist UI\n- Quick-loading design\n\n<a href='https://lodwickmasete.github.io/index.html#live-scores' target='_blank'>View details</a>",
+            options: [
+                "See app screenshots",
+                "Back to projects"
+            ]
+        },
+        "Localhost Server": {
+            text: "A mobile server simulation tool featuring:\n- Local hosting capabilities\n- HTML project testing\n- Offline development\n\n<a href='https://lodwickmasete.github.io/index.html#localhost-server' target='_blank'>View details</a>",
+            options: [
+                "View source code",
+                "Back to projects"
+            ]
+        },
+        "Sepedi AI": {
+            text: "An experimental chatbot with:\n- Sepedi language interface\n- Cultural context awareness\n- Local language promotion\n\n<a href='https://lodwickmasete.github.io/index.html#sepedi-ai' target='_blank'>Try it out</a>",
+            options: [
+                "See live demo",
+                "Back to projects"
+            ]
+        },
+        "See app screenshots": {
+            text: "You can view screenshots of my mobile applications on my <a href='https://lodwickmasete.github.io' target='_blank'>portfolio website</a>.",
+            options: [
+                "Back to projects",
+                "Contact me"
+            ]
+        }
+    },
+    fallback: "I'm not sure I understood that. Could you please rephrase or choose one of the options below?"
+};
+
+        // DOM Elements
+        const chatContainer = document.getElementById('chat-container');
+        const chatBubble = document.getElementById('chat-bubble');
+        const chatBody = document.getElementById('chat-body');
+        const chatOptions = document.getElementById('chat-options');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+        const minimizeBtn = document.getElementById('minimize-btn');
+        const chatHeader = document.getElementById('chat-header');
+
+        // State
+        let isChatOpen = false;
+        let isTyping = false;
+
+        // Functions
+        function toggleChat() {
+            if (isChatOpen) {
+                chatContainer.style.display = 'none';
+                chatBubble.style.display = 'flex';
+            } else {
+                chatContainer.style.display = 'flex';
+                chatBubble.style.display = 'none';
+                if (chatBody.children.length === 0) {
+                    // First time opening, show welcome message
+                    setTimeout(() => {
+                        addBotMessage(chatbotData.welcome);
+                        showOptions(chatbotData.initialOptions);
+                    }, 500);
+                }
+            }
+            isChatOpen = !isChatOpen;
+        }
+
+        function addBotMessage(text) {
+            isTyping = true;
+            disableOptions();
+            
+            // Add typing indicator
+            const typingIndicator = document.createElement('div');
+            typingIndicator.className = 'typing-indicator';
+            typingIndicator.innerHTML = '<span></span><span></span><span></span>';
+            chatBody.appendChild(typingIndicator);
+            
+            // Scroll to bottom
+            chatBody.scrollTop = chatBody.scrollHeight;
+            
+            // After a short delay, remove typing indicator and add the actual message
+            setTimeout(() => {
+                chatBody.removeChild(typingIndicator);
+                
+                const messageElement = document.createElement('div');
+                messageElement.className = 'message bot-message';
+                
+                // Process text for links and code blocks
+                const processedText = processMessageText(text);
+                messageElement.innerHTML = processedText;
+                
+                chatBody.appendChild(messageElement);
+                
+                // Add copy functionality to code blocks
+                addCopyButtons();
+                
+                // Scroll to the new message
+                chatBody.scrollTop = chatBody.scrollHeight;
+                
+                isTyping = false;
+                enableOptions();
+            }, 1000 + Math.random() * 1000); // Random delay for more natural feel
+        }
+function escapeHtml(html) {
+    return html
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function processMessageText(text) {
+    // Process code blocks
+    text = text.replace(/```(\w*)\n([\s\S]*?)\n```/g, function(match, lang, code) {
+        const escapedCode = escapeHtml(code);
+        return `<div class="code-block">
+                    <div class="code-header">${lang}<button class="copy-btn">Copy</button></div>
+                    <pre><code>${escapedCode}</code></pre>
+                </div>`;
+    });
+
+    // Process links
+    text = text.replace(/([^]+)([^)]+)/g, 
+        '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+
+    // Process line breaks
+    text = text.replace(/\n/g, '<br>');
+
+    return text;
+}
+
+        function addCopyButtons() {
+            document.querySelectorAll('.copy-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const codeBlock = e.target.closest('.code-block');
+                    const code = codeBlock.querySelector('code').textContent;
+                    
+                    navigator.clipboard.writeText(code).then(() => {
+                        button.textContent = 'Copied!';
+                        button.classList.add('copied');
+                        
+                        setTimeout(() => {
+                            button.textContent = 'Copy';
+                            button.classList.remove('copied');
+                        }, 2000);
+                    });
+                });
+            });
+        }
+
+        function addUserMessage(text) {
+            const messageElement = document.createElement('div');
+            messageElement.className = 'message user-message';
+            messageElement.textContent = text;
+            chatBody.appendChild(messageElement);
+            
+            // Scroll to the new message
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        function showOptions(options) {
+            // Clear previous options
+            chatOptions.innerHTML = '';
+            
+            // Add new options
+            options.forEach(option => {
+                const button = document.createElement('button');
+                button.className = 'option-button';
+                button.textContent = option;
+                button.addEventListener('click', () => handleOptionClick(option));
+                chatOptions.appendChild(button);
+            });
+        }
+
+        function disableOptions() {
+       //     chatOptions.style.display ='none';
+            chatOptions.classList.add('disabled');
+            sendBtn.disabled = true;
+        }
+
+        function enableOptions() {
+           // chatOptions.style.display ='';
+            chatOptions.classList.remove('disabled');
+            sendBtn.disabled = false;
+            //chatBody.scrollTop = chatBody.scrollHeight;
+        }
+
+        function handleOptionClick(option) {
+            if (isTyping) return;
+            
+            // Add the selected option as a user message
+            addUserMessage(option);
+            
+            // Process the response
+            processUserInput(option);
+        }
+
+        function processUserInput(text) {
+            disableOptions();
+            
+            // Check if we have a predefined response
+            if (chatbotData.responses[text]) {
+                const response = chatbotData.responses[text];
+                
+                // Add bot response after a short delay
+                setTimeout(() => {
+                    addBotMessage(response.text);
+                    
+                    // Show options if available
+                    if (response.options) {
+                        showOptions(response.options);
+                    } else {
+                        showOptions(chatbotData.initialOptions);
+                    }
+                }, 500);
+            } else {
+                // Fallback response for non-predefined inputs
+                setTimeout(() => {
+                    addBotMessage(chatbotData.fallback);
+                    showOptions(chatbotData.initialOptions);
+                }, 500);
+            }
+        }
+
+        function handleUserInputSubmit() {
+            const text = userInput.value.trim();
+            if (text && !isTyping) {
+                // Add user message
+                addUserMessage(text);
+                
+                // Process the input
+                processUserInput(text);
+                
+                // Clear input field
+                userInput.value = '';
+            }
+        }
+
+        // Event Listeners
+        chatBubble.addEventListener('click', toggleChat);
+        minimizeBtn.addEventListener('click', toggleChat);
+        chatHeader.addEventListener('click', (e) => {
+            // Only toggle if directly clicking the header (not its child elements)
+            if (e.target === chatHeader || e.target.classList.contains('chat-header-title') || e.target.tagName === 'H3') {
+                toggleChat();
+            }
+        });
+
+        sendBtn.addEventListener('click', handleUserInputSubmit);
+        userInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                handleUserInputSubmit();
+            }
+        });
+
+        // Initialize chat with welcome message if opened directly
+        if (window.location.hash === '#chat') {
+            toggleChat();
+        }
+    </script>
+</body>
+</html>
