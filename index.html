@@ -9,8 +9,6 @@
     <link rel="icon" type="image/jpg" sizes="2304x3072" href="./img/lodwick.jpg">
     <link rel="shortcut icon" href="./img/lodwick.jpg">   
     <link rel="stylesheet" href="css/portfolio.css">
-
-       
     <title>Lodwick Masete - portfolio | Developer, Electronics Maker & Amapiano Producer</title>
   
 <script type="application/ld+json">
@@ -71,23 +69,49 @@
 
 </head>
 <body>
+<style>
 
-    <header class="header">
-        <div class="nav-container">
-            <a href="#" class="logo">Lodwick Masete</a>
-            <ul class="nav-links">
+</style>
+<header class="header">
+    <div class="nav-container">
+        <a href="#" class="logo">
+            <span>Lodwick Masete</span>
+        </a>
+        
+        <button class="mobile-menu-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+        
+        <div class="nav-main">
+            <ul class="tabs">
+                <li class="active"><a href="#home">Home</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#updates">Updates</a></li>
                 <li><a href="#collage-gallery">Gallery</a></li>
-                <li><a href="#footer">Contact</a></li>
             </ul>
-            <div class="hamburger">
-                <div class="line1"></div>
-                <div class="line2"></div>
-                <div class="line3"></div>
+            
+            <div class="dropdown">
+                <button class="dropdown-toggle">
+                    <div class="dots-container">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                </button>
+                <div class="dropdown-menu">
+                    <a href="https://lodwickmasete.github.io/webt-to-apk/index.html" class="dropdown-item">Convert Website To Apk</a>
+                    <a href="#my-skills" class="dropdown-item">Skills</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="assistant.html" class="dropdown-item">Contact</a>               
+                </div>
             </div>
         </div>
-    </header>
+    </div>
+</header>
 
     <section class="hero" id="hero">
 <!--- 
@@ -114,6 +138,35 @@ https://lodwickmasete.github.io/img/lodwick.jpg
         </div>
         
         <div class="projects-container">
+        <div class="project-card" data-category="web">
+            <div class="project-image">
+                <img src="./img/web-to-apk.jpg" alt="website/html to apk icon">
+            </div>
+            <div class="project-content">
+                <h3 class="project-title">Website To Apk</h3>
+                <div class="project-tags">
+                    <span class="tag">firebase</span>
+                    <span class="tag">HTML</span>
+                    <span class="tag">CSS</span>
+                    <span class="tag">JavaScript</span>
+                </div>
+                <p class="project-desc">A <a href="./web-to-apk/">Free </a> Website/HTML/CSS/JS to APK <b> Online coverter  </b>( with free basic plans to premiun</b>) Try it.</p>
+
+        
+        <div class="project-links">
+            <a href="https://lodwickmasete.github.io/web-to-apk/index.html" class="project-link">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="15 3 21 3 21 9"></polyline>
+    <polyline points="9 21 3 21 3 15"></polyline>
+    <line x1="21" y1="3" x2="14" y2="10"></line>
+    <line x1="3" y1="21" x2="10" y2="14"></line>
+</svg>
+Convert My Website
+            </a>
+        
+        </div>
+            </div>
+        </div>
         
         <div class="project-card" data-category="app">
             <div class="project-image">
@@ -401,9 +454,10 @@ A server that runs on localhost and any local addresses (127.0.0.1 and 0.0.0.0) 
   <p id="about-me">
     Lodwick Masete is a South African software developer, electronics enthusiast, and Amapiano music producer. 
     He is known for creating custom web apps, working with open-source projects, and building innovative DIY tech solutions.
+    
     He is from Limpopo > Tzaneen > Maruleng > Madeira Village
-  
-  <ul>
+
+  <ul id="my-skills">
   I excel in:
   <li>SQL (still learning)</li>
   <li>Python </li>
@@ -572,59 +626,89 @@ A server that runs on localhost and any local addresses (127.0.0.1 and 0.0.0.0) 
     }
     });
     </script>
+<script>
+    // Toggle mobile menu
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navMain = document.querySelector('.nav-main');
+    
+    mobileMenuBtn.addEventListener('click', () => {
+        navMain.classList.toggle('open');
+    });
+    
+    // Toggle dropdown menu
+    const dropdownToggle = document.querySelector('.dropdown-toggle');
+    const dropdownMenu = document.querySelector('.dropdown-menu');
+    
+    dropdownToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdownMenu.classList.toggle('show');
+    });
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.dropdown')) {
+            dropdownMenu.classList.remove('show');
+        }
+    });
+    
+    // Hide header on scroll down
+    let lastScroll = 0;
+    let scrollTimeout;
+    const header = document.querySelector('.header');
+    
 
-<script type="text/javascript">
 
-// Header scroll behavior
-let lastScrollTop = 0;
-const header = document.querySelector('.header');
-let scrollTimer = null;
 
-// Handle scroll event
-window.addEventListener('scroll', function () {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-    // Determine scroll direction
-    if (scrollTop > lastScrollTop) {
-        // Scrolling down - hide header
+window.addEventListener('scroll', () => {
+    const currentScroll = window.pageYOffset;
+
+    clearTimeout(scrollTimeout); // Clear previous timeout
+
+    if (currentScroll <= 0) {
+        header.classList.remove('hide');
+    } else if (currentScroll > lastScroll && !header.classList.contains('hide')) {
+        // Scrolling down
         header.classList.add('hide');
-
-    } else {  
-        // Scrolling up - show header
+    } else if (currentScroll < lastScroll && header.classList.contains('hide')) {
+        // Scrolling up
         header.classList.remove('hide');
     }
 
-    lastScrollTop = scrollTop;
-
-    // Clear previous timer
-    if (scrollTimer !== null) {
-        clearTimeout(scrollTimer);
-    }
-
-    // Set new timer to show header when scrolling stops
-    scrollTimer = setTimeout(function () {
+    // If scroll stops for 200ms, show the header
+    scrollTimeout = setTimeout(() => {
         header.classList.remove('hide');
-    }, 300); // delay 
+    }, 200);
+
+    lastScroll = currentScroll;
 });
 
-// Mobile menu toggle
-const hamburger = document.querySelector('.hamburger');
-const navLinks = document.querySelector('.nav-links');
 
-hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('active');
-    hamburger.classList.toggle('toggle');
-});
 
-// Smooth scroll for the "Learn More" button
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    // Smooth scroll for the "Learn More" button
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute('href')).scrollIntoView({
-            behavior: 'smooth'
+    e.preventDefault();
+
+    document.querySelector(this.getAttribute('href')).scrollIntoView({
+    behavior: 'smooth'
+    });
+    });
+    });
+    
+    const navLinks = document.querySelectorAll('.tabs a, .dropdown-item');
+    navLinks.forEach(link => {
+       link.classList.remove('active');
+        link.addEventListener('click', () => {
+
+         
+                mobileMenuBtn.setAttribute('aria-expanded', 'false');
+
         });
     });
-});
+</script>
+<script type="text/javascript">
+
 
 // Project filtering
 const filterBtns = document.querySelectorAll('.filter-btn');
