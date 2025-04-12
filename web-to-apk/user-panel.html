@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web to APK Converter</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --danger: #f72585;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --border-radius: 8px;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 250px;
+            background: white;
+            box-shadow: var(--shadow);
+            padding: 20px 0;
+        }
+
+        .logo {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+        }
+
+        .logo h2 {
+            color: var(--primary);
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 5px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: var(--dark);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary);
+        }
+
+        .nav-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: var(--dark);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary);
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            opacity: 0.9;
+        }
+
+        /* Submission Cards */
+        .submissions-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+
+        .submission-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 20px;
+            transition: transform 0.3s;
+        }
+
+        .submission-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .app-name {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .status {
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-completed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .status-rejected {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .card-body p {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .card-body i {
+            margin-right: 8px;
+            color: var(--gray);
+            width: 16px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 15px;
+            gap: 10px;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 13px;
+        }
+
+        /* Login/Signup Page */
+        .auth-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 30px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .auth-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+        }
+
+        .auth-tab.active {
+            border-bottom-color: var(--primary);
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+        }
+
+        .alert {
+            padding: 10px 15px;
+            margin-bottom: 20px;
+            border-radius: var(--border-radius);
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .modal.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: var(--shadow);
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--gray);
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .details-row {
+            display: flex;
+            margin-bottom: 15px;
+        }
+
+        .details-label {
+            font-weight: 600;
+            min-width: 120px;
+            color: var(--gray);
+        }
+
+        .details-value {
+            flex: 1;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-top: 10px;
+        }
+
+        .features-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* New Submission Form */
+        .new-submission-form {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        .form-section h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .feature-item {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .feature-item:hover {
+            border-color: var(--primary);
+        }
+
+        .feature-item.selected {
+            background-color: rgba(67, 97, 238, 0.1);
+            border-color: var(--primary);
+        }
+
+        .feature-item h4 {
+            margin-bottom: 5px;
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+
+        .w-100 {
+            width: 100%;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt-3 {
+            margin-top: 15px;
+        }
+
+        .mb-3 {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Auth Section -->
+    <div id="authSection" class="auth-container">
+        <h2><i class="fas fa-lock"></i> Web to APK Converter</h2>
+        
+        <div class="auth-tabs">
+            <div class="auth-tab active" id="loginTab">Login</div>
+            <div class="auth-tab" id="registerTab">Register</div>
+        </div>
+        
+        <div id="authMessage" class="alert hidden"></div>
+        
+        <!-- Login Form -->
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="loginEmail">Email</label>
+                <input type="email" class="form-control" id="loginEmail" required>
+            </div>
+            <div class="form-group">
+                <label for="loginPassword">Password</label>
+                <input type="password" class="form-control" id="loginPassword" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">
+                <i class="fas fa-sign-in-alt"></i> Login
+            </button>
+        </form>
+        
+        <!-- Register Form (hidden initially) -->
+        <form id="registerForm" class="hidden">
+            <div class="form-group">
+                <label for="registerName">Full Name</label>
+                <input type="text" class="form-control" id="registerName" required>
+            </div>
+            <div class="form-group">
+                <label for="registerEmail">Email</label>
+                <input type="email" class="form-control" id="registerEmail" required>
+            </div>
+            <div class="form-group">
+                <label for="registerPassword">Password</label>
+                <input type="password" class="form-control" id="registerPassword" required>
+            </div>
+            <div class="form-group">
+                <label for="registerConfirmPassword">Confirm Password</label>
+                <input type="password" class="form-control" id="registerConfirmPassword" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">
+                <i class="fas fa-user-plus"></i> Register
+            </button>
+        </form>
+    </div>
+
+    <!-- User Panel (hidden initially) -->
+    <div id="userPanel" class="container hidden">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <h2><i class="fas fa-mobile-alt"></i> APK Converter</h2>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active" id="dashboardLink">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" id="newSubmissionLink">
+                        <i class="fas fa-plus-circle"></i> New Submission
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link" id="mySubmissionsLink">
+                        <i class="fas fa-list"></i> My Submissions
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <button id="logoutBtn" class="nav-link w-100 text-left">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Dashboard View -->
+            <div id="dashboardView">
+                <div class="header">
+                    <h1><i class="fas fa-tachometer-alt"></i> Dashboard</h1>
+                    <div class="user-info">
+                        <div class="user-avatar" id="userAvatar">U</div>
+                        <span id="userName">User</span>
+                    </div>
+                </div>
+
+                <div class="stats-container">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-value" id="totalSubmissions">0</div>
+                            <div class="stat-label">Total Submissions</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="pendingSubmissions">0</div>
+                            <div class="stat-label">Pending</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="completedSubmissions">0</div>
+                            <div class="stat-label">Completed</div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="mt-4"><i class="fas fa-history"></i> Recent Submissions</h2>
+                <div class="submissions-container" id="recentSubmissions">
+                    <div class="text-center" id="loadingMessage">
+                        <p><i class="fas fa-spinner fa-spin"></i> Loading submissions...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- My Submissions View -->
+            <div id="submissionsView" class="hidden">
+                <div class="header">
+                    <h1><i class="fas fa-list"></i> My Submissions</h1>
+                    <button class="btn btn-primary" id="newSubmissionBtn">
+                        <i class="fas fa-plus"></i> New Submission
+                    </button>
+                </div>
+
+                <div class="submissions-container" id="submissionsContainer">
+                    <!-- Submissions will be loaded here -->
+                </div>
+            </div>
+
+            <!-- New Submission View -->
+            <div id="newSubmissionView" class="hidden">
+                <div class="header">
+                    <h1><i class="fas fa-plus-circle"></i> New Submission</h1>
+                    <button class="btn btn-danger" id="cancelSubmissionBtn">
+                        <i class="fas fa-times"></i> Cancel
+                    </button>
+                </div>
+
+                <form id="newSubmissionForm" class="new-submission-form">
+                    <div class="form-section">
+                        <h3><i class="fas fa-info-circle"></i> Basic Information</h3>
+                        <div class="form-group">
+                            <label for="appName">App Name</label>
+                            <input type="text" class="form-control" id="appName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="websiteUrl">Website URL</label>
+                            <input type="url" class="form-control" id="websiteUrl" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="contactEmail">Contact Email</label>
+                            <input type="email" class="form-control" id="contactEmail" required>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3><i class="fas fa-cubes"></i> Features</h3>
+                        <div class="features-grid" id="featuresGrid">
+                            <!-- Features will be loaded here -->
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3><i class="fas fa-cog"></i> Configuration</h3>
+                        <div class="form-group">
+                            <label for="publishOption">Publish Option</label>
+                            <select class="form-control" id="publishOption" required>
+                                <option value="">Select an option</option>
+                                <option value="google">Google Play Store</option>
+                                <option value="apple">Apple App Store</option>
+                                <option value="both">Both Stores</option>
+                                <option value="self">Self Hosting</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="developerAccount">Do you have a developer account?</label>
+                            <select class="form-control" id="developerAccount" required>
+                                <option value="">Select an option</option>
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="timeline">Timeline</label>
+                            <select class="form-control" id="timeline" required>
+                                <option value="">Select an option</option>
+                                <option value="standard">Standard (2-3 weeks)</option>
+                                <option value="rush">Rush (custom timeline)</option>
+                            </select>
+                        </div>
+                        <div class="form-group hidden" id="customTimelineGroup">
+                            <label for="customTimeline">Custom Timeline (days)</label>
+                            <input type="number" class="form-control" id="customTimeline" min="1">
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3><i class="fas fa-file-invoice-dollar"></i> Summary</h3>
+                        <div class="form-group">
+                            <label>Selected Features</label>
+                            <div id="selectedFeaturesList"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Total Price</label>
+                            <div id="totalPrice">$0.00</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Submit
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- Submission Details Modal -->
+    <div id="submissionDetailsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="submissionDetailsModalTitle">
+                    <i class="fas fa-info-circle"></i> Submission Details
+                </h3>
+                <button class="close-btn" id="closeDetailsModal">&times;</button>
+            </div>
+            <div class="modal-body" id="submissionDetailsModalBody">
+                <!-- Details will be loaded here -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="closeDetailsModalBtn">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCF2OP-Klw12nOyK80qrEzq0qB-Ejmwbek",
+            authDomain: "web-to-apk-converter.firebaseapp.com",
+            databaseURL: "https://web-to-apk-converter-default-rtdb.firebaseio.com",
+            projectId: "web-to-apk-converter",
+            storageBucket: "web-to-apk-converter.firebasestorage.app",
+            messagingSenderId: "478871085916",
+            appId: "1:478871085916:web:b22739e5bad02e5cec5799",
+            measurementId: "G-WVPTC2CECX"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+
+        // DOM elements
+        const authSection = document.getElementById('authSection');
+        const userPanel = document.getElementById('userPanel');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const loginTab = document.getElementById('loginTab');
+        const registerTab = document.getElementById('registerTab');
+        const authMessage = document.getElementById('authMessage');
+        const logoutBtn = document.getElementById('logoutBtn');
+        
+        // User info elements
+        const userAvatar = document.getElementById('userAvatar');
+        const userName = document.getElementById('userName');
+        
+        // View elements
+        const dashboardView = document.getElementById('dashboardView');
+        const submissionsView = document.getElementById('submissionsView');
+        const newSubmissionView = document.getElementById('newSubmissionView');
+        
+        // Navigation links
+        const dashboardLink = document.getElementById('dashboardLink');
+        const newSubmissionLink = document.getElementById('newSubmissionLink');
+        const mySubmissionsLink = document.getElementById('mySubmissionsLink');
+        const newSubmissionBtn = document.getElementById('newSubmissionBtn');
+        const cancelSubmissionBtn = document.getElementById('cancelSubmissionBtn');
+        
+        // Submission elements
+        const submissionsContainer = document.getElementById('submissionsContainer');
+        const recentSubmissions = document.getElementById('recentSubmissions');
+        const loadingMessage = document.getElementById('loadingMessage');
+        
+        // Stats elements
+        const totalSubmissions = document.getElementById('totalSubmissions');
+        const pendingSubmissions = document.getElementById('pendingSubmissions');
+        const completedSubmissions = document.getElementById('completedSubmissions');
+        
+        // New submission form elements
+        const newSubmissionForm = document.getElementById('newSubmissionForm');
+        const featuresGrid = document.getElementById('featuresGrid');
+        const selectedFeaturesList = document.getElementById('selectedFeaturesList');
+        const totalPrice = document.getElementById('totalPrice');
+        const timelineSelect = document.getElementById('timeline');
+        const customTimelineGroup = document.getElementById('customTimelineGroup');
+        
+        // Modal elements
+        const submissionDetailsModal = document.getElementById('submissionDetailsModal');
+        const submissionDetailsModalTitle = document.getElementById('submissionDetailsModalTitle');
+        const submissionDetailsModalBody = document.getElementById('submissionDetailsModalBody');
+        const closeDetailsModal = document.getElementById('closeDetailsModal');
+        const closeDetailsModalBtn = document.getElementById('closeDetailsModalBtn');
+
+        // Available features with prices
+        const availableFeatures = [
+            { id: 'push_notifications', name: 'Push Notifications', price: 50, isCustom: false },
+            { id: 'in_app_purchases', name: 'In-App Purchases', price: 75, isCustom: false },
+            { id: 'social_login', name: 'Social Login', price: 40, isCustom: false },
+            { id: 'offline_support', name: 'Offline Support', price: 100, isCustom: false },
+            { id: 'custom_design', name: 'Custom Design', price: 150, isCustom: true },
+            { id: 'custom_feature', name: 'Custom Feature', price: 200, isCustom: true }
+        ];
+
+        // Current user data
+        let currentUser = null;
+        let userSubmissions = [];
+
+        // Initialize the app
+        function init() {
+            setupEventListeners();
+            renderFeatures();
+            checkAuthState();
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Auth tabs
+            loginTab.addEventListener('click', () => switchAuthTab('login'));
+            registerTab.addEventListener('click', () => switchAuthTab('register'));
+            
+            // Auth forms
+            loginForm.addEventListener('submit', handleLogin);
+            registerForm.addEventListener('submit', handleRegister);
+            logoutBtn.addEventListener('click', handleLogout);
+            
+            // Navigation
+            dashboardLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showView('dashboard');
+            });
+            
+            newSubmissionLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showView('newSubmission');
+            });
+            
+            mySubmissionsLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                showView('submissions');
+            });
+            
+            newSubmissionBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showView('newSubmission');
+            });
+            
+            cancelSubmissionBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                showView('dashboard');
+            });
+            
+            // Timeline selection
+            timelineSelect.addEventListener('change', (e) => {
+                if (e.target.value === 'rush') {
+                    customTimelineGroup.classList.remove('hidden');
+                } else {
+                    customTimelineGroup.classList.add('hidden');
+                }
+            });
+            
+            // New submission form
+            newSubmissionForm.addEventListener('submit', handleNewSubmission);
+            
+            // Modal close buttons
+            closeDetailsModal.addEventListener('click', () => {
+                submissionDetailsModal.classList.remove('show');
+            });
+            
+            closeDetailsModalBtn.addEventListener('click', () => {
+                submissionDetailsModal.classList.remove('show');
+            });
+            
+            // Close modal when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === submissionDetailsModal) {
+                    submissionDetailsModal.classList.remove('show');
+                }
+            });
+        }
+
+        // Check auth state
+        function checkAuthState() {
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    // User is signed in
+                    currentUser = user;
+                    authSection.classList.add('hidden');
+                    userPanel.classList.remove('hidden');
+                    loadUserData();
+                    loadSubmissions();
+                    updateUserInfo();
+                } else {
+                    // No user is signed in
+                    currentUser = null;
+                    authSection.classList.remove('hidden');
+                    userPanel.classList.add('hidden');
+                    switchAuthTab('login');
+                }
+            });
+        }
+
+        // Switch between login and register tabs
+        function switchAuthTab(tab) {
+            if (tab === 'login') {
+                loginTab.classList.add('active');
+                registerTab.classList.remove('active');
+                loginForm.classList.remove('hidden');
+                registerForm.classList.add('hidden');
+            } else {
+                loginTab.classList.remove('active');
+                registerTab.classList.add('active');
+                loginForm.classList.add('hidden');
+                registerForm.classList.remove('hidden');
+            }
+            authMessage.classList.add('hidden');
+        }
+
+        // Handle login
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            auth.signInWithEmailAndPassword(email, password)
+                .then(() => {
+                    // Login successful, auth state change will handle the rest
+                })
+                .catch((error) => {
+                    showAuthError(error.message);
+                });
+        }
+
+        // Handle register
+        function handleRegister(e) {
+            e.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+
+            if (password !== confirmPassword) {
+                showAuthError("Passwords don't match");
+                return;
+            }
+
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Save additional user data
+                    return database.ref('users/' + userCredential.user.uid).set({
+                        name: name,
+                        email: email,
+                        createdAt: firebase.database.ServerValue.TIMESTAMP
+                    });
+                })
+                .then(() => {
+                    showAuthMessage('Registration successful! Please login.', 'success');
+                    switchAuthTab('login');
+                    registerForm.reset();
+                })
+                .catch((error) => {
+                    showAuthError(error.message);
+                });
+        }
+
+        // Handle logout
+        function handleLogout() {
+            auth.signOut();
+        }
+
+        // Show auth error
+        function showAuthError(message) {
+            authMessage.textContent = message;
+            authMessage.className = 'alert alert-danger';
+            authMessage.classList.remove('hidden');
+        }
+
+        // Show auth message
+        function showAuthMessage(message, type) {
+            authMessage.textContent = message;
+            authMessage.className = `alert alert-${type}`;
+            authMessage.classList.remove('hidden');
+        }
+
+        // Update user info in the UI
+        function updateUserInfo() {
+            if (!currentUser) return;
+            
+            // Get the first letter of the email for the avatar
+            const letter = currentUser.email.charAt(0).toUpperCase();
+            userAvatar.textContent = letter;
+            
+            // Try to get the user's name
+            database.ref('users/' + currentUser.uid).once('value')
+                .then((snapshot) => {
+                    const userData = snapshot.val();
+                    if (userData && userData.name) {
+                        userName.textContent = userData.name;
+                    } else {
+                        userName.textContent = currentUser.email;
+                    }
+                });
+        }
+
+        // Load user data
+        function loadUserData() {
+            if (!currentUser) return;
+            
+            database.ref('users/' + currentUser.uid).on('value', (snapshot) => {
+                const userData = snapshot.val();
+                if (userData) {
+                    // Update user info if needed
+                }
+            });
+        }
+
+        // Load user submissions
+        function loadSubmissions() {
+            if (!currentUser) return;
+            
+            database.ref('submissions').orderByChild('userId').equalTo(currentUser.uid).on('value', (snapshot) => {
+                const submissions = snapshot.val();
+                userSubmissions = [];
+                submissionsContainer.innerHTML = '';
+                recentSubmissions.innerHTML = '';
+                
+                if (submissions) {
+                    loadingMessage.classList.add('hidden');
+                    
+                    // Convert to array and sort by timestamp
+                    const submissionsArray = Object.keys(submissions).map(submissionId => {
+                        return { id: submissionId, ...submissions[submissionId] };
+                    }).sort((a, b) => b.timestamp - a.timestamp);
+                    
+                    userSubmissions = submissionsArray;
+                    
+                    // Update stats
+                    updateStats(submissionsArray);
+                    
+                    // Display all submissions
+                    submissionsArray.forEach(submission => {
+                        createSubmissionCard(submission, submissionsContainer);
+                    });
+                    
+                    // Display recent submissions (first 3)
+                    const recent = submissionsArray.slice(0, 3);
+                    if (recent.length > 0) {
+                        recent.forEach(submission => {
+                            createSubmissionCard(submission, recentSubmissions);
+                        });
+                    } else {
+                        recentSubmissions.innerHTML = '<div class="text-center">No recent submissions</div>';
+                    }
+                } else {
+                    loadingMessage.innerHTML = '<div class="text-center"><i class="fas fa-inbox"></i> No submissions found</div>';
+                    totalSubmissions.textContent = '0';
+                    pendingSubmissions.textContent = '0';
+                    completedSubmissions.textContent = '0';
+                    recentSubmissions.innerHTML = '<div class="text-center">No recent submissions</div>';
+                }
+            });
+        }
+
+        // Update stats
+        function updateStats(submissions) {
+            totalSubmissions.textContent = submissions.length;
+            
+            const pending = submissions.filter(s => s.status === 'pending').length;
+            const completed = submissions.filter(s => s.status === 'completed').length;
+            
+            pendingSubmissions.textContent = pending;
+            completedSubmissions.textContent = completed;
+        }
+
+        // Create submission card
+        function createSubmissionCard(submission, container) {
+            const card = document.createElement('div');
+            card.className = 'submission-card';
+            
+            // Format timestamp to readable date
+            const date = new Date(submission.timestamp);
+            const formattedDate = date.toLocaleString();
+            
+            // Status badge
+            let statusClass, statusText;
+            switch(submission.status) {
+                case 'completed':
+                    statusClass = 'status-completed';
+                    statusText = 'Completed';
+                    break;
+                case 'rejected':
+                    statusClass = 'status-rejected';
+                    statusText = 'Rejected';
+                    break;
+                default:
+                    statusClass = 'status-pending';
+                    statusText = 'Pending';
+            }
+            
+            card.innerHTML = `
+                <div class="card-header">
+                    <h3 class="app-name">${submission.appName}</h3>
+                    <span class="status ${statusClass}">${statusText}</span>
+                </div>
+                <div class="card-body">
+                    <p><i class="fas fa-envelope"></i> ${submission.contactEmail}</p>
+                    <p><i class="fas fa-globe"></i> ${submission.websiteUrl}</p>
+                    <p><i class="fas fa-dollar-sign"></i> ${submission.totalPrice}</p>
+                    <p><i class="fas fa-calendar-alt"></i> ${formattedDate}</p>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-primary btn-sm view-details-btn" data-id="${submission.id}">
+                        <i class="fas fa-eye"></i> View
+                    </button>
+                </div>
+            `;
+            
+            container.appendChild(card);
+            
+            // Add event listener to the view button
+            card.querySelector('.view-details-btn').addEventListener('click', () => showSubmissionDetails(submission));
+        }
+
+        // Show submission details in modal
+        function showSubmissionDetails(submission) {
+            submissionDetailsModalTitle.textContent = `Submission: ${submission.appName}`;
+            
+            // Format features list
+            const featuresList = submission.features.map(feature => {
+                const customTag = feature.isCustom ? '<span class="badge badge-info">Custom</span>' : '';
+                return `<li>${feature.name} - $${feature.price} ${customTag}</li>`;
+            }).join('');
+            
+            // Format publish option
+            let publishOption;
+            switch(submission.publishOption) {
+                case 'google':
+                    publishOption = 'Google Play Store';
+                    break;
+                case 'apple':
+                    publishOption = 'Apple App Store';
+                    break;
+                case 'both':
+                    publishOption = 'Both Stores';
+                    break;
+                case 'self':
+                    publishOption = 'Self Hosting';
+                    break;
+                default:
+                    publishOption = submission.publishOption;
+            }
+            
+            // Format timeline
+            let timeline;
+            if (submission.timeline === 'rush' && submission.customTimeline) {
+                timeline = `Rush (${submission.customTimeline} days)`;
+            } else if (submission.timeline === 'standard') {
+                timeline = 'Standard (2-3 weeks)';
+            } else {
+                timeline = submission.timeline;
+            }
+            
+            submissionDetailsModalBody.innerHTML = `
+                <div class="details-row">
+                    <div class="details-label"><i class="fas fa-mobile-alt"></i> App Name:</div>
+                    <div class="details-value">${submission.appName}</div>
+                </div>
+                <div class="details-row">
+                    <div class="details-label"><i class="fas fa-link"></i> Website URL:</div>
+                    <div class="details-value"><a href="${submission.websiteUrl}" target="_blank">${submission.websiteUrl}</a></div>
+                </div>
+                <div class="details-row">
+                    <div class="details-label"><i class="fas fa-envelope"></i> Contact Email:</div>
+                    <div class="details-value">${submission.contactEmail}</div>
+                </div>
+                <div class="details-row">
+                    <div class="details-label"><i class="fas fa-box"></i> Publish Option:</div>
+                    <div class="details-value">${publishOption}</div>
+                </div>
+                <div class="details-row">
+                    <div class="details-label"><i class="fas fa-user-tie"></i> Developer Account:</div>
+                    <div class="details-value">${submission.developerAccount === 'yes' ? 'Yes' : 'No'}</div>
+                </div>
+                <div class="details-row">
+                    <div class="details-label"><i class="fas fa-clock"></i> Timeline:</div>
+                    <div class="details-value">${timeline}</div>
+                </div>
+                <div class="details-row">
+                    <div class="details-label"><i class="fas fa-dollar-sign"></i> Total Price:</div>
+                    <div class="details-value">${submission.totalPrice}</div>
+                </div>
+                <div class="details-row">
+                    <div class="details-label"><i class="fas fa-info-circle"></i> Status:</div>
+                    <div class="details-value"><span class="status ${getStatusBadgeClass(submission.status)}">${submission.status.charAt(0).toUpperCase() + submission.status.slice(1)}</span></div>
+                </div>
+                
+                <h4 class="mt-4"><i class="fas fa-star"></i> Selected Features</h4>
+                <ul class="features-list">${featuresList}</ul>
+            `;
+            
+            submissionDetailsModal.classList.add('show');
+        }
+
+        // Render available features
+        function renderFeatures() {
+            featuresGrid.innerHTML = '';
+            
+            availableFeatures.forEach(feature => {
+                const featureItem = document.createElement('div');
+                featureItem.className = 'feature-item';
+                featureItem.dataset.id = feature.id;
+                featureItem.innerHTML = `
+                    <h4>${feature.name}</h4>
+                    <div>$${feature.price}</div>
+                `;
+                
+                featureItem.addEventListener('click', () => toggleFeatureSelection(featureItem, feature));
+                featuresGrid.appendChild(featureItem);
+            });
+        }
+
+        // Toggle feature selection
+        function toggleFeatureSelection(element, feature) {
+            element.classList.toggle('selected');
+            updateSelectedFeatures();
+        }
+
+        // Update selected features list and total price
+        function updateSelectedFeatures() {
+            const selectedFeatures = [];
+            let total = 0;
+            
+            document.querySelectorAll('.feature-item.selected').forEach(item => {
+                const featureId = item.dataset.id;
+                const feature = availableFeatures.find(f => f.id === featureId);
+                if (feature) {
+                    selectedFeatures.push(feature);
+                    total += feature.price;
+                }
+            });
+            
+            // Update selected features list
+            if (selectedFeatures.length > 0) {
+                selectedFeaturesList.innerHTML = selectedFeatures.map(feature => {
+                    const customTag = feature.isCustom ? '<span class="badge badge-info">Custom</span>' : '';
+                    return `<div>${feature.name} - $${feature.price} ${customTag}</div>`;
+                }).join('');
+            } else {
+                selectedFeaturesList.innerHTML = '<div>No features selected</div>';
+            }
+            
+            // Update total price
+            totalPrice.textContent = `$${total.toFixed(2)}`;
+        }
+
+        // Handle new submission
+        function handleNewSubmission(e) {
+            e.preventDefault();
+            
+            if (!currentUser) return;
+            
+            // Get form values
+            const appName = document.getElementById('appName').value;
+            const websiteUrl = document.getElementById('websiteUrl').value;
+            const contactEmail = document.getElementById('contactEmail').value;
+            const publishOption = document.getElementById('publishOption').value;
+            const developerAccount = document.getElementById('developerAccount').value;
+            const timeline = document.getElementById('timeline').value;
+            const customTimeline = document.getElementById('customTimeline').value;
+            
+            // Get selected features
+            const selectedFeatures = [];
+            document.querySelectorAll('.feature-item.selected').forEach(item => {
+                const featureId = item.dataset.id;
+                const feature = availableFeatures.find(f => f.id === featureId);
+                if (feature) {
+                    selectedFeatures.push({
+                        id: feature.id,
+                        name: feature.name,
+                        price: feature.price,
+                        isCustom: feature.isCustom
+                    });
+                }
+            });
+            
+            // Calculate total price
+            const total = selectedFeatures.reduce((sum, feature) => sum + feature.price, 0);
+            
+            // Create submission object
+            const submission = {
+                appName,
+                websiteUrl,
+                contactEmail,
+                features: selectedFeatures,
+                publishOption,
+                developerAccount,
+                timeline,
+                customTimeline: timeline === 'rush' ? customTimeline : null,
+                totalPrice: `$${total.toFixed(2)}`,
+                status: 'pending',
+                userId: currentUser.uid,
+                userEmail: currentUser.email,
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            };
+            
+            // Save to database
+            database.ref('submissions').push(submission)
+                .then(() => {
+                    showAlert('Submission created successfully!', 'success');
+                    newSubmissionForm.reset();
+                    showView('dashboard');
+                })
+                .catch(error => {
+                    showAlert('Error creating submission: ' + error.message, 'error');
+                });
+        }
+
+        // Show alert message
+        function showAlert(message, type) {
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i> ${message}
+            `;
+            
+            const header = document.querySelector('.header');
+            header.insertAdjacentElement('afterend', alert);
+            
+            setTimeout(() => {
+                alert.remove();
+            }, 3000);
+        }
+
+        // Show specific view
+        function showView(view) {
+            dashboardView.classList.add('hidden');
+            submissionsView.classList.add('hidden');
+            newSubmissionView.classList.add('hidden');
+            
+            // Update active nav link
+            dashboardLink.classList.remove('active');
+            newSubmissionLink.classList.remove('active');
+            mySubmissionsLink.classList.remove('active');
+            
+            switch(view) {
+                case 'dashboard':
+                    dashboardView.classList.remove('hidden');
+                    dashboardLink.classList.add('active');
+                    break;
+                case 'submissions':
+                    submissionsView.classList.remove('hidden');
+                    mySubmissionsLink.classList.add('active');
+                    break;
+                case 'newSubmission':
+                    newSubmissionView.classList.remove('hidden');
+                    newSubmissionLink.classList.add('active');
+                    break;
+            }
+        }
+
+        // Helper function to get status badge class
+        function getStatusBadgeClass(status) {
+            switch(status) {
+                case 'completed': return 'status-completed';
+                case 'rejected': return 'status-rejected';
+                default: return 'status-pending';
+            }
+        }
+
+        // Initialize the app
+        init();
+    </script>
+</body>
+</html>

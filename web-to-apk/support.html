@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web2APK Support</title>
+    <style>
+        :root {
+            --primary-color: #4285F4;
+            --secondary-color: #34A853;
+            --accent-color: #FBBC05;
+            --error-color: #EA4335;
+            --background-color: #f8f9fa;
+            --text-color: #202124;
+            --border-color: #dadce0;
+            --card-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+        }
+        
+        /* Fixed Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 0.8rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .nav-brand {
+            font-weight: 500;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-brand span {
+            margin-left: 0.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-left: 1.5rem;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        /* Main Content */
+        .main-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 5rem 1.5rem 2rem;
+        }
+        
+        .support-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .support-card h1 {
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        
+        .support-form {
+            margin-top: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 0.95rem;
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .btn:hover {
+            background-color: #3367d6;
+        }
+        
+        .btn-secondary {
+            background-color: #f1f3f4;
+            color: var(--text-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #e8eaed;
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+        
+        .tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            font-size: 0.95rem;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+        
+        /* Ticket List */
+        .ticket-list {
+            margin-top: 2rem;
+        }
+        
+        .ticket-item {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            transition: box-shadow 0.2s;
+        }
+        
+        .ticket-item:hover {
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .ticket-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .ticket-title {
+            font-weight: 500;
+            color: var(--primary-color);
+        }
+        
+        .ticket-date {
+            font-size: 0.85rem;
+            color: #5f6368;
+        }
+        
+        .ticket-status {
+            display: inline-block;
+            padding: 0.3rem 0.6rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+        
+        .status-open {
+            background-color: #e8f0fe;
+            color: var(--primary-color);
+        }
+        
+        .status-closed {
+            background-color: #e6f4ea;
+            color: var(--secondary-color);
+        }
+        
+        .ticket-message {
+            font-size: 0.9rem;
+            color: #3c4043;
+            margin-top: 0.5rem;
+        }
+        
+        /* Auth Status Display */
+        .auth-status {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            border-radius: 4px;
+            background-color: #e8f0fe;
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        /* Messages */
+        .message {
+            padding: 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+        
+        .success {
+            background-color: #e6f4ea;
+            border-left: 3px solid var(--secondary-color);
+        }
+        
+        .error {
+            background-color: #fce8e6;
+            border-left: 3px solid var(--error-color);
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 4rem 1rem 1rem;
+            }
+            
+            .support-card {
+                padding: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            nav {
+                padding: 0.8rem 1rem;
+            }
+            
+            .nav-brand {
+                font-size: 1rem;
+            }
+            
+            .nav-links a {
+                margin-left: 1rem;
+                font-size: 0.85rem;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Fixed Navigation Bar -->
+    <nav>
+        <a href="index.html" class="nav-brand">
+            <div class="logo" style="width: 30px; height: 30px; font-size: 0.9rem; display: inline-flex; align-items: center; justify-content: center;">W2A</div>
+            <span>Web2APK</span>
+        </a>
+        
+        <div class="nav-links">
+            <a href="guest-panel.html">Guest</a>
+            <a href="user-panel.html">User</a>
+            <a href="documentation.html">Documentation</a>
+            <a href="support.html" style="color: var(--primary-color);">Support</a>
+        </div>
+    </nav>
+    
+    <!-- Main Container -->
+    <div class="main-container">
+        <!-- Support Card -->
+        <div class="support-card">
+            <h1>Support Center</h1>
+            
+            <div id="authStatusContainer" class="auth-status" style="display: none;">
+                <div id="authStatusMessage">Please sign in to view your support tickets or submit a new one.</div>
+            </div>
+            
+            <div id="messageContainer" style="display: none;" class="message"></div>
+            
+            <div class="tabs">
+                <div id="newTicketTab" class="tab active" onclick="switchTab('newTicket')">New Support Ticket</div>
+                <div id="myTicketsTab" class="tab" onclick="switchTab('myTickets')">My Tickets</div>
+            </div>
+            
+            <div id="newTicketContainer">
+                <p>If you're experiencing issues with Web2APK converter or have questions, please fill out the form below. Our support team will respond as soon as possible.</p>
+                
+                <form id="supportForm" class="support-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category" class="form-control">
+                            <option value="general">General Question</option>
+                            <option value="technical">Technical Issue</option>
+                            <option value="billing">Billing Issue</option>
+                            <option value="feature">Feature Request</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" class="form-control" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn">Submit Ticket</button>
+                </form>
+            </div>
+            
+            <div id="myTicketsContainer" style="display: none;">
+                <div class="ticket-list" id="ticketsList">
+                    <!-- Tickets will be loaded here -->
+                    <div class="ticket-item loading-placeholder">
+                        <p>Loading your tickets...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyCF2OP-Klw12nOyK80qrEzq0qB-Ejmwbek",
+            authDomain: "web-to-apk-converter.firebaseapp.com",
+            databaseURL: "https://web-to-apk-converter-default-rtdb.firebaseio.com",
+            projectId: "web-to-apk-converter",
+            storageBucket: "web-to-apk-converter.firebasestorage.app",
+            messagingSenderId: "478871085916",
+            appId: "1:478871085916:web:b22739e5bad02e5cec5799",
+            measurementId: "G-WVPTC2CECX"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+        
+        // DOM Elements
+        const supportForm = document.getElementById('supportForm');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const subjectInput = document.getElementById('subject');
+        const categorySelect = document.getElementById('category');
+        const messageInput = document.getElementById('message');
+        const ticketsList = document.getElementById('ticketsList');
+        const authStatusContainer = document.getElementById('authStatusContainer');
+        const authStatusMessage = document.getElementById('authStatusMessage');
+        const messageContainer = document.getElementById('messageContainer');
+        
+        // Tab switching
+        function switchTab(tabName) {
+            if (tabName === 'newTicket') {
+                document.getElementById('newTicketTab').classList.add('active');
+                document.getElementById('myTicketsTab').classList.remove('active');
+                document.getElementById('newTicketContainer').style.display = 'block';
+                document.getElementById('myTicketsContainer').style.display = 'none';
+            } else {
+                document.getElementById('newTicketTab').classList.remove('active');
+                document.getElementById('myTicketsTab').classList.add('active');
+                document.getElementById('newTicketContainer').style.display = 'none';
+                document.getElementById('myTicketsContainer').style.display = 'block';
+                
+                // Load tickets when switching to this tab
+                if (auth.currentUser) {
+                    loadUserTickets();
+                }
+            }
+        }
+        
+        // Display message
+        function showMessage(message, type) {
+            messageContainer.textContent = message;
+            messageContainer.className = 'message ' + type;
+            messageContainer.style.display = 'block';
+            
+            // Auto-hide message after 5 seconds
+            setTimeout(() => {
+                messageContainer.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Auth state observer
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                // User is signed in
+                authStatusContainer.style.display = 'block';
+                authStatusMessage.textContent = `Signed in as ${user.email}`;
+                
+                // Pre-fill the email field
+                emailInput.value = user.email;
+                
+                // Enable the "My Tickets" tab
+                document.getElementById('myTicketsTab').style.display = 'block';
+                
+                // If on the "My Tickets" tab, load tickets
+                if (document.getElementById('myTicketsTab').classList.contains('active')) {
+                    loadUserTickets();
+                }
+            } else {
+                // User is not signed in
+                authStatusContainer.style.display = 'block';
+                authStatusMessage.textContent = 'Please sign in to view your support tickets or submit a new one.';
+                
+                // Hide the "My Tickets" tab
+                document.getElementById('myTicketsTab').style.display = 'none';
+                
+                // Switch to the "New Ticket" tab
+                switchTab('newTicket');
+            }
+        });
+        
+        // Submit support ticket
+        supportForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const newTicket = {
+                name: nameInput.value,
+                email: emailInput.value,
+                subject: subjectInput.value,
+                category: categorySelect.value,
+                message: messageInput.value,
+                status: 'open',
+                createdAt: firebase.database.ServerValue.TIMESTAMP,
+                userId: auth.currentUser ? auth.currentUser.uid : 'guest',
+                userType: auth.currentUser ? 'registered' : 'guest'
+            };
+            
+            // Generate a new key for the ticket
+            const newTicketKey = database.ref().child('support').push().key;
+            
+            // Create the ticket in Firebase
+            database.ref(`support/${newTicketKey}`).set(newTicket)
+                .then(() => {
+                    showMessage('Your support ticket has been submitted successfully!', 'success');
+                    
+                    // Reset form
+                    supportForm.reset();
+                    
+                    // If user is logged in, pre-fill email again
+                    if (auth.currentUser) {
+                        emailInput.value = auth.currentUser.email;
+                    }
+                    
+                    // Switch to My Tickets tab if user is logged in
+                    if (auth.currentUser) {
+                        switchTab('myTickets');
+                    }
+                })
+                .catch(error => {
+                    showMessage('Error submitting ticket: ' + error.message, 'error');
+                });
+        });
+        
+        // Load user tickets
+        function loadUserTickets() {
+            if (!auth.currentUser) return;
+            
+            // Clear existing tickets
+            ticketsList.innerHTML = '<div class="ticket-item loading-placeholder"><p>Loading your tickets...</p></div>';
+            
+            // Query tickets for current user
+            database.ref('support').orderByChild('userId').equalTo(auth.currentUser.uid).once('value')
+                .then(snapshot => {
+                    // Clear loading placeholder
+                    ticketsList.innerHTML = '';
+                    
+                    if (snapshot.exists()) {
+                        snapshot.forEach(ticketSnapshot => {
+                            const ticket = ticketSnapshot.val();
+                            const ticketId = ticketSnapshot.key;
+                            
+                            // Format date
+                            const date = new Date(ticket.createdAt);
+                            const formattedDate = date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+                            
+                            // Create ticket element
+                            const ticketElement = document.createElement('div');
+                            ticketElement.className = 'ticket-item';
+                            ticketElement.innerHTML = `
+                                <div class="ticket-header">
+                                    <div class="ticket-title">${ticket.subject}</div>
+                                    <div class="ticket-date">${formattedDate}</div>
+                                </div>
+                                <div class="ticket-category">Category: ${ticket.category}</div>
+                                <div class="ticket-status status-${ticket.status}">${ticket.status}</div>
+                                <div class="ticket-message">${ticket.message}</div>
+                            `;
+                            
+                            ticketsList.appendChild(ticketElement);
+                        });
+                    } else {
+                        ticketsList.innerHTML = '<p>You have no support tickets yet.</p>';
+                    }
+                })
+                .catch(error => {
+                    ticketsList.innerHTML = `<p>Error loading tickets: ${error.message}</p>`;
+                });
+        }
+    </script>
+</body>
+</html>

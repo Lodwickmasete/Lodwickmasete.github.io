@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Android Web App To Apk Conversion Request | Lodwick Masete Services</title>
+    <style>
+        :root {
+            --primary-color: #4285F4; /* Google blue */
+            --secondary-color: #34A853; /* Google green */
+            --accent-color: #FBBC05; /* Google yellow */
+            --error-color: #EA4335; /* Google red */
+            --background-color: #f8f9fa;
+            --text-color: #202124;
+            --border-color: #dadce0;
+            --card-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+        }
+        
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .intro-text {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #5f6368;
+            font-size: 1.1em;
+        }
+        
+        h2 {
+            color: var(--secondary-color);
+            margin: 25px 0 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 500;
+            font-size: 1.3em;
+        }
+        
+        .section {
+            margin-bottom: 35px;
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .section-number {
+            background-color: var(--secondary-color);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-size: 0.8em;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #3c4043;
+        }
+        
+        .required:after {
+            content: " *";
+            color: var(--error-color);
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        input[type="url"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+            outline: none;
+        }
+        
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        
+        .checkbox-group, .radio-group {
+            margin-bottom: 20px;
+        }
+        
+        .checkbox-item, .radio-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        
+        .checkbox-item input, .radio-item input {
+            margin-top: 3px;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-card.selected {
+            border-color: var(--primary-color);
+            background-color: #f5f8ff;
+        }
+        
+        .feature-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .feature-price {
+            font-weight: bold;
+            color: var(--secondary-color);
+            white-space: nowrap;
+        }
+        
+        .feature-desc {
+            color: #5f6368;
+            font-size: 0.9em;
+        }
+        
+        .price-summary {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 4px solid var(--secondary-color);
+        }
+        
+        .price-line {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed var(--border-color);
+        }
+        
+        .price-total {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--secondary-color);
+        }
+        
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            width: 100%;
+            transition: background-color 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .submit-btn:hover {
+            background-color: #3367d6;
+        }
+        
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: help;
+            margin-left: 5px;
+            color: var(--primary-color);
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 250px;
+            background-color: #3c4043;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-weight: normal;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1;
+        }
+        
+        .step-number {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #e0e0e0;
+            color: #757575;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .step-label {
+            font-size: 0.9em;
+            color: #757575;
+            text-align: center;
+        }
+        
+        .progress-step.active .step-number {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .progress-step.active .step-label {
+            color: var(--text-color);
+            font-weight: 500;
+        }
+        
+        .progress-line {
+            position: absolute;
+            top: 18px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #e0e0e0;
+            z-index: 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .progress-bar {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .progress-step {
+                width: 33%;
+                margin-bottom: 15px;
+            }
+            
+            .progress-line {
+                display: none;
+            }
+        }
+        
+        /* Form validation styles */
+        input:invalid, textarea:invalid {
+            border-color: var(--error-color);
+        }
+        
+        input:invalid:focus, textarea:invalid:focus {
+            box-shadow: 0 0 0 2px rgba(234, 67, 53, 0.2);
+        }
+        
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.8em;
+            margin-top: -15px;
+            margin-bottom: 15px;
+            display: none;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Android Web App Conversion</h1>
+        <p class="intro-text">Transform your website into a native Android application with enhanced features and mobile capabilities.</p>
+
+        <div class="progress-bar">
+            <div class="progress-line"><div class="progress-fill" id="progressFill"></div></div>
+            <div class="progress-step active" data-step="1">
+                <div class="step-number">1</div>
+                <div class="step-label">Basic Info</div>
+            </div>
+            <div class="progress-step" data-step="2">
+                <div class="step-number">2</div>
+                <div class="step-label">Features</div>
+            </div>
+            <div class="progress-step" data-step="3">
+                <div class="step-number">3</div>
+                <div class="step-label">Appearance</div>
+            </div>
+            <div class="progress-step" data-step="4">
+                <div class="step-number">4</div>
+                <div class="step-label">Publishing</div>
+            </div>
+            <div class="progress-step" data-step="5">
+                <div class="step-number">5</div>
+                <div class="step-label">Review</div>
+            </div>
+        </div>
+        
+        <form id="appRequestForm">
+            <div class="section" data-step="1">
+                <div class="section-header">
+                    <div class="section-number">1</div>
+                    <h2>Project Information</h2>
+                </div>
+                
+                <label for="appName" class="required">App Name</label>
+                <input type="text" id="appName" name="appName" required placeholder="My Awesome App">
+                <div class="error-message" id="appNameError">Please enter your app name</div>
+                
+                <label for="websiteUrl" class="required">Website URL to Convert</label>
+                <input type="url" id="websiteUrl" name="websiteUrl" required placeholder="https://www.example.com">
+                <div class="error-message" id="websiteUrlError">Please enter a valid website URL</div>
+                
+                <label for="contactEmail" class="required">Contact Email</label>
+                <input type="email" id="contactEmail" name="contactEmail" required placeholder="your.email@example.com">
+                <div class="error-message" id="emailError">Please enter a valid email address</div>
+                
+                <label for="contactPhone">Contact Phone (optional)</label>
+                <input type="text" id="contactPhone" name="contactPhone" placeholder="+1 (123) 456-7890">
+                
+                <label for="companyName">Company/Organization Name (optional)</label>
+                <input type="text" id="companyName" name="companyName" placeholder="Your Company Inc.">
+            </div>
+            
+            <div class="section" data-step="2">
+                <div class="section-header">
+                    <div class="section-number">2</div>
+                    <h2>App Features</h2>
+                </div>
+                <p>Select the features you want to include in your Android Web App:</p>
+                
+                <div class="feature-grid">
+                    <div class="feature-card" data-feature="splash">
+                        <div class="feature-header">
+                            <label>
+                                <input type="checkbox" id="feature-splash" name="features" value="splash" data-price="1.05">
+                                Custom Splash Screen
+                            </label>
+                            <span class="feature-price">+$1.05</span>
+                        </div>
+                        <p class="feature-desc">Branded loading screen when app launches</p>
+                    </div>
+                    
+                    <div class="feature-card" data-feature="offline">
+                        <div class="feature-header">
+                            <label>
+                                <input type="checkbox" id="feature-offline" name="features" value="offline" data-price="1.00">
+                                Offline Access
+                            </label>
+                            <span class="feature-price">+$1.00</span>
+                        </div>
+                        <p class="feature-desc">Cache content for use without internet connection</p>
+                    </div>
+                    
+                    <div class="feature-card" data-feature="push">
+                        <div class="feature-header">
+                            <label>
+                                <input type="checkbox" id="feature-push" name="features" value="push" data-price="5.00" >
+                                Push Notifications
+                            </label>
+                            <span class="feature-price">+$5.00</span>
+                        </div>
+                        <p class="feature-desc">Send notifications to engage your users</p>
+                    </div>
+                    
+                    <div class="feature-card hidden" data-feature="ads">
+                        <div class="feature-header">
+                            <label>
+                                <input type="checkbox" id="feature-ads" name="features" value="ads" data-price="-" disabled>
+                                AdMob Integration
+                            </label>
+                            <span class="feature-price">unvailable</span>
+                        </div>
+                        <p class="feature-desc">Monetize your app with Google ads</p>
+                    </div>
+                    
+                    <div class="feature-card" data-feature="login">
+                        <div class="feature-header">
+                            <label>
+                                <input type="checkbox" id="feature-login" name="features" value="login" data-price="1.50">
+                                User Authentication
+                            </label>
+                            <span class="feature-price">+$1.50</span>
+                        </div>
+                        <p class="feature-desc">Secure login system for user accounts</p>
+                    </div>
+                    
+                    <div class="feature-card" data-feature="share">
+                        <div class="feature-header">
+                            <label>
+                                <input type="checkbox" id="feature-share" name="features" value="share" data-price="1.05">
+                                Social Media Sharing
+                            </label>
+                            <span class="feature-price">+$1.05</span>
+                        </div>
+                        <p class="feature-desc">Share content to social platforms</p>
+                    </div>
+                    
+                    <div class="feature-card" data-feature="camera">
+                        <div class="feature-header">
+                            <label>
+                                <input type="checkbox" id="feature-camera" name="features" value="camera" data-price="3.30">
+                                Camera Access
+                            </label>
+                            <span class="feature-price">+$3.30</span>
+                        </div>
+                        <p class="feature-desc">Access device camera for photos/videos</p>
+                    </div>
+                    
+                    <div class="feature-card" data-feature="custom">
+                        <div class="feature-header">
+                            <label>
+                                <input type="checkbox" id="feature-custom" name="features" value="custom">
+                                Custom Features
+                            </label>
+                            <span class="feature-price">Varies</span>
+                        </div>
+                        <p class="feature-desc">Need something special? Let us know</p>
+                    </div>
+                </div>
+                
+                <div class="custom-feature" id="customFeatureSection" style="display: none;">
+                    <label for="customFeatureDesc">Describe your custom features:</label>
+                    <textarea id="customFeatureDesc" name="customFeatureDesc" placeholder="Please describe the custom features you need..."></textarea>
+                    
+                    <label for="customFeaturePrice">Estimated Additional Budget ($):</label>
+                    <input type="number" id="customFeaturePrice" name="customFeaturePrice" placeholder="Enter amount" min="0">
+                </div>
+            </div>
+            
+            <div class="section" data-step="3">
+                <div class="section-header">
+                    <div class="section-number">3</div>
+                    <h2>App Appearance</h2>
+                </div>
+                
+                <label for="appTheme">Primary Brand Color</label>
+                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                    <input type="color" id="appTheme" name="appTheme" value="#4285F4" style="width: 60px; height: 40px; padding: 0;">
+                    <span>Select your brand color for the app theme</span>
+                </div>
+                
+                <label for="appIcon">Upload App Icon (optional)</label>
+                <input type="file" id="appIcon" name="appIcon" accept="image/*" style="margin-bottom: 20px;">
+                <p style="font-size: 0.9em; color: #5f6368; margin-top: -15px; margin-bottom: 20px;">Recommended size: 512×512 pixels PNG format</p>
+                
+                <label for="appDescription">App Description for Store Listing</label>
+                <textarea id="appDescription" name="appDescription" placeholder="Describe your app for potential users..."></textarea>
+            </div>
+            
+            <div class="section" data-step="4">
+                <div class="section-header">
+                    <div class="section-number">4</div>
+                    <h2>Publishing Options</h2>
+                </div>
+                
+                <div class="radio-group">
+                    <p>Where would you like to publish your app?</p>
+                    <div class="radio-item">
+                        <input type="radio" id="publish-google" name="publish" value="google" checked>
+                        <label for="publish-google">Google Play Store ($25 one-time publishing fee)</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="publish-self" name="publish" value="self">
+                        <label for="publish-self">Self-host APK (No additional cost)</label>
+                    </div>
+                    <div class="radio-item">
+                        <input type="radio" id="publish-both" name="publish" value="both">
+                        <label for="publish-both">Both Google Play and Self-host ($25 one-time fee)</label>
+                    </div>
+                </div>
+                
+                <div id="googlePlaySection">
+                    <label for="developerAccount">Google Play Developer Account</label>
+                    <select id="developerAccount" name="developerAccount" style="margin-bottom: 20px;">
+                        <option value="yes">Yes, I have an active developer account</option>
+                        <option value="no">No, I need help setting one up (+$30)</option>
+                    </select>
+                    <p style="font-size: 0.9em; color: #5f6368; margin-top: -15px; margin-bottom: 20px;">Note: Google Play requires a one-time $25 developer registration fee</p>
+                </div>
+            </div>
+            
+            <div class="section" data-step="5">
+                <div class="section-header">
+                    <div class="section-number">5</div>
+                    <h2>Final Details</h2>
+                </div>
+                
+                <label for="specialRequests">Special Requests or Requirements</label>
+                <textarea id="specialRequests" name="specialRequests" placeholder="Any additional requirements or notes for our team..."></textarea>
+                
+                <label for="timeline">Project Timeline</label>
+                <select id="timeline" name="timeline" style="margin-bottom: 20px;">
+                    <option value="standard">Standard Delivery (2-3 weeks)</option>
+                    <option value="rush">Expedited Delivery (1 week) (+$7)</option>
+                    <option value="custom">Custom timeline (specify below)</option>
+                </select>
+                
+                <div id="customTimeline" style="display: none;">
+                    <label for="customTimelineDetails">Custom Timeline Requirements:</label>
+                    <input type="text" id="customTimelineDetails" name="customTimelineDetails" placeholder="Example: Need by March 15 for product launch">
+                </div>
+                
+                <div class="price-summary">
+                    <h3 style="margin-bottom: 15px; color: var(--secondary-color);">Price Estimate</h3>
+                    <div class="price-line">
+                        <span>Base Conversion:</span>
+                        <span>Free</span>
+                    </div>
+                    <div id="featureCosts">
+                        <!-- Feature costs will be added here by JavaScript -->
+                    </div>
+                    <div id="publishingCost" class="price-line">
+                        <!-- Publishing costs will be added here by JavaScript -->
+                    </div>
+                    <div id="timelineCost" class="price-line">
+                        <!-- Timeline costs will be added here by JavaScript -->
+                    </div>
+                    <div class="price-line" style="border-bottom: none; padding-bottom: 0;">
+                        <span class="price-total">Estimated Total:</span>
+                        <span class="price-total" id="totalPrice">0.00</span>
+                    </div>
+                </div>
+                
+                <div style="margin: 25px 0; padding: 15px; background-color: #f5f5f5; border-radius: 4px;">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="agreeTerms" name="agreeTerms" required style="margin-right: 10px;">
+                        <label for="agreeTerms" class="required">I understand this is an estimate and final pricing may vary based on project complexity. I agree to be contacted regarding this request.</label>
+                    </div>
+                </div>
+            </div>
+               <code id="generated-uuid"></code>
+            <div style="display: flex; justify-content: space-between; margin-top: 30px;">
+                <button type="button" id="prevBtn" class="submit-btn" style="background-color: #5f6368; width: 48%; display: none;">Previous</button>
+                <button type="button" id="nextBtn" class="submit-btn" style="width: 48%;">Next</button>
+                <button type="submit" id="submitBtn" class="submit-btn" style="display: none; width: 100%;">Submit Request</button>
+            </div>
+        </form>
+    </div>
+    
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCF2OP-Klw12nOyK80qrEzq0qB-Ejmwbek",
+            authDomain: "web-to-apk-converter.firebaseapp.com",
+            databaseURL: "https://web-to-apk-converter-default-rtdb.firebaseio.com",
+            projectId: "web-to-apk-converter",
+            storageBucket: "web-to-apk-converter.firebasestorage.app",
+            messagingSenderId: "478871085916",
+            appId: "1:478871085916:web:b22739e5bad02e5cec5799",
+            measurementId: "G-WVPTC2CECX"
+        };
+        
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        
+        // Form steps navigation
+        const form = document.getElementById('appRequestForm');
+        const sections = document.querySelectorAll('.section');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const progressSteps = document.querySelectorAll('.progress-step');
+        const progressFill = document.getElementById('progressFill');
+        
+        let currentStep = 0;
+        
+        function showStep(step) {
+            sections.forEach((section, index) => {
+                section.style.display = index === step ? 'block' : 'none';
+            });
+            
+            // Update progress bar
+            progressSteps.forEach((stepElement, index) => {
+                if (index <= step) {
+                    stepElement.classList.add('active');
+                } else {
+                    stepElement.classList.remove('active');
+                }
+            });
+            
+            const progressPercent = (step / (sections.length - 1)) * 100;
+            progressFill.style.width = `${progressPercent}%`;
+            
+            // Update buttons
+            prevBtn.style.display = step === 0 ? 'none' : 'block';
+            nextBtn.style.display = step === sections.length - 1 ? 'none' : 'block';
+            submitBtn.style.display = step === sections.length - 1 ? 'block' : 'none';
+            
+            currentStep = step;
+        }
+        
+        nextBtn.addEventListener('click', function() {
+            if (validateStep(currentStep)) {
+                showStep(currentStep + 1);
+            }
+        });
+        
+        prevBtn.addEventListener('click', function() {
+            showStep(currentStep - 1);
+        });
+        
+        // Initialize
+        showStep(0);
+        
+        // Step validation
+        function validateStep(step) {
+            let isValid = true;
+            
+            if (step === 0) {
+                // Validate basic info
+                if (!document.getElementById('appName').value.trim()) {
+                    document.getElementById('appNameError').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('appNameError').style.display = 'none';
+                }
+                
+                if (!document.getElementById('websiteUrl').value.trim()) {
+                    document.getElementById('websiteUrlError').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('websiteUrlError').style.display = 'none';
+                }
+                
+                if (!document.getElementById('contactEmail').value.trim() || 
+                    !document.getElementById('contactEmail').checkValidity()) {
+                    document.getElementById('emailError').style.display = 'block';
+                    isValid = false;
+                } else {
+                    document.getElementById('emailError').style.display = 'none';
+                }
+            }
+            
+            if (step === sections.length - 1) {
+                // Validate terms agreement
+                if (!document.getElementById('agreeTerms').checked) {
+                    alert('Please agree to the terms before submitting');
+                    isValid = false;
+                }
+            }
+            
+            return isValid;
+        }
+        
+        // Feature cards interaction
+        const featureCards = document.querySelectorAll('.feature-card');
+        featureCards.forEach(card => {
+            const checkbox = card.querySelector('input[type="checkbox"]');
+            
+            card.addEventListener('click', (e) => {
+                // Don't toggle if clicking on the checkbox itself
+                if (e.target.tagName !== 'INPUT') {
+                    checkbox.checked = !checkbox.checked;
+                    checkbox.dispatchEvent(new Event('change'));
+                }
+            });
+            
+            checkbox.addEventListener('change', function() {
+                if (this.checked) {
+                    card.classList.add('selected');
+                } else {
+                    card.classList.remove('selected');
+                }
+                calculateTotal();
+            });
+        });
+        
+        // Show/hide custom feature section
+        document.getElementById('feature-custom').addEventListener('change', function() {
+            const customSection = document.getElementById('customFeatureSection');
+            customSection.style.display = this.checked ? 'block' : 'none';
+            calculateTotal();
+        });
+        
+        // Show/hide Google Play section based on publishing option
+        const publishOptions = document.querySelectorAll('input[name="publish"]');
+        publishOptions.forEach(option => {
+            option.addEventListener('change', function() {
+                const googlePlaySection = document.getElementById('googlePlaySection');
+                googlePlaySection.style.display = (this.value === 'self') ? 'none' : 'block';
+                calculateTotal();
+            });
+        });
+        
+        // Show/hide custom timeline field
+        document.getElementById('timeline').addEventListener('change', function() {
+            const customTimeline = document.getElementById('customTimeline');
+            customTimeline.style.display = (this.value === 'custom') ? 'block' : 'none';
+            calculateTotal();
+        });
+        
+        // Calculate total price when features are selected
+        const featureCheckboxes = document.querySelectorAll('input[name="features"]');
+        featureCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', calculateTotal);
+        });
+        
+        document.getElementById('developerAccount').addEventListener('change', calculateTotal);
+        document.getElementById('timeline').addEventListener('change', calculateTotal);
+        document.getElementById('customFeaturePrice').addEventListener('input', calculateTotal);
+        
+        // Calculate total price function
+        function calculateTotal() {
+            const basePrice = 0; //basic free
+            let featuresPrice = 0;
+            let publishingPrice = 0;
+            let timelinePrice = 0;
+            
+            // Feature costs
+            const featureCostsElement = document.getElementById('featureCosts');
+            featureCostsElement.innerHTML = '';
+            
+            featureCheckboxes.forEach(checkbox => {
+                if (checkbox.checked && checkbox.id !== 'feature-custom') {
+                    const price = parseInt(checkbox.dataset.price) || 0;
+                    featuresPrice += price;
+                    
+                    const featureLine = document.createElement('div');
+                    featureLine.className = 'price-line';
+                    featureLine.innerHTML = `
+                        <span>${checkbox.parentElement.textContent.trim()}:</span>
+                        <span>+$${price}</span>
+                    `;
+                    featureCostsElement.appendChild(featureLine);
+                }
+            });
+            
+            // Custom feature price
+            if (document.getElementById('feature-custom').checked) {
+                const customPrice = parseInt(document.getElementById('customFeaturePrice').value) || 0;
+                featuresPrice += customPrice;
+                
+                if (customPrice > 0) {
+                    const customLine = document.createElement('div');
+                    customLine.className = 'price-line';
+                    customLine.innerHTML = `
+                        <span>Custom Features:</span>
+                        <span>+$${customPrice}</span>
+                    `;
+                    featureCostsElement.appendChild(customLine);
+                }
+            }
+            
+            // Publishing options
+            const publishOption = document.querySelector('input[name="publish"]:checked').value;
+            const publishingCostElement = document.getElementById('publishingCost');
+            publishingCostElement.innerHTML = '';
+            
+            if (publishOption === 'google' || publishOption === 'both') {
+                publishingPrice += 25;
+                
+                const publishLine = document.createElement('div');
+                publishLine.className = 'price-line';
+                publishLine.innerHTML = `
+                    <span>Google Play Publishing:</span>
+                    <span>+$25</span>
+                `;
+                publishingCostElement.appendChild(publishLine);
+                
+                // Developer account setup
+                if (document.getElementById('developerAccount').value === 'no') {
+                    publishingPrice += 30;
+                    
+                    const accountLine = document.createElement('div');
+                    accountLine.className = 'price-line';
+                    accountLine.innerHTML = `
+                        <span>Developer Account Setup:</span>
+                        <span>+$30</span>
+                    `;
+                    publishingCostElement.appendChild(accountLine);
+                }
+            }
+            
+            // Timeline rush fee
+            const timelineCostElement = document.getElementById('timelineCost');
+            timelineCostElement.innerHTML = '';
+            
+            if (document.getElementById('timeline').value === 'rush') {
+                timelinePrice += 7;
+                
+                const timelineLine = document.createElement('div');
+                timelineLine.className = 'price-line';
+                timelineLine.innerHTML = `
+                    <span>Expedited Delivery:</span>
+                    <span>+$7.00</span>
+                `;
+                timelineCostElement.appendChild(timelineLine);
+            }
+            
+            // Update total
+            const total = basePrice + featuresPrice + publishingPrice + timelinePrice;
+            document.getElementById('totalPrice').textContent = `$${total.toFixed(2)}`;
+        }
+        
+        // Helper function to generate UUID
+        function generateUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0;
+                const v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+        
+        // Helper function to get selected features
+        function getSelectedFeatures() {
+            const selectedFeatures = [];
+            const featureCheckboxes = document.querySelectorAll('input[name="features"]:checked');
+            
+            featureCheckboxes.forEach(checkbox => {
+                const feature = {
+                    name: checkbox.parentElement.textContent.trim(),
+                    price: checkbox.dataset.price || '0',
+                    isCustom: checkbox.id === 'feature-custom'
+                };
+                
+                if (checkbox.id === 'feature-custom') {
+                    feature.customPrice = parseInt(document.getElementById('customFeaturePrice').value) || 0;
+                }
+                
+                selectedFeatures.push(feature);
+            });
+            
+            return selectedFeatures;
+        }
+        
+        // Form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (validateStep(currentStep)) {
+                // Generate UUID for this submission
+                const submissionId = generateUUID();
+                
+                // Get form data
+                const formData = {
+                    appName: document.getElementById('appName').value.trim(),
+                    websiteUrl: document.getElementById('websiteUrl').value.trim(),
+                    contactEmail: document.getElementById('contactEmail').value.trim(),
+                    features: getSelectedFeatures(),
+                    publishOption: document.querySelector('input[name="publish"]:checked').value,
+                    developerAccount: document.getElementById('developerAccount').value,
+                    timeline: document.getElementById('timeline').value,
+                    agreeTerms: document.getElementById('agreeTerms').checked,
+                    totalPrice: document.getElementById('totalPrice').textContent,
+                    timestamp: firebase.database.ServerValue.TIMESTAMP,
+                    status: 'pending'
+                };
+                
+                // Only add customTimeline if timeline is set to 'custom'
+                if (document.getElementById('timeline').value === 'custom') {
+                    formData.customTimeline = document.getElementById('customTimeline').value;
+                }
+                
+                // Show loading state
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Submitting...';
+                
+                // Save to Firebase
+                database.ref('/guest-submisions/' + submissionId).set(formData)
+                    .then(() => {
+                        // Show confirmation
+                        alert('Thank you for your request!\n\nWe have received your Android Web App conversion request and will review your requirements. Our team will contact you within 24 hours to discuss next steps and confirm pricing.\n\nLooking forward to working with you!');
+                        alert('id' +submissionId + ' \n copied.use it to check your status.you may want to log/sign in to access full status features');                     
+                        document.getElementById('generated-uuid').innerHTML ='your reference is ' + submissionId + `
+                      use it to <a href='check-submission-status.html'>Check Status</a>  
+                        `;
+                         copyToClipboard(submissionId); 
+                        // Reset form
+                        form.reset();
+                        showStep(0);
+                        calculateTotal();
+                    })
+                    .catch((error) => {
+                        console.error('Error saving data:', error);
+                        alert('There was an error submitting your request. Please try again.');
+                    })
+                    .finally(() => {
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = 'Submit Request';
+                    });
+            }
+        });
+        
+        // Initialize calculations
+        calculateTotal();
+    });
+</script>
+
+<script>
+function copyToClipboard(x) {
+    const submissionIdx = x;
+    navigator.clipboard.writeText(submissionIdx).then(() => {
+        alert('ID ' + submissionIdx + ' copied. Use it to check your status. You may want to log in/sign up to access full status features.');
+    });
+}
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submission Status Checker</title>
+    <!-- Bootstrap 5.3.0 CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .status-badge {
+            font-size: 0.9rem;
+            padding: 0.4rem 0.6rem;
+        }
+        .status-pending {
+            background-color: #ffc107;
+        }
+        .status-approved {
+            background-color: #198754;
+        }
+        .status-rejected {
+            background-color: #dc3545;
+        }
+        .status-in-progress {
+            background-color: #0d6efd;
+        }
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+        .card-header {
+            border-radius: 10px 10px 0 0 !important;
+            background-color: #6c757d;
+            color: white;
+        }
+        .features-list li {
+            margin-bottom: 0.5rem;
+        }
+        .timeline-info {
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+        #loader {
+            display: none;
+        }
+        .header-icon {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white py-3">
+                        <h4 class="mb-0"><i class="fas fa-search header-icon"></i>Check Your Submission Status</h4>
+                    </div>
+                    <div class="card-body p-4">
+                        <p class="lead">Enter your submission ID to check the current status of your request</p>
+                        
+                        <form id="statusForm" class="mb-4">
+                            <div class="input-group mb-3">
+                                <input type="text" id="submissionId" class="form-control form-control-lg" 
+                                    placeholder="Enter your submission ID" required>
+                                <button class="btn btn-primary btn-lg" type="submit">
+                                    <i class="fas fa-search"></i> Check Status
+                                </button>
+                            </div>
+                            <div class="form-text">
+                                Your submission ID was provided in the confirmation message or email after submission.
+                            </div>
+                        </form>
+                        
+                        <div id="loader" class="text-center py-4">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                            <p class="mt-2">Fetching your submission details...</p>
+                        </div>
+                        
+                        <div id="errorMessage" class="alert alert-danger d-none" role="alert">
+                            <i class="fas fa-exclamation-circle me-2"></i>
+                            <span id="errorText"></span>
+                        </div>
+                        
+                        <div id="submissionDetails" class="d-none">
+                            <div class="card">
+                                <div class="card-header bg-secondary text-white py-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Submission Details</h5>
+                                        <span id="statusBadge" class="badge status-badge"></span>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row mb-4">
+                                        <div class="col-md-6">
+                                            <p class="mb-1 text-muted">App Name</p>
+                                            <h5 id="appName" class="mb-3"></h5>
+                                            
+                                            <p class="mb-1 text-muted">Website URL</p>
+                                            <p id="websiteUrl" class="mb-3"></p>
+                                            
+                                            <p class="mb-1 text-muted">Contact Email</p>
+                                            <p id="contactEmail" class="mb-3"></p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="mb-1 text-muted">Submission Date</p>
+                                            <p id="submissionDate" class="mb-3"></p>
+                                            
+                                            <p class="mb-1 text-muted">Total Price</p>
+                                            <h5 id="totalPrice" class="mb-3 text-primary"></h5>
+                                            
+                                            <p class="mb-1 text-muted">Publish Option</p>
+                                            <p id="publishOption" class="mb-3"></p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <h6 class="text-muted mb-3">Selected Features</h6>
+                                        <ul id="featuresList" class="features-list"></ul>
+                                    </div>
+                                    
+                                    <div id="timelineSection">
+                                        <h6 class="text-muted mb-2">Timeline</h6>
+                                        <div class="timeline-info">
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-clock me-2 text-primary"></i>
+                                                <span id="timelineText"></span>
+                                            </div>
+                                            <div id="customTimelineSection" class="d-none mt-2">
+                                                <p class="mb-1 fw-bold">Custom Timeline:</p>
+                                                <p id="customTimeline" class="mb-0"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="adminMessage" class="alert alert-info mt-4 d-none">
+                                        <i class="fas fa-comment-dots me-2"></i>
+                                        <span id="adminMessageText"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <p class="mb-0">Need help? <a href="#" class="text-decoration-none">Contact our support team</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- Firebase -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.23.0/firebase-database-compat.js"></script>
+    
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCF2OP-Klw12nOyK80qrEzq0qB-Ejmwbek",
+            authDomain: "web-to-apk-converter.firebaseapp.com",
+            databaseURL: "https://web-to-apk-converter-default-rtdb.firebaseio.com",
+            projectId: "web-to-apk-converter",
+            storageBucket: "web-to-apk-converter.firebasestorage.app",
+            messagingSenderId: "478871085916",
+            appId: "1:478871085916:web:b22739e5bad02e5cec5799",
+            measurementId: "G-WVPTC2CECX"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        
+        // Form submission handler
+        document.getElementById('statusForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const submissionId = document.getElementById('submissionId').value.trim();
+            if (!submissionId) {
+                showError('Please enter a valid submission ID');
+                return;
+            }
+            
+            // Show loader
+            document.getElementById('loader').style.display = 'block';
+            document.getElementById('errorMessage').classList.add('d-none');
+            document.getElementById('submissionDetails').classList.add('d-none');
+            
+            // Get submission data from Firebase
+            database.ref('/guest-submisions/' + submissionId).once('value')
+                .then((snapshot) => {
+                    // Hide loader
+                    document.getElementById('loader').style.display = 'none';
+                    
+                    if (snapshot.exists()) {
+                        const data = snapshot.val();
+                        displaySubmissionData(data);
+                    } else {
+                        showError('No submission found with this ID. Please check and try again.');
+                    }
+                })
+                .catch((error) => {
+                    document.getElementById('loader').style.display = 'none';
+                    showError('Error fetching submission: ' + error.message);
+                    console.error(error);
+                });
+        });
+        
+        function displaySubmissionData(data) {
+            // Show submission container
+            document.getElementById('submissionDetails').classList.remove('d-none');
+            
+            // Set status badge
+            const statusBadge = document.getElementById('statusBadge');
+            statusBadge.textContent = data.status ? data.status.charAt(0).toUpperCase() + data.status.slice(1) : 'Pending';
+            statusBadge.className = 'badge status-badge';
+            
+            // Add status-specific class
+            switch (data.status?.toLowerCase() || 'pending') {
+                case 'approved':
+                    statusBadge.classList.add('status-approved');
+                    break;
+                case 'rejected':
+                    statusBadge.classList.add('status-rejected');
+                    break;
+                case 'in-progress':
+                    statusBadge.classList.add('status-in-progress');
+                    break;
+                case 'pending':
+                default:
+                    statusBadge.classList.add('status-pending');
+                    break;
+            }
+            
+            // Fill in all data fields
+            document.getElementById('appName').textContent = data.appName || 'N/A';
+            document.getElementById('websiteUrl').textContent = data.websiteUrl || 'N/A';
+            document.getElementById('contactEmail').textContent = data.contactEmail || 'N/A';
+            document.getElementById('totalPrice').textContent = data.totalPrice || '$0';
+            document.getElementById('publishOption').textContent = data.publishOption || 'N/A';
+            
+            // Format and display submission date
+            const submissionDate = data.timestamp ? new Date(data.timestamp) : null;
+            document.getElementById('submissionDate').textContent = submissionDate ? 
+                submissionDate.toLocaleDateString() + ' ' + submissionDate.toLocaleTimeString() : 'N/A';
+            
+            // Display features
+            const featuresList = document.getElementById('featuresList');
+            featuresList.innerHTML = '';
+            
+            
+            if (data.features && Array.isArray(data.features) && data.features.length > 0) {
+                data.features.forEach(feature => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<i class="fas fa-check-circle text-success me-2"></i>${feature.name}`;
+                    console.log(data.features);
+                    featuresList.appendChild(li);
+                });
+            } else {
+                const li = document.createElement('li');
+                li.textContent = 'No specific features selected';
+                featuresList.appendChild(li);
+            }
+            
+            // Display timeline
+            document.getElementById('timelineText').textContent = data.timeline || 'Standard';
+            
+            // Display custom timeline if available
+            if (data.timeline === 'custom' && data.customTimeline) {
+                document.getElementById('customTimelineSection').classList.remove('d-none');
+                document.getElementById('customTimeline').textContent = data.customTimeline;
+            } else {
+                document.getElementById('customTimelineSection').classList.add('d-none');
+            }
+            
+            // Show admin message if available
+            if (data.adminNotes && data.adminNotes.trim() !== '') {
+                document.getElementById('adminMessage').classList.remove('d-none');
+                document.getElementById('adminMessageText').textContent = data.adminNotes;
+            } else {
+                document.getElementById('adminMessage').classList.add('d-none');
+            }
+        }
+        
+        function showError(message) {
+            const errorElement = document.getElementById('errorMessage');
+            errorElement.classList.remove('d-none');
+            document.getElementById('errorText').textContent = message;
+        }
+    </script>
+</body>
+</html>
