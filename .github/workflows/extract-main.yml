@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: write
+  workflows: write
 
 jobs:
   extract:
@@ -27,7 +28,6 @@ jobs:
 
           unzip -o main.zip -d .extract
 
-          # Move ZIP contents to repository root
           cp -a .extract/. .
 
           rm -rf .extract
