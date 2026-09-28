@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lodwick Masete</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', Arial, Helvetica, sans-serif;
+            background: #ffffff;
+            color: #111111;
+            line-height: 1.4;
+        }
+
+        /* HEADER */
+        header {
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            background: #ffffff;
+            border-bottom: 1px solid #f0f0f0;
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            backdrop-filter: blur(8px);
+            background: rgba(255,255,255,0.88);
+        }
+        .headerName {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            margin: 0;
+        }
+        .headerMenu {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .headerButton {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            border-radius: 30px;
+            background: #f5f5f5;
+            color: #111111;
+            text-decoration: none;
+            font-size: 15px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+        }
+        .headerButton:hover {
+            background: #eaeaea;
+            transform: translateY(-1px);
+        }
+
+        /* MAIN */
+        main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 36px 20px 80px;
+        }
+
+        /* INTRO */
+        .intro {
+            max-width: 680px;
+            margin-bottom: 48px;
+        }
+        .introLabel {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin-bottom: 12px;
+            padding: 6px 12px;
+            border-radius: 40px;
+            background: #f2f2f2;
+            color: #5a5a5a;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        .intro h1 {
+            font-size: 42px;
+            line-height: 1.08;
+            letter-spacing: -1.8px;
+            margin: 0 0 12px;
+            font-weight: 700;
+        }
+        .intro p {
+            color: #666666;
+            font-size: 16px;
+            line-height: 1.7;
+            max-width: 560px;
+        }
+
+        /* SOCIAL LINKS */
+        .social-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            list-style: none;
+            padding: 0;
+            margin: 24px 0 0 0;
+        }
+        .social-links li {
+            margin: 0;
+        }
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #f5f5f5;
+            color: #111111;
+            text-decoration: none;
+            transition: background 0.2s, transform 0.15s, color 0.2s;
+        }
+        .social-links a:hover {
+            background: #111111;
+            color: #ffffff;
+            transform: translateY(-2px);
+        }
+        .social-links svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* SECTION LABEL */
+        .sectionLabel {
+            margin-bottom: 14px;
+            color: #8a8a8a;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+        }
+
+        /* ========== FEATURED - STATIC IMAGE GRID ========== */
+        .featuredGrid {
+            display: grid;
+            grid-template-columns: 1.4fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .featuredMain {
+            position: relative;
+            border-radius: 26px;
+            overflow: hidden;
+            background: #0b0b0b;
+            aspect-ratio: 4 / 3;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.10);
+            transition: box-shadow 0.35s ease, transform 0.35s ease;
+            isolation: isolate;
+        }
+        .featuredMain:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 28px 60px rgba(0,0,0,0.18);
+        }
+        .featuredMain img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 8s ease;
+            opacity: 1;
+        }
+        .featuredMain:hover img {
+            transform: scale(1.03);
+        }
+        .featuredMain .imageNumber {
+            position: absolute;
+            top: 20px;
+            left: 22px;
+            z-index: 5;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.7);
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+        .featuredMain::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                135deg,
+                rgba(0,0,0,0.25) 0%,
+                transparent 50%,
+                rgba(0,0,0,0.15) 100%
+            );
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .featuredSide {
+            display: grid;
+            grid-template-rows: repeat(2, 1fr);
+            gap: 12px;
+        }
+        .featuredSideItem {
+            position: relative;
+            border-radius: 18px;
+            overflow: hidden;
+            background: #f0f0f0;
+            aspect-ratio: 16 / 10;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            transition: transform 0.25s, box-shadow 0.25s;
+            isolation: isolate;
+        }
+        .featuredSideItem:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+        }
+        .featuredSideItem img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .featuredSideItem::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.2) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .featuredSideItem .sideNumber {
+            position: absolute;
+            bottom: 12px;
+            left: 16px;
+            z-index: 3;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.9);
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.4);
+        }
+
+        /* ========== SOCIAL LINKS SECTION ========== */
+        .socialSection {
+            margin-top: 48px;
+            margin-bottom: 40px;
+        }
+        .socialSectionTitle {
+            margin-bottom: 16px;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+        .socialSection .social-links {
+            margin: 0;
+        }
+        .socialSection .social-links a {
+            width: 48px;
+            height: 48px;
+            background: #f5f5f5;
+        }
+        .socialSection .social-links a:hover {
+            background: #111111;
+            color: #ffffff;
+        }
+        .socialSection .social-links svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* ========== EXPLORE ========== */
+        .explore {
+            margin-top: 8px;
+        }
+        .exploreTitle {
+            margin-bottom: 16px;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+        }
+        .exploreGrid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        .exploreItem {
+            min-height: 140px;
+            padding: 20px;
+            border: 1px solid #f0f0f0;
+            border-radius: 16px;
+            background: #fafafa;
+            text-decoration: none;
+            color: #111111;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: background 0.2s, transform 0.2s, border-color 0.2s;
+        }
+        .exploreItem:hover {
+            background: #f6f6f6;
+            transform: translateY(-2px);
+            border-color: #e5e5e5;
+        }
+        .exploreIcon {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 40px;
+            background: #111111;
+            color: #ffffff;
+            font-size: 15px;
+        }
+        .exploreItem h3 {
+            margin: 16px 0 3px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .exploreItem p {
+            margin: 0;
+            color: #888888;
+            font-size: 12px;
+            line-height: 1.45;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 950px) {
+            .featuredGrid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 850px) {
+            .featuredGrid { grid-template-columns: 1fr; }
+            .featuredMain { aspect-ratio: 16 / 10; }
+            .featuredSide {
+                grid-template-rows: none;
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .featuredSideItem { aspect-ratio: 4 / 3; }
+        }
+        @media (max-width: 750px) {
+            main { padding: 28px 16px 60px; }
+            .intro h1 { font-size: 34px; }
+            .exploreGrid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .exploreItem { min-height: 125px; padding: 16px; }
+        }
+        @media (max-width: 640px) {
+            .featuredSide { grid-template-columns: 1fr; }
+            .featuredSideItem { aspect-ratio: 16 / 10; }
+        }
+        @media (max-width: 440px) {
+            .headerName { font-size: 16px; }
+            .intro h1 { font-size: 28px; letter-spacing: -1px; }
+            .intro p { font-size: 14px; }
+            .featuredMain { border-radius: 18px; }
+            .featuredSideItem { border-radius: 14px; }
+            .exploreGrid { grid-template-columns: 1fr 1fr; gap: 8px; }
+            .exploreItem h3 { font-size: 14px; }
+            .social-links a { width: 38px; height: 38px; }
+            .social-links svg { width: 16px; height: 16px; }
+            .socialSection .social-links a { width: 42px; height: 42px; }
+            .socialSection .social-links svg { width: 18px; height: 18px; }
+        }
+        @media (max-width: 360px) {
+            .intro h1 { font-size: 24px; }
+            .featuredMain .imageNumber { font-size: 10px; top: 14px; left: 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 class="headerName">Lodwick Masete</h1>
+    <nav class="headerMenu">
+        <a href="assistant.html" class="headerButton" aria-label="Chat With Bot">
+            <i class="fa-solid fa-message"></i>
+        </a>
+        <a href="/cv" class="headerButton" aria-label="View CV">
+            <i class="fa-solid fa-file-lines"></i>
+        </a>
+        <a href="./gallery/index.html" class="headerButton" aria-label="Gallery">
+            <i class="fa-solid fa-images"></i>
+        </a>
+        <a href="https://github.com/lodwickmasete" class="headerButton" target="_blank" rel="noopener" aria-label="GitHub">
+            <i class="fa-brands fa-github"></i>
+        </a>
+    </nav>
+</header>
+
+<main>
+    <!-- INTRO -->
+    <section class="intro">
+        <span class="introLabel">
+            <i class="fa-solid fa-code"></i>
+            Developer / Builder
+        </span>
+        <h1>Building software, hardware and ideas.</h1>
+        <p>A collection of applications, web projects and hardware experiments I've built.</p>
+    </section>
+
+    <!-- FEATURED - STATIC IMAGE GRID -->
+    <section>
+        <div class="sectionLabel">Featured Project - Ampdroid</div>
+
+        <div class="featuredGrid">
+            <!-- Primary large image: app icon -->
+            <div class="featuredMain">
+                <span class="imageNumber">01 / 05</span>
+                <img src="./img/ampdroid/icon_512x512.png"
+                     alt="Ampdroid - Android local web server environment">
+            </div>
+
+            <!-- Side grid: two stacked images -->
+            <div class="featuredSide">
+                <div class="featuredSideItem">
+                    <span class="sideNumber">02</span>
+                    <img src="./img/ampdroid/detail/android_settings_drawer.jpg"
+                         alt="Ampdroid settings drawer"
+                         loading="lazy">
+                </div>
+                <div class="featuredSideItem">
+                    <span class="sideNumber">03</span>
+                    <img src="./img/ampdroid/detail/ampdroid_tool_bar.jpg"
+                         alt="Ampdroid tool bar"
+                         loading="lazy">
+                </div>
+            </div>
+        </div>
+
+        <!-- Two additional images below -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px;">
+            <div class="featuredSideItem" style="aspect-ratio: 16 / 10;">
+                <span class="sideNumber">04</span>
+                <img src="./img/ampdroid/detail/ampdroid_database_config.jpg"
+                     alt="Ampdroid database configuration"
+                     loading="lazy">
+            </div>
+            <div class="featuredSideItem" style="aspect-ratio: 16 / 10;">
+                <span class="sideNumber">05</span>
+                <img src="./img/ampdroid/detail/ampdroid_dashboard_panels.jpg"
+                     alt="Ampdroid dashboard panels"
+                     loading="lazy">
+            </div>
+        </div>
+
+        <!-- Text details below the images -->
+        <div style="margin-top: 18px; padding: 0 4px;">
+            <div class="editorialKicker" style="color: #8a8a8a; font-size: 10px; font-weight: 700; letter-spacing: 2.8px; text-transform: uppercase; display: flex; align-items: center; gap: 9px; margin-bottom: 8px;">
+                <i class="fa-brands fa-android"></i>
+                Android / Server
+            </div>
+            <h2 style="font-size: 36px; line-height: 1.1; letter-spacing: -1.5px; font-weight: 700; margin: 0 0 6px; color: #111;">
+                Ampdroid
+            </h2>
+            <p style="color: #666; font-size: 15px; line-height: 1.6; max-width: 560px; margin: 0 0 16px;">
+                A lightweight Android server environment for running PHP web applications directly from a mobile device.
+            </p>
+            <div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px;">
+                <span style="font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; padding: 7px 13px; border: 1px solid #e0e0e0; border-radius: 40px; color: #555;">Android</span>
+                <span style="font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; padding: 7px 13px; border: 1px solid #e0e0e0; border-radius: 40px; color: #555;">PHP</span>
+                <span style="font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; padding: 7px 13px; border: 1px solid #e0e0e0; border-radius: 40px; color: #555;">Apache</span>
+                <span style="font-size: 10px; letter-spacing: 1.2px; text-transform: uppercase; padding: 7px 13px; border: 1px solid #e0e0e0; border-radius: 40px; color: #555;">MariaDB</span>
+            </div>
+            <a href="./project/ampdroid/index.html"
+               style="display: inline-flex; align-items: center; gap: 12px; padding: 14px 26px; border: 1px solid #111; border-radius: 40px; background: transparent; color: #111; font-size: 12px; font-weight: 600; letter-spacing: 1.8px; text-transform: uppercase; text-decoration: none; width: fit-content; transition: background 0.25s, color 0.25s, gap 0.25s;"
+               onmouseover="this.style.background='#111'; this.style.color='#fff'; this.style.gap='18px';"
+               onmouseout="this.style.background='transparent'; this.style.color='#111'; this.style.gap='12px';">
+                View Project
+                <i class="fa-solid fa-arrow-right"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- SOCIAL LINKS -->
+    <section class="socialSection">
+        <div class="socialSectionTitle">Connect</div>
+        <ul class="social-links">
+            <li>
+                <a href="https://github.com/lodwickmasete" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.linkedin.com/in/lodwick-tlaishego-4bbb9b350?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                        <rect x="2" y="9" width="4" height="12"></rect>
+                        <circle cx="4" cy="4" r="2"></circle>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="https://x.com/Lodwickmasete" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.instagram.com/lodwickm_za?igsh=aHJxNjM3YjhyMjY0" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.facebook.com/lordwickj.masete" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"/>
+                    </svg>
+                </a>
+            </li>
+            <li>
+                <a href="https://tiktok.com/@lodwickmasete" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/>
+                    </svg>
+                </a>
+            </li>
+        </ul>
+    </section>
+
+    <!-- EXPLORE -->
+    <section class="explore">
+        <div class="exploreTitle">Explore</div>
+        <div class="exploreGrid">
+            <a href="./gallery/index.html" class="exploreItem">
+                <div class="exploreIcon"><i class="fa-solid fa-images"></i></div>
+                <div>
+                    <h3>Gallery</h3>
+                    <p>Screenshots and project images.</p>
+                </div>
+            </a>
+            <a href="https://github.com/lodwickmasete" class="exploreItem" target="_blank" rel="noopener">
+                <div class="exploreIcon"><i class="fa-brands fa-github"></i></div>
+                <div>
+                    <h3>GitHub</h3>
+                    <p>Source code and repositories.</p>
+                </div>
+            </a>
+            <a href="./about/index.html" class="exploreItem">
+                <div class="exploreIcon"><i class="fa-solid fa-user"></i></div>
+                <div>
+                    <h3>About</h3>
+                    <p>More about me and my work.</p>
+                </div>
+            </a>
+        </div>
+    </section>
+</main>
+
+</body>
+</html>

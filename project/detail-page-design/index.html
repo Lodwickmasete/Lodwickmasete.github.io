@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <title>Ampdroid</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #ffffff;
+            color: #111111;
+        }
+
+        /* Header */
+
+        header {
+            height: 60px;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 16px;
+
+            background: #ffffff;
+
+            border-bottom: 1px solid #eeeeee;
+
+            position: sticky;
+            top: 0;
+
+            z-index: 20;
+        }
+
+        .backBtn {
+            width: 40px;
+            height: 40px;
+
+            border: none;
+            border-radius: 50%;
+
+            background: #f2f2f2;
+            color: #111111;
+
+            font-size: 23px;
+
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        header h1 {
+            margin: 0 0 0 12px;
+
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+
+        /* Main */
+
+        main {
+            max-width: 850px;
+            margin: auto;
+
+            padding-bottom: 40px;
+        }
+
+
+/* Project intro */
+
+.intro {
+    padding: 20px 16px 15px;
+}
+
+.category {
+    display: inline-block;
+
+    padding: 6px 9px;
+
+    background: #f2f2f2;
+
+    border-radius: 5px;
+
+    color: #666666;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    margin-bottom: 12px;
+}
+
+/* Title area */
+
+.titleRow {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+
+.projectIcon {
+    width: 50px;
+    height: 50px;
+
+    object-fit: contain;
+
+    border-radius: 50%;
+
+    border: 3px solid #f2f2f2;
+    flex-shrink: 0;
+}
+
+.titleInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    min-width: 0;
+}
+
+.title {
+    margin: 0;
+
+    font-size: 28px;
+    line-height: 1.2;
+}
+
+.author {
+    margin-top: 3px;
+
+    color: #888888;
+
+    font-size: 12px;
+    line-height: 1.3;
+}
+
+.description {
+    margin: 14px 0 0;
+
+    color: #666666;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+}
+
+
+        /* Main project image */
+
+        .mainImage {
+            width: calc(100% - 32px);
+
+            margin: 5px 16px 0;
+
+            aspect-ratio: 16 / 9;
+
+            object-fit: cover;
+
+            border-radius: 10px;
+
+            background: #f3f3f3;
+
+            display: block;
+        }
+
+
+        /* Image gallery */
+
+        .galleryTitle {
+            padding: 20px 16px 10px;
+
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .imageGrid {
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 8px;
+
+            padding: 0 16px;
+        }
+
+        .galleryImage {
+            width: 100%;
+
+            aspect-ratio: 16 / 10;
+
+            object-fit: cover;
+
+            border-radius: 8px;
+
+            background: #f3f3f3;
+
+            display: block;
+
+            cursor: pointer;
+        }
+
+
+        /* Content sections */
+
+        .section {
+            margin-top: 25px;
+
+            padding: 0 16px;
+        }
+
+        .section h2 {
+            margin: 0 0 9px;
+
+            font-size: 16px;
+        }
+
+        .section p {
+            margin: 0;
+
+            color: #555555;
+
+            font-size: 14px;
+
+            line-height: 1.7;
+        }
+
+
+        /* Technologies */
+
+        .technologies {
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 6px;
+        }
+
+        .technology {
+            padding: 7px 9px;
+
+            background: #f2f2f2;
+
+            border-radius: 6px;
+
+            color: #555555;
+
+            font-size: 11px;
+        }
+
+
+        /* Features */
+
+        .features {
+            margin: 0;
+
+            padding: 0;
+
+            list-style: none;
+        }
+
+        .features li {
+            padding: 11px 0;
+
+            border-bottom: 1px solid #eeeeee;
+
+            color: #555555;
+
+            font-size: 14px;
+        }
+
+        .features li:last-child {
+            border-bottom: none;
+        }
+
+
+        /* Information */
+
+        .info {
+            display: grid;
+
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 8px;
+        }
+
+        .infoBox {
+            padding: 12px;
+
+            background: #f7f7f7;
+
+            border-radius: 8px;
+        }
+
+        .infoLabel {
+            display: block;
+
+            margin-bottom: 5px;
+
+            color: #999999;
+
+            font-size: 10px;
+        }
+
+        .infoValue {
+            font-size: 13px;
+
+            font-weight: 600;
+        }
+
+
+        /* Project button */
+
+        .projectButton {
+            display: block;
+
+            margin: 28px 16px 0;
+
+            padding: 12px;
+
+            background: #111111;
+
+            color: #ffffff;
+
+            border-radius: 7px;
+
+            text-align: center;
+
+            text-decoration: none;
+
+            font-size: 13px;
+        }
+
+
+        /* Image viewer */
+
+        #imageViewer {
+            position: fixed;
+
+            inset: 0;
+
+            display: none;
+
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(255, 255, 255, 0.98);
+
+            z-index: 100;
+        }
+
+        #imageViewer.show {
+            display: flex;
+        }
+
+        #viewerImage {
+            max-width: 96%;
+            max-height: 85vh;
+
+            object-fit: contain;
+        }
+
+        .viewerClose {
+            position: absolute;
+
+            top: 12px;
+            right: 15px;
+
+            width: 42px;
+            height: 42px;
+
+            border: none;
+            border-radius: 50%;
+
+            background: #eeeeee;
+
+            color: #111111;
+
+            font-size: 25px;
+
+            cursor: pointer;
+        }
+
+
+        /* Footer */
+
+        footer {
+            padding: 25px 16px;
+
+            text-align: center;
+
+            color: #999999;
+
+            font-size: 11px;
+        }
+
+
+        /* Desktop */
+
+        @media (min-width: 700px) {
+
+            .intro {
+                padding: 25px 0 15px;
+            }
+
+            .mainImage {
+                width: 100%;
+                margin: 5px 0 0;
+            }
+
+            .galleryTitle {
+                padding-left: 0;
+            }
+
+            .imageGrid {
+                padding: 0;
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .section {
+                padding: 0;
+            }
+
+            .projectButton {
+                margin-left: 0;
+                margin-right: 0;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <button
+        class="backBtn"
+        onclick="history.back()"
+        aria-label="Go back">
+<i class="fa-solid fa-chevron-left"></i>
+    </button>
+
+    <h1>Ampdroid</h1>
+
+</header>
+
+
+<main>
+
+
+
+<!-- Project introduction -->
+
+<section class="intro">
+
+<!---
+    <span class="category">
+        Android / Server
+    </span>
+-->
+<a
+    href="https://github.com/lodwickmasete/ampdroid"
+    target="_blank"
+    rel="noopener"
+    class="githubCategory"
+>
+<span class="category">
+
+        <i class="fa-brands fa-github"></i>
+        Lodwickmasete/ampdroid
+
+</span>
+    </a>
+    <style type="text/css">
+    .githubCategory {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    
+    color: #666666;
+    text-decoration: none;
+    }
+    
+    .githubCategory i {
+    font-size: 15px;
+    }</style>
+    <div class="titleRow">
+
+        <img
+            class="projectIcon"
+            src="./../../img/ampdroid/favicon.ico"
+            alt="Ampdroid icon"
+        >
+
+        <div class="titleInfo">
+
+            <h2 class="title">
+                Ampdroid
+            </h2>
+
+            <div class="author">
+                Author: Lodwick Masete
+            </div>
+
+        </div>
+
+    </div>
+
+    <p class="description">
+        A lightweight Android server environment
+        for running PHP web applications directly
+        from a mobile device.
+    </p>
+
+</section>
+
+
+    <!-- Main project image -->
+
+    <img
+        class="mainImage"
+        src="./../../img/ampdroid/detail/ampdroid_setup_wizard_banner.jpg"
+        alt="Ampdroid"
+    >
+
+
+    <!-- Project images -->
+
+    <div class="galleryTitle">
+        Project images
+    </div>
+
+    <div class="imageGrid">
+
+        <img
+            class="galleryImage"
+            src="./../../img/ampdroid/detail/ampdroid_dashboard_panels.jpg"
+            alt="Ampdroid"
+        >
+
+        <img
+            class="galleryImage"
+            src="./../../img/ampdroid/detail/ampdroid_database_config.jpg"
+            alt="Ampdroid"
+        >
+
+
+        <img
+            class="galleryImage"
+            src="./../../img/ampdroid/detail/ampdroid_tool_bar.jpg"
+            alt="Ampdroid"
+        >
+
+        <img
+            class="galleryImage"
+            src="./../../img/ampdroid/detail/android_settings_drawer.jpg"
+            alt="Ampdroid"
+        >
+
+    </div>
+
+
+    <!-- About -->
+
+    <section class="section">
+
+        <h2>
+            About
+        </h2>
+
+        <p>
+            Ampdroid brings a local web development
+            environment to Android. The idea is to allow
+            web applications to be developed, tested and
+            hosted locally using a phone instead of a
+            traditional computer.
+        </p>
+
+    </section>
+
+
+    <!-- Technologies -->
+
+    <section class="section">
+
+        <h2>
+            Technologies
+        </h2>
+
+        <div class="technologies">
+
+            <span class="technology">
+                Android
+            </span>
+
+            <span class="technology">
+                PHP
+            </span>
+
+            <span class="technology">
+                Apache
+            </span>
+
+            <span class="technology">
+                PHP-FPM
+            </span>
+
+            <span class="technology">
+                MariaDB
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <!-- Features -->
+
+    <section class="section">
+
+        <h2>
+            Features
+        </h2>
+
+        <ul class="features">
+
+            <li>
+                Local Apache web server
+            </li>
+
+            <li>
+                PHP and PHP-FPM support
+            </li>
+
+            <li>
+                MariaDB database server
+            </li>
+
+            <li>
+                Local web root for projects
+            </li>
+
+            <li>
+                Designed for Android devices
+            </li>
+
+            <li>
+                Run PHP applications locally
+            </li>
+
+        </ul>
+
+    </section>
+
+
+    <!-- Server information -->
+
+    <section class="section">
+
+        <h2>
+            Server environment
+        </h2>
+
+        <div class="info">
+
+            <div class="infoBox">
+
+                <span class="infoLabel">
+                    Web server
+                </span>
+
+                <span class="infoValue">
+                    Apache
+                </span>
+
+            </div>
+
+
+            <div class="infoBox">
+
+                <span class="infoLabel">
+                    PHP
+                </span>
+
+                <span class="infoValue">
+                    PHP-FPM
+                </span>
+
+            </div>
+
+
+            <div class="infoBox">
+
+                <span class="infoLabel">
+                    Database
+                </span>
+
+                <span class="infoValue">
+                    MariaDB
+                </span>
+
+            </div>
+
+
+            <div class="infoBox">
+
+                <span class="infoLabel">
+                    Platform
+                </span>
+
+                <span class="infoValue">
+                    Android
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Development -->
+
+    <section class="section">
+
+        <h2>
+            Development
+        </h2>
+
+        <p>
+            The project focuses on keeping the server
+            environment lightweight while still providing
+            the components normally found in a desktop
+            development stack.
+        </p>
+
+    </section>
+
+
+    <!-- Project link -->
+
+    <a
+        class="projectButton"
+        href="https://github.com/lodwickmasete/ampdroid"
+        onclick="return false;">
+        View Project
+    </a>
+
+
+</main>
+
+
+<footer>
+
+    Ampdroid
+
+</footer>
+
+
+<!-- Image viewer -->
+
+<div id="imageViewer">
+
+    <button
+        class="viewerClose"
+        id="viewerClose">
+        ×
+    </button>
+
+    <img
+        id="viewerImage"
+        src=""
+        alt="Project image"
+    >
+
+</div>
+
+
+<script>
+
+
+/*
+    Image viewer
+*/
+
+const imageViewer =
+    document.getElementById("imageViewer");
+
+const viewerImage =
+    document.getElementById("viewerImage");
+
+const viewerClose =
+    document.getElementById("viewerClose");
+
+
+const galleryImages =
+    document.querySelectorAll(".galleryImage");
+
+
+galleryImages.forEach(image => {
+
+    image.addEventListener("click", () => {
+
+        viewerImage.src = image.src;
+
+        imageViewer.classList.add("show");
+
+    });
+
+});
+
+
+viewerClose.addEventListener("click", () => {
+
+    imageViewer.classList.remove("show");
+
+});
+
+
+imageViewer.addEventListener("click", event => {
+
+    if (event.target === imageViewer) {
+
+        imageViewer.classList.remove("show");
+
+    }
+
+});
+
+
+document.addEventListener("keydown", event => {
+
+    if (event.key === "Escape") {
+
+        imageViewer.classList.remove("show");
+
+    }
+
+});
+
+
+</script>
+
+
+</body>
+
+</html>

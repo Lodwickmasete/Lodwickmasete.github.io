@@ -1,0 +1,601 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>About - Lodwick Masete</title>
+<link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+>
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        margin: 0;
+        background: #ffffff;
+        color: #111111;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* --------------------------------------------------
+       HEADER
+    -------------------------------------------------- */
+
+    header {
+        height: 60px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 0 18px;
+
+        background: #ffffff;
+        border-bottom: 1px solid #eeeeee;
+
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    .headerName {
+        margin: 0;
+
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .headerButton {
+        width: 36px;
+        height: 36px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        border: none;
+        border-radius: 50%;
+
+        background: #f2f2f2;
+        color: #111111;
+
+        text-decoration: none;
+
+        font-size: 20px;
+
+        cursor: pointer;
+    }
+
+    .headerButton:active {
+        background: #dddddd;
+    }
+
+    /* --------------------------------------------------
+       MAIN
+    -------------------------------------------------- */
+
+    main {
+        max-width: 850px;
+
+        margin: auto;
+
+        padding: 35px 16px 60px;
+    }
+
+    /* --------------------------------------------------
+       INTRO
+    -------------------------------------------------- */
+
+    .intro {
+        padding-bottom: 35px;
+
+        border-bottom: 1px solid #eeeeee;
+    }
+
+    .label {
+        display: inline-block;
+
+        margin-bottom: 12px;
+
+        padding: 6px 9px;
+
+        border-radius: 5px;
+
+        background: #f2f2f2;
+        color: #666666;
+
+        font-size: 11px;
+        font-weight: 600;
+
+        text-transform: uppercase;
+        letter-spacing: .5px;
+    }
+
+    .intro h1 {
+        margin: 0 0 12px;
+
+        font-size: 40px;
+        line-height: 1.1;
+
+        letter-spacing: -1px;
+    }
+
+    .intro p {
+        max-width: 650px;
+
+        margin: 0;
+
+        color: #666666;
+
+        font-size: 15px;
+        line-height: 1.7;
+    }
+
+    /* --------------------------------------------------
+       SECTIONS
+    -------------------------------------------------- */
+
+    .section {
+        padding: 32px 0;
+
+        border-bottom: 1px solid #eeeeee;
+    }
+
+    .section:last-child {
+        border-bottom: none;
+    }
+
+    .sectionTitle {
+        margin: 0 0 15px;
+
+        font-size: 19px;
+        font-weight: 600;
+    }
+
+    .sectionText {
+        margin: 0;
+
+        color: #555555;
+
+        font-size: 14px;
+        line-height: 1.75;
+    }
+
+    /* --------------------------------------------------
+       PERSONAL INFO
+    -------------------------------------------------- */
+
+    .infoGrid {
+        display: grid;
+
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 10px;
+    }
+
+    .infoCard {
+        padding: 17px;
+
+        border: 1px solid #eeeeee;
+        border-radius: 10px;
+
+        background: #fafafa;
+    }
+
+    .infoLabel {
+        display: block;
+
+        margin-bottom: 6px;
+
+        color: #999999;
+
+        font-size: 10px;
+        font-weight: 600;
+
+        text-transform: uppercase;
+        letter-spacing: .5px;
+    }
+
+    .infoValue {
+        color: #222222;
+
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    /* --------------------------------------------------
+       INTERESTS
+    -------------------------------------------------- */
+
+    .interestList {
+        display: flex;
+
+        flex-wrap: wrap;
+
+        gap: 7px;
+    }
+
+    .interest {
+        padding: 9px 11px;
+
+        border-radius: 6px;
+
+        background: #f2f2f2;
+        color: #555555;
+
+        font-size: 11px;
+    }
+
+    /* --------------------------------------------------
+       TECHNOLOGIES
+    -------------------------------------------------- */
+
+    .skills {
+        display: flex;
+
+        flex-wrap: wrap;
+
+        gap: 7px;
+    }
+
+    .skill {
+        padding: 8px 10px;
+
+        border-radius: 6px;
+
+        background: #f2f2f2;
+        color: #555555;
+
+        font-size: 11px;
+    }
+
+    /* --------------------------------------------------
+       LINKS
+    -------------------------------------------------- */
+
+    .links {
+        display: flex;
+
+        flex-wrap: wrap;
+
+        gap: 8px;
+
+        margin-top: 18px;
+    }
+
+    .linkButton {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 11px 15px;
+
+        border-radius: 7px;
+
+        background: #111111;
+        color: #ffffff;
+
+        text-decoration: none;
+
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .linkButton:active {
+        opacity: .7;
+    }
+
+    .linkButton.secondary {
+        background: #f1f1f1;
+        color: #222222;
+    }
+
+    /* --------------------------------------------------
+       FOOTER
+    -------------------------------------------------- */
+
+    footer {
+        padding-top: 30px;
+
+        color: #999999;
+
+        font-size: 11px;
+
+        text-align: center;
+    }
+
+    /* --------------------------------------------------
+       MOBILE
+    -------------------------------------------------- */
+
+    @media (max-width: 600px) {
+
+        main {
+            padding: 28px 13px 50px;
+        }
+
+        .intro h1 {
+            font-size: 32px;
+        }
+
+        .intro p {
+            font-size: 13px;
+        }
+
+        .infoGrid {
+            grid-template-columns: 1fr;
+        }
+
+        .section {
+            padding: 27px 0;
+        }
+
+    }
+
+    @media (max-width: 430px) {
+
+        .headerName {
+            font-size: 16px;
+        }
+
+        .intro h1 {
+            font-size: 29px;
+        }
+
+    }
+
+</style>
+
+</head><body><header>
+<h1 class="headerName">
+    Lodwick Masete
+</h1>
+
+<a href="../index.html" class="headerButton" aria-label="Back">
+    <i class="fa-solid fa-arrow-left"></i>
+</a>
+
+</header><main><!-- INTRO -->
+
+<section class="intro">
+
+    <span class="label">
+        About Me
+    </span>
+
+    <h1>
+        I'm Lodwick.
+    </h1>
+
+    <p>
+        I'm a developer and builder with an interest in
+        technology, electronics and creating useful things.
+    </p>
+
+</section>
+
+
+<!-- ABOUT ME -->
+
+<section class="section">
+
+    <h2 class="sectionTitle">
+        About me
+    </h2>
+
+    <p class="sectionText">
+        I enjoy learning how technology works and turning
+        ideas into something practical.
+
+        <br><br>
+
+        My interests cover software development, electronics,
+        computer systems and hardware. I like experimenting,
+        building prototypes and figuring out how to solve
+        problems when there isn't an obvious solution.
+
+        <br><br>
+
+        I'm particularly interested in understanding things
+        at a deeper level rather than simply using them.
+        This often means exploring how software, hardware
+        and systems work together.
+    </p>
+
+</section>
+
+
+<!-- PERSONAL -->
+
+<section class="section">
+
+    <h2 class="sectionTitle">
+        A little more about me
+    </h2>
+
+    <div class="infoGrid">
+
+        <div class="infoCard">
+
+            <span class="infoLabel">
+                Focus
+            </span>
+
+            <span class="infoValue">
+                Technology & Development
+            </span>
+
+        </div>
+
+
+        <div class="infoCard">
+
+            <span class="infoLabel">
+                Interests
+            </span>
+
+            <span class="infoValue">
+                Software & Electronics
+            </span>
+
+        </div>
+
+
+        <div class="infoCard">
+
+            <span class="infoLabel">
+                Approach
+            </span>
+
+            <span class="infoValue">
+                Build, Test, Improve
+            </span>
+
+        </div>
+
+
+        <div class="infoCard">
+
+            <span class="infoLabel">
+                Currently
+            </span>
+
+            <span class="infoValue">
+                Learning & Building
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- INTERESTS -->
+
+<section class="section">
+
+    <h2 class="sectionTitle">
+        Things I enjoy
+    </h2>
+
+    <div class="interestList">
+
+        <span class="interest">
+            Programming
+        </span>
+
+        <span class="interest">
+            Electronics
+        </span>
+
+        <span class="interest">
+            Hardware
+        </span>
+
+        <span class="interest">
+            Problem Solving
+        </span>
+
+        <span class="interest">
+            Learning
+        </span>
+
+        <span class="interest">
+            Experimenting
+        </span>
+
+        <span class="interest">
+            Computer Systems
+        </span>
+
+    </div>
+
+</section>
+
+
+<!-- TECHNOLOGIES -->
+
+<section class="section">
+
+    <h2 class="sectionTitle">
+        Technologies I work with
+    </h2>
+
+    <div class="skills">
+
+        <span class="skill">HTML</span>
+        <span class="skill">CSS</span>
+        <span class="skill">JavaScript</span>
+        <span class="skill">PHP</span>
+        <span class="skill">MySQL</span>
+        <span class="skill">C++</span>
+        <span class="skill">Java</span>
+        <span class="skill">Android</span>
+        <span class="skill">ESP32</span>
+        <span class="skill">RFID</span>
+        <span class="skill">Git</span>
+        <span class="skill">Linux</span>
+
+    </div>
+
+</section>
+
+
+<!-- LINKS -->
+
+<section class="section">
+
+    <h2 class="sectionTitle">
+        More
+    </h2>
+
+    <p class="sectionText">
+        Take a look at my CV or explore some of the things
+        I've built.
+    </p>
+
+    <div class="links">
+
+        <a
+            href="/cv"
+            class="linkButton"
+        >
+            CV
+        </a>
+
+        <a
+            href="https://github.com/lodwickmasete"
+            class="linkButton secondary"
+            target="_blank"
+            rel="noopener"
+        >
+            GitHub
+        </a>
+
+        <a
+            href="../gallery/index.html"
+            class="linkButton secondary"
+        >
+            Gallery
+        </a>
+
+    </div>
+
+</section>
+
+
+<footer>
+
+    © 2026 Lodwick Masete
+
+</footer>
+
+</main></body>
+</html>

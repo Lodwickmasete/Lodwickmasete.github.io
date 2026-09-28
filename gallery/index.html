@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Gallery - Lodwick Masete</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #ffffff;
+            color: #111111;
+        }
+
+        header {
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            background: #ffffff;
+            border-bottom: 1px solid #eeeeee;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 21px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        header h1 i {
+            color: #111111;
+            font-size: 18px;
+        }
+
+        .backLink {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #111111;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: #f3f3f3;
+            transition: background .2s;
+        }
+
+        .backLink:hover {
+            background: #e8e8e8;
+        }
+
+        /* Project sections */
+
+        .dateSection {
+            margin-bottom: 32px;
+        }
+
+        .dateTitle {
+            padding: 20px 16px 12px;
+            font-size: 15px;
+            font-weight: 600;
+            color: #555555;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dateTitle i {
+            color: #999999;
+            font-size: 13px;
+        }
+
+        .photoGrid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+        }
+
+        .photo {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            cursor: pointer;
+            background: #f2f2f2;
+            display: block;
+        }
+
+
+        /* Viewer */
+
+        #viewer {
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.98);
+            display: none;
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        #viewer.show {
+            display: flex;
+        }
+
+        #viewerImage {
+            max-width: 100%;
+            max-height: 72vh;
+            object-fit: contain;
+        }
+
+
+        /* Viewer top */
+
+        .viewerTop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 15px;
+        }
+
+
+        /* Viewer description */
+
+        .viewerDescription {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 96px;
+
+            padding: 0 24px;
+
+            text-align: center;
+
+            font-size: 14px;
+            color: #444444;
+            line-height: 1.5;
+
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+
+        /* Viewer bottom */
+
+        .viewerBottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+        }
+
+
+        /* Buttons */
+
+        .viewerBtn {
+            border: none;
+            background: #eeeeee;
+            color: #111111;
+
+            width: 48px;
+            height: 48px;
+
+            border-radius: 50%;
+
+            font-size: 22px;
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .viewerBtn:active {
+            background: #dddddd;
+        }
+
+        #closeBtn {
+            font-size: 22px;
+        }
+
+        #counter {
+            font-size: 14px;
+            color: #777777;
+        }
+
+
+        /* Mobile */
+
+        @media (max-width: 500px) {
+
+            .photoGrid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .dateTitle {
+                font-size: 14px;
+                padding: 16px 12px 10px;
+            }
+
+            header h1 {
+                font-size: 18px;
+            }
+
+            .backLink {
+                font-size: 12px;
+                padding: 7px 10px;
+            }
+
+            .viewerDescription {
+                font-size: 13px;
+                bottom: 88px;
+                padding: 0 18px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>
+        <i class="fa-solid fa-images"></i>
+        Gallery
+    </h1>
+
+    <a href="../index.html" class="backLink">
+        <i class="fa-solid fa-arrow-left"></i>
+        Back
+    </a>
+
+</header>
+
+
+<main id="gallery">
+
+    <!-- Ampdroid -->
+    <section class="dateSection">
+        <div class="dateTitle">
+            <i class="fa-brands fa-android"></i> Ampdroid
+        </div>
+        <div class="photoGrid">
+            <img class="photo" src="../img/ampdroid/icon_512x512.png" alt="Ampdroid app icon"
+                 data-description="Ampdroid app icon - a lightweight Android server environment." loading="lazy">
+            <img class="photo" src="../img/ampdroid/detail/android_settings_drawer.jpg" alt="Ampdroid settings drawer"
+                 data-description="Native Android settings drawer - control your server without leaving the app." loading="lazy">
+            <img class="photo" src="../img/ampdroid/detail/ampdroid_tool_bar.jpg" alt="Ampdroid tool bar"
+                 data-description="Compact tool bar for quick access to server controls and live status." loading="lazy">
+            <img class="photo" src="../img/ampdroid/detail/ampdroid_database_config.jpg" alt="Ampdroid database configuration"
+                 data-description="Database configuration panel - set up MariaDB right from your phone." loading="lazy">
+            <img class="photo" src="../img/ampdroid/detail/ampdroid_dashboard_panels.jpg" alt="Ampdroid dashboard panels"
+                 data-description="Dashboard panels - monitor your local server environment at a glance." loading="lazy">
+        </div>
+    </section>
+
+    <!-- Local LLM -->
+    <section class="dateSection">
+        <div class="dateTitle">
+            <i class="fa-solid fa-brain"></i> Local LLM
+        </div>
+        <div class="photoGrid">
+            <img class="photo" src="../img/llms/icon_366x329.jpg" alt="Local LLM icon"
+                 data-description="Local LLM - running compact language models directly on Android, offline." loading="lazy">
+        </div>
+    </section>
+
+    <!-- Lessons App -->
+    <section class="dateSection">
+        <div class="dateTitle">
+            <i class="fa-solid fa-graduation-cap"></i> Lessons App
+        </div>
+        <div class="photoGrid">
+            <img class="photo" src="../img/lessons_app/icon_719x402.jpg" alt="Lessons App preview"
+                 data-description="Lessons App - an interactive platform for digital lessons." loading="lazy">
+        </div>
+    </section>
+
+    <!-- Sportsdiff -->
+    <section class="dateSection">
+        <div class="dateTitle">
+            <i class="fa-solid fa-futbol"></i> Sportsdiff
+        </div>
+        <div class="photoGrid">
+            <img class="photo" src="../img/sportsdiff/icon_120x120.png" alt="Sportsdiff icon"
+                 data-description="Sportsdiff - football statistics and match data, made easy to explore." loading="lazy">
+        </div>
+    </section>
+
+</main>
+
+
+<!-- Fullscreen viewer -->
+
+<div id="viewer" role="dialog" aria-modal="true" aria-label="Photo viewer">
+
+    <div class="viewerTop">
+
+        <button class="viewerBtn" id="closeBtn" aria-label="Close">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <span id="counter"></span>
+
+    </div>
+
+
+    <img
+        id="viewerImage"
+        src=""
+        alt="Photo"
+    >
+
+    <p class="viewerDescription" id="viewerDescription"></p>
+
+
+    <div class="viewerBottom">
+
+        <button class="viewerBtn" id="previousBtn" aria-label="Previous">
+            <i class="fa-solid fa-chevron-left"></i>
+        </button>
+
+        <button class="viewerBtn" id="nextBtn" aria-label="Next">
+            <i class="fa-solid fa-chevron-right"></i>
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+/*
+    Viewer only.
+    Gallery is fully static HTML.
+*/
+
+const viewer = document.getElementById("viewer");
+const viewerImage = document.getElementById("viewerImage");
+const viewerDescription = document.getElementById("viewerDescription");
+
+const closeBtn = document.getElementById("closeBtn");
+const previousBtn = document.getElementById("previousBtn");
+const nextBtn = document.getElementById("nextBtn");
+
+const counter = document.getElementById("counter");
+
+
+const photos = Array.from(
+    document.querySelectorAll(".photo")
+);
+
+
+let currentIndex = 0;
+
+
+photos.forEach((img, index) => {
+
+    img.addEventListener("click", () => {
+
+        currentIndex = index;
+
+        updateViewer();
+
+        viewer.classList.add("show");
+
+    });
+
+});
+
+
+function updateViewer() {
+
+    const img = photos[currentIndex];
+
+    viewerImage.src = img.src;
+    viewerImage.alt = img.alt;
+
+    viewerDescription.textContent =
+        img.dataset.description || img.alt || "";
+
+    counter.textContent =
+        `${currentIndex + 1} / ${photos.length}`;
+
+}
+
+
+closeBtn.addEventListener("click", () => {
+
+    viewer.classList.remove("show");
+
+});
+
+
+previousBtn.addEventListener("click", () => {
+
+    if (photos.length === 0) {
+        return;
+    }
+
+    currentIndex--;
+
+    if (currentIndex < 0) {
+        currentIndex = photos.length - 1;
+    }
+
+    updateViewer();
+
+});
+
+
+nextBtn.addEventListener("click", () => {
+
+    if (photos.length === 0) {
+        return;
+    }
+
+    currentIndex++;
+
+    if (currentIndex >= photos.length) {
+        currentIndex = 0;
+    }
+
+    updateViewer();
+
+});
+
+
+viewer.addEventListener("click", event => {
+
+    if (event.target === viewer) {
+
+        viewer.classList.remove("show");
+
+    }
+
+});
+
+
+document.addEventListener("keydown", event => {
+
+    if (!viewer.classList.contains("show")) {
+        return;
+    }
+
+    if (event.key === "Escape") {
+
+        viewer.classList.remove("show");
+
+    }
+
+    if (event.key === "ArrowLeft") {
+
+        previousBtn.click();
+
+    }
+
+    if (event.key === "ArrowRight") {
+
+        nextBtn.click();
+
+    }
+
+});
+
+
+let touchStartX = 0;
+
+
+viewer.addEventListener("touchstart", event => {
+
+    touchStartX = event.touches[0].clientX;
+
+});
+
+
+viewer.addEventListener("touchend", event => {
+
+    const touchEndX =
+        event.changedTouches[0].clientX;
+
+    const difference =
+        touchEndX - touchStartX;
+
+
+    if (Math.abs(difference) < 50) {
+        return;
+    }
+
+
+    if (difference > 0) {
+
+        previousBtn.click();
+
+    }
+
+    else {
+
+        nextBtn.click();
+
+    }
+
+});
+
+
+</script>
+
+</body>
+
+</html>
