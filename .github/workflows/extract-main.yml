@@ -5,11 +5,10 @@ on:
     branches:
       - main
     paths:
-      - "main.zip"
+      - main.zip
 
 permissions:
   contents: write
-  workflows: write
 
 jobs:
   extract:
@@ -18,19 +17,14 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Extract main.zip
         run: |
-          rm -rf .extract
-          mkdir .extract
+          unzip -o main.zip -d extracted
 
-          unzip -o main.zip -d .extract
+          cp -a extracted/. .
 
-          cp -a .extract/. .
-
-          rm -rf .extract
+          rm -rf extracted
           rm -f main.zip
 
       - name: Commit extracted files
@@ -39,6 +33,8 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add -A
+
+          git reset -- .github/workflows/
 
           if git diff --cached --quiet; then
             echo "No changes to commit."
